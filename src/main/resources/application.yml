@@ -1,0 +1,55 @@
+
+server:
+  port: 8888
+
+
+spring:
+  datasource:
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    url: jdbc:oracle:thin:@oracle.coffit.site:1521:xe
+    username: C##HOT6
+    password: HOT6
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB
+      max-request-size: 10MB
+      location: C:\DEV\04_project\HotsixBoot
+#  web:
+#    resources:
+#      static-locations: classpath:/productimgs/
+
+  ## jpa config
+  jpa:
+    generate-ddl: false
+    show-sql: true
+    database: oracle
+    properties:
+      hibernate:
+        '[format_sql]': true
+
+
+
+jwt:
+#  secret: l1Z5I9WufSD5qM0UTHXDJa1kaGxBlyhKMbx+ONkqzeRTlKdF8Bq37mA3Z8nhjRlwVUrL/u3bdkFeamIrUoWvVw==
+
+# swagger-ui custom path
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+
+
+image:
+
+
+#  add-resource-locations: classpath:/static/productimgs/
+#  add-resource-handler: /productimgs/**
+
+
+#  image-dir: src/main/resources/static/productimgs
+#  image-url: http://localhost:8080/productimgs/
+
+# Logging Level
+logging:
+  level:
+    root: info
