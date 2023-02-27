@@ -6,11 +6,63 @@ import javax.persistence.*;
 @Table(name = "TBL_RETIREE_HISTORY")
 public class RetireeHistory {
 
-    @ManyToOne
-    @JoinColumn(name = "MEMBER_CODE")
-    private Member member;
+    @Id
+    @Column(name = "MEMBER_CODE")
+    private String memberCode;
+
+    @Id
+    @Column(name = "RETIREE_CODE")
+    private String retireeCode;
 
     @ManyToOne
     @JoinColumn(name = "RETIREE_CODE")
     private Retiree retiree;
+
+    public RetireeHistory(String memberCode, String retireeCode) {
+        this.memberCode = memberCode;
+        this.retireeCode = retireeCode;
+    }
+
+    public RetireeHistory(String memberCode, String retireeCode, Retiree retiree) {
+        this.memberCode = memberCode;
+        this.retireeCode = retireeCode;
+        this.retiree = retiree;
+    }
+
+    public RetireeHistory() {
+
+    }
+
+    public String getMemberCode() {
+        return memberCode;
+    }
+
+    public void setMemberCode(String memberCode) {
+        this.memberCode = memberCode;
+    }
+
+    public String getRetireeCode() {
+        return retireeCode;
+    }
+
+    public void setRetireeCode(String retireeCode) {
+        this.retireeCode = retireeCode;
+    }
+
+    public Retiree getRetiree() {
+        return retiree;
+    }
+
+    public void setRetiree(Retiree retiree) {
+        this.retiree = retiree;
+    }
+
+    @Override
+    public String toString() {
+        return "RetireeHistory{" +
+                "memberCode='" + memberCode + '\'' +
+                ", retireeCode='" + retireeCode + '\'' +
+                ", retiree=" + retiree +
+                '}';
+    }
 }
