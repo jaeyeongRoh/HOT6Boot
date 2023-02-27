@@ -1,9 +1,7 @@
 package com.hotsix.titans.jwt;
 
-import com.ohgiraffers.bootrestapi.exception.TokenException;
-import com.ohgiraffers.bootrestapi.member.dto.TokenDTO;
-import com.ohgiraffers.bootrestapi.member.entity.Member;
-import com.ohgiraffers.bootrestapi.member.entity.MemberRole;
+
+import com.hotsix.titans.member.dto.TokenDTO;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;

@@ -3,6 +3,7 @@ package com.hotsix.titans.member.entity;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "TBL_MEMBER")
@@ -49,5 +50,9 @@ public class Member {
     @JoinColumn(name = "RANK_CODE")
     @ManyToOne
     private Rank rank;                  // 직급 테이블 다대일 매핑
+
+    @OneToMany
+    @JoinColumn(name = "MEMBER_CODE")
+    private List<RetireeHistory> retireeHistory; // 퇴직내역 일대다 매핑
 
 }
