@@ -14,16 +14,12 @@ public class Authority {
     @Column(name = "AUTHORITY_CODE")
     private int authorityCode;
 
-    @OneToMany(mappedBy = "authority")
-    private List<Team> teamList;
-
     public Authority() {
     }
 
-    public Authority(String authorityName, int authorityCode, List<Team> teamList) {
+    public Authority(String authorityName, int authorityCode) {
         this.authorityName = authorityName;
         this.authorityCode = authorityCode;
-        this.teamList = teamList;
     }
 
     public String getAuthorityName() {
@@ -42,20 +38,12 @@ public class Authority {
         this.authorityCode = authorityCode;
     }
 
-    public List<Team> getTeamList() {
-        return teamList;
-    }
-
-    public void setTeamList(List<Team> teamList) {
-        this.teamList = teamList;
-    }
 
     @Override
     public String toString() {
         return "Authority{" +
                 "authorityName='" + authorityName + '\'' +
                 ", authorityCode=" + authorityCode +
-                ", teamList=" + teamList +
                 '}';
     }
 }

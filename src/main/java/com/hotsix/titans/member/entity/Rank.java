@@ -1,10 +1,14 @@
 package com.hotsix.titans.member.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import lombok.*;
 
+import javax.persistence.*;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
+@Getter
+@Setter
 @Entity
 @Table(name = "TBL_RANK")
 public class Rank {
@@ -15,4 +19,9 @@ public class Rank {
 
     @Column(name = "RANK_NAME")
     private String rankName;
+
+    @Column(name = "HOURLY_MONEY")
+    private Long hourlyMoney;
+
+
 }

@@ -4,6 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "TBL_RETIREE_HISTORY")
+@IdClass(RetireeHistoryPk.class)
 public class RetireeHistory {
 
     @Id
@@ -15,7 +16,7 @@ public class RetireeHistory {
     private String retireeCode;
 
     @ManyToOne
-    @JoinColumn(name = "RETIREE_CODE")
+    @JoinColumn(name = "RETIREE_CODE", insertable = false, updatable = false)
     private Retiree retiree;
 
     public RetireeHistory(String memberCode, String retireeCode) {
