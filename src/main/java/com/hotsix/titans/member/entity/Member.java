@@ -43,12 +43,12 @@ public class Member {
     @Column(name = "MEMBER_MARRIED")
     private String memberMarried;       // 사원 결혼 여부
 
-    @JoinColumn(name = "TEAM_CODE")
     @ManyToOne
+    @JoinColumn(name = "TEAM_CODE")
     private Team team;                  // 조직 테이블 다대일 매핑
 
-    @JoinColumn(name = "RANK_CODE")
     @ManyToOne
+    @JoinColumn(name = "RANK_CODE")
     private Rank rank;                  // 직급 테이블 다대일 매핑
 
     @OneToMany

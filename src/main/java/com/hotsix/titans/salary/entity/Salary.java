@@ -1,15 +1,20 @@
 package com.hotsix.titans.salary.entity;
 
-import com.hotsix.titans.member.entity.Member;
-import lombok.*;
-
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "TBL_SALARY")
+//@SequenceGenerator(
+//    name = "SALARY_SEQ_GENERATOR",
+//    sequenceName = "SEQ_SALARY",
+//    initialValue = 1,
+//    allocationSize = 50
+//)
 public class Salary {
 
     @Id
+//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_SALARY")
     @Column(name = "SALARY_CODE")
     private String salaryCode;              // 급여 코드
 
@@ -25,20 +30,25 @@ public class Salary {
     @Column(name = "MEAL_SALARY")
     private Long mealSalary;                // 식대
 
-    @JoinColumn(name = "MEMBER_CODE")
     @ManyToOne
-    private Member member;                  // 멤버 테이블 다대일 매핑
+    @JoinColumn(name = "TAX_CODE")
+    private Tax tax;
+
+    @OneToMany
+    @JoinColumn(name = "BONUS_CODE")
+    private List<Bonus> bonusList;
 
     public Salary() {
     }
 
-    public Salary(String salaryCode, Long basicSalary, Long beforeSalary, Long afterSalary, Long mealSalary, Member member) {
+    public Salary(String salaryCode, Long basicSalary, Long beforeSalary, Long afterSalary, Long mealSalary, Tax tax, List<Bonus> bonusList) {
         this.salaryCode = salaryCode;
         this.basicSalary = basicSalary;
         this.beforeSalary = beforeSalary;
         this.afterSalary = afterSalary;
         this.mealSalary = mealSalary;
-        this.member = member;
+        this.tax = tax;
+        this.bonusList = bonusList;
     }
 
     public String getSalaryCode() {
@@ -81,12 +91,20 @@ public class Salary {
         this.mealSalary = mealSalary;
     }
 
-    public Member getMember() {
-        return member;
+    public Tax getTax() {
+        return tax;
     }
 
-    public void setMember(Member member) {
-        this.member = member;
+    public void setTax(Tax tax) {
+        this.tax = tax;
+    }
+
+    public List<Bonus> getBonusList() {
+        return bonusList;
+    }
+
+    public void setBonusList(List<Bonus> bonusList) {
+        this.bonusList = bonusList;
     }
 
     @Override
@@ -97,7 +115,8 @@ public class Salary {
                 ", beforeSalary=" + beforeSalary +
                 ", afterSalary=" + afterSalary +
                 ", mealSalary=" + mealSalary +
-                ", member=" + member +
+                ", tax=" + tax +
+                ", bonusList=" + bonusList +
                 '}';
     }
 }
