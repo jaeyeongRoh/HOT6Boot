@@ -5,11 +5,6 @@ import lombok.*;
 
 import javax.persistence.*;
 
-@Getter
-@Setter
-@ToString
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
 @Table(name = "TBL_SALARY")
 public class Salary {
@@ -34,4 +29,75 @@ public class Salary {
     @ManyToOne
     private Member member;                  // 멤버 테이블 다대일 매핑
 
+    public Salary() {
+    }
+
+    public Salary(String salaryCode, Long basicSalary, Long beforeSalary, Long afterSalary, Long mealSalary, Member member) {
+        this.salaryCode = salaryCode;
+        this.basicSalary = basicSalary;
+        this.beforeSalary = beforeSalary;
+        this.afterSalary = afterSalary;
+        this.mealSalary = mealSalary;
+        this.member = member;
+    }
+
+    public String getSalaryCode() {
+        return salaryCode;
+    }
+
+    public void setSalaryCode(String salaryCode) {
+        this.salaryCode = salaryCode;
+    }
+
+    public Long getBasicSalary() {
+        return basicSalary;
+    }
+
+    public void setBasicSalary(Long basicSalary) {
+        this.basicSalary = basicSalary;
+    }
+
+    public Long getBeforeSalary() {
+        return beforeSalary;
+    }
+
+    public void setBeforeSalary(Long beforeSalary) {
+        this.beforeSalary = beforeSalary;
+    }
+
+    public Long getAfterSalary() {
+        return afterSalary;
+    }
+
+    public void setAfterSalary(Long afterSalary) {
+        this.afterSalary = afterSalary;
+    }
+
+    public Long getMealSalary() {
+        return mealSalary;
+    }
+
+    public void setMealSalary(Long mealSalary) {
+        this.mealSalary = mealSalary;
+    }
+
+    public Member getMember() {
+        return member;
+    }
+
+    public void setMember(Member member) {
+        this.member = member;
+    }
+
+    @Override
+    public String toString() {
+        return "Salary{" +
+                "salaryCode='" + salaryCode + '\'' +
+                ", basicSalary=" + basicSalary +
+                ", beforeSalary=" + beforeSalary +
+                ", afterSalary=" + afterSalary +
+                ", mealSalary=" + mealSalary +
+                ", member=" + member +
+                '}';
+    }
 }

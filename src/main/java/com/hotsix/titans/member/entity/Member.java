@@ -1,14 +1,8 @@
 package com.hotsix.titans.member.entity;
 
-import com.hotsix.titans.rank.entity.Rank;
-import com.hotsix.titans.salary.entity.Salary;
-import com.hotsix.titans.team.entity.Team;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Table(name = "TBL_MEMBER")
@@ -56,6 +50,4 @@ public class Member {
     @ManyToOne
     private Rank rank;                  // 직급 테이블 다대일 매핑
 
-    @OneToMany(mappedBy = "member")
-    private List<Salary> salaryList;    // 급여 테이블 일대다 매핑
 }
