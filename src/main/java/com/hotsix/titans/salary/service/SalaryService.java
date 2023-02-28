@@ -24,11 +24,19 @@ public class SalaryService {
         this.modelMapper = modelMapper;
     }
 
-    public Object selectPaymentNSalary() {
+    public Object selectMySalary(Integer paymentYear, Integer paymentMonth) {
 
-        List<Salary> salaryListPaymentN = salaryRepository.findBySalaryPaymentYn("N");
+        Salary salary = salaryRepository.findBySalaryCode(paymentYear, paymentMonth);
 
-        return salaryListPaymentN.stream().map(salary -> modelMapper.map(salary, SalaryDTO.class)).collect(Collectors.toList());
+        return modelMapper.map(salary, Salary.class);
+    }
+
+    /* 지급 여부에 따른 급여 전체 목록 조회 */
+    public Object selectPaymentYNSalary(String salaryPaymentYn) {
+
+        List<Salary> salaryListPaymentYN = salaryRepository.findBySalaryPayment(salaryPaymentYn);
+
+        return salaryListPaymentYN.stream().map(salary -> modelMapper.map(salary, SalaryDTO.class)).collect(Collectors.toList());
 
     }
 }
