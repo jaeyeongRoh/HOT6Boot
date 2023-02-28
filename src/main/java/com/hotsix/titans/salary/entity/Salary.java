@@ -1,6 +1,9 @@
 package com.hotsix.titans.salary.entity;
 
+import com.hotsix.titans.member.entity.Member;
+
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -30,6 +33,21 @@ public class Salary {
     @Column(name = "MEAL_SALARY")
     private Long mealSalary;                // 식대
 
+    @Column(name = "HEALTH_TAX")
+    private Long healthTax;
+
+    @Column(name = "NATIONAL_TAX")
+    private Long nationalTax;
+
+    @Column(name = "PAYMENT_YEAR")
+    private Date paymentYear;
+
+    @Column(name = "PAYMENT_MONTH")
+    private Date paymentMonth;
+
+    @Column(name = "SALARY_PAYMENTS_YN")
+    private String paymentsYn;
+
     @ManyToOne
     @JoinColumn(name = "TAX_CODE")
     private Tax tax;
@@ -38,17 +56,27 @@ public class Salary {
     @JoinColumn(name = "BONUS_CODE")
     private List<Bonus> bonusList;
 
+    @ManyToOne
+    @JoinColumn(name = "MEMBER_CODE")
+    private Member member;
+
     public Salary() {
     }
 
-    public Salary(String salaryCode, Long basicSalary, Long beforeSalary, Long afterSalary, Long mealSalary, Tax tax, List<Bonus> bonusList) {
+    public Salary(String salaryCode, Long basicSalary, Long beforeSalary, Long afterSalary, Long mealSalary, Long healthTax, Long nationalTax, Date paymentYear, Date paymentMonth, String paymentsYn, Tax tax, List<Bonus> bonusList, Member member) {
         this.salaryCode = salaryCode;
         this.basicSalary = basicSalary;
         this.beforeSalary = beforeSalary;
         this.afterSalary = afterSalary;
         this.mealSalary = mealSalary;
+        this.healthTax = healthTax;
+        this.nationalTax = nationalTax;
+        this.paymentYear = paymentYear;
+        this.paymentMonth = paymentMonth;
+        this.paymentsYn = paymentsYn;
         this.tax = tax;
         this.bonusList = bonusList;
+        this.member = member;
     }
 
     public String getSalaryCode() {
@@ -91,6 +119,46 @@ public class Salary {
         this.mealSalary = mealSalary;
     }
 
+    public Long getHealthTax() {
+        return healthTax;
+    }
+
+    public void setHealthTax(Long healthTax) {
+        this.healthTax = healthTax;
+    }
+
+    public Long getNationalTax() {
+        return nationalTax;
+    }
+
+    public void setNationalTax(Long nationalTax) {
+        this.nationalTax = nationalTax;
+    }
+
+    public Date getPaymentYear() {
+        return paymentYear;
+    }
+
+    public void setPaymentYear(Date paymentYear) {
+        this.paymentYear = paymentYear;
+    }
+
+    public Date getPaymentMonth() {
+        return paymentMonth;
+    }
+
+    public void setPaymentMonth(Date paymentMonth) {
+        this.paymentMonth = paymentMonth;
+    }
+
+    public String getPaymentsYn() {
+        return paymentsYn;
+    }
+
+    public void setPaymentsYn(String paymentsYn) {
+        this.paymentsYn = paymentsYn;
+    }
+
     public Tax getTax() {
         return tax;
     }
@@ -107,6 +175,14 @@ public class Salary {
         this.bonusList = bonusList;
     }
 
+    public Member getMember() {
+        return member;
+    }
+
+    public void setMember(Member member) {
+        this.member = member;
+    }
+
     @Override
     public String toString() {
         return "Salary{" +
@@ -115,8 +191,14 @@ public class Salary {
                 ", beforeSalary=" + beforeSalary +
                 ", afterSalary=" + afterSalary +
                 ", mealSalary=" + mealSalary +
+                ", healthTax=" + healthTax +
+                ", nationalTax=" + nationalTax +
+                ", paymentYear=" + paymentYear +
+                ", paymentMonth=" + paymentMonth +
+                ", paymentsYn='" + paymentsYn + '\'' +
                 ", tax=" + tax +
                 ", bonusList=" + bonusList +
+                ", member=" + member +
                 '}';
     }
 }
