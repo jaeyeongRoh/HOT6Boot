@@ -13,6 +13,10 @@ public class Member {
     @Column(name = "MEMBER_CODE")
     private String MemberCode;          // 사원 번호
 
+    @Id
+    @Column(name = "MEMBER_PASSWORD")
+    private String memberPassword;          // 비밀번호
+
     @Column(name = "MEMBER_NAME")
     private String memberName;          // 사원 이름
 
