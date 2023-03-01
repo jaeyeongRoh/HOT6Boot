@@ -15,18 +15,18 @@ public class Team {
     @Column(name = "TEAM_NAME")
     private String teamName;
 
+    @OneToMany
+    @JoinColumn(name = "TEAM_CODE")
+    private List<MemberRole> memberRole;
 
-    @JoinColumn(name = "AUTHORITY_NAME")
-    @ManyToOne
-    private Authority authority;
 
     public Team() {
     }
 
-    public Team(int teamCode, String teamName, Authority authority) {
+    public Team(int teamCode, String teamName, List<MemberRole> memberRole) {
         this.teamCode = teamCode;
         this.teamName = teamName;
-        this.authority = authority;
+        this.memberRole = memberRole;
     }
 
     public int getTeamCode() {
@@ -45,22 +45,20 @@ public class Team {
         this.teamName = teamName;
     }
 
-
-    public Authority getAuthority() {
-        return authority;
+    public List<MemberRole> getMemberRole() {
+        return memberRole;
     }
 
-    public void setAuthority(Authority authority) {
-        this.authority = authority;
+    public void setMemberRole(List<MemberRole> memberRole) {
+        this.memberRole = memberRole;
     }
-
 
     @Override
     public String toString() {
         return "Team{" +
                 "teamCode=" + teamCode +
                 ", teamName='" + teamName + '\'' +
-                ", authority=" + authority +
+                ", memberRole=" + memberRole +
                 '}';
     }
 }

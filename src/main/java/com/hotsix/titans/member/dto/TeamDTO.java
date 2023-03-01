@@ -1,21 +1,18 @@
 package com.hotsix.titans.member.dto;
 
+import java.util.List;
+
 public class TeamDTO {
 
     private int teamCode;
     private String teamName;
-    private int authorityCode;
-
-    private AuthorityDTO authority;
 
     public TeamDTO() {
     }
 
-    public TeamDTO(int teamCode, String teamName, int authorityCode, AuthorityDTO authority) {
+    public TeamDTO(int teamCode, String teamName) {
         this.teamCode = teamCode;
         this.teamName = teamName;
-        this.authorityCode = authorityCode;
-        this.authority = authority;
     }
 
     public int getTeamCode() {
@@ -34,29 +31,11 @@ public class TeamDTO {
         this.teamName = teamName;
     }
 
-    public int getAuthorityCode() {
-        return authorityCode;
-    }
-
-    public void setAuthorityCode(int authorityCode) {
-        this.authorityCode = authorityCode;
-    }
-
-    public AuthorityDTO getAuthority() {
-        return authority;
-    }
-
-    public void setAuthority(AuthorityDTO authority) {
-        this.authority = authority;
-    }
-
     @Override
     public String toString() {
         return "TeamDTO{" +
                 "teamCode=" + teamCode +
                 ", teamName='" + teamName + '\'' +
-                ", authorityCode=" + authorityCode +
-                ", authority=" + authority +
                 '}';
     }
 }

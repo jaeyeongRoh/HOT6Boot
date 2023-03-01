@@ -31,7 +31,7 @@ spring:
 
 
 jwt:
-#  secret: l1Z5I9WufSD5qM0UTHXDJa1kaGxBlyhKMbx+ONkqzeRTlKdF8Bq37mA3Z8nhjRlwVUrL/u3bdkFeamIrUoWvVw==
+  secret: V2UgYXJlIFRpdGFucyBhdGUgaG90NiEgT3VyIHBhc3Npb24gY29tZSBmcm9tIGhvdDYh
 
 # swagger-ui custom path
 springdoc:

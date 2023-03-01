@@ -1,7 +1,11 @@
 package com.hotsix.titans.jwt;
 
 
+import com.hotsix.titans.exception.TokenException;
 import com.hotsix.titans.member.dto.TokenDTO;
+import com.hotsix.titans.member.entity.Member;
+import com.hotsix.titans.member.entity.MemberRole;
+import com.hotsix.titans.member.entity.Team;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -63,7 +67,7 @@ public class TokenProvider {
 	
 	private final Key key;		// java.security.Key로 임포트 할 것
 
-	public TokenProvider(@Value("${jwt.secret}")String secretKey, 
+	public TokenProvider(@Value("${jwt.secret}")String secretKey,
 												UserDetailsService userDetailsService) {
 		this.userDetailsService = userDetailsService;
 		byte[] keyBytes = Decoders.BASE64.decode(secretKey);
@@ -75,14 +79,14 @@ public class TokenProvider {
 		
 		log.info("[TokenProvider] generateTokenDTO Start ===============================");
 		List<String> roles = new ArrayList<>();
-		for(MemberRole memberRole : member.getMemberRole()) {
+		for(MemberRole memberRole : member.getTeam().getMemberRole()) {
 			roles.add(memberRole.getAuthority().getAuthorityName());
 		}
-		
+
 		log.info("[TokenProvider] authorities {}", roles); 		// SLF4J에서 제공하는 치환문자 활용(+(덧셈)같은 연산처리 작업 생략)
 		
-		/* 1. 회원 아이디를 "sub"이라는 클레임으로 토큰에 추가 */
-		Claims claims = Jwts.claims().setSubject(member.getMemberId());
+		/* 1. 사원번호를 "sub"이라는 클레임으로 토큰에 추가 */
+		Claims claims = Jwts.claims().setSubject(member.getMemberCode());
 		
 		/* 2. 회원의 권한들을 "auth"라는 클레임으로 토큰에 추가 */
 		claims.put(AUTHORITIES_KEY, roles);
@@ -104,13 +108,13 @@ public class TokenProvider {
 							accessTokenExpiresIn.getTime());
 	}
 	
-	/* 2. 토큰의 등록된 클레임의 subject에서 해당 회원의 아이디를 추출 */
+	/* 2. 토큰의 등록된 클레임의 subject에서 해당 사원의 번호를 추출 */
 	public String getUserId(String token) {
 		return Jwts.parserBuilder()
 				   .setSigningKey(key).build()
 				   .parseClaimsJws(token)
 				   .getBody()					// payload의 Claims 추출 
-				   .getSubject();				// Claim중에 등록 클레임에 해당하는 sub값 추출(회원 아이디)
+				   .getSubject();				// Claim중에 등록 클레임에 해당하는 sub값 추출(사원 번호)
 	}
 	
 	/* 3. AccessToken으로 인증 객체 추출(이 클래스의 5번과 2번에 해당하는 메소드를 사용) */
@@ -168,38 +172,4 @@ public class TokenProvider {
 		}
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
