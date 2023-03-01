@@ -5,7 +5,6 @@ import com.hotsix.titans.exception.TokenException;
 import com.hotsix.titans.member.dto.TokenDTO;
 import com.hotsix.titans.member.entity.Member;
 import com.hotsix.titans.member.entity.MemberRole;
-import com.hotsix.titans.member.entity.Team;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
