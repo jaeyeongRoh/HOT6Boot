@@ -25,10 +25,10 @@ public class LeaveController {
     }
 
     @GetMapping("/annual/standardsManagement")
-    public ResponseEntity<ResponseDTO> listAllPrint(@RequestParam(name = "offset", defaultValue = "1") String offset){
+    public ResponseEntity<ResponseDTO> listAllPrint(){
 
         List<LeaveCategoryDTO> leaveCAtegoryList = leaveService.listAll();
 
-       return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK,"조회성공", leaveCAtegoryList));
+       return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK,"조회성공",(Object) leaveCAtegoryList));
     }
 }
