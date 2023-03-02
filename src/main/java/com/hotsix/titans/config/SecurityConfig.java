@@ -21,7 +21,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import java.util.Arrays;
 
 @EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig /* extends WebSecurityConfigurerAdapter */ {
 
 	private final TokenProvider tokenProvider;
 	private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
@@ -43,31 +43,31 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 	/* 2. 시큐리티 설정을 무시 할 정적 리소스 등록 */
-//	@Bean
-//	public WebSecurityCustomizer webSecurityCustomizer() {
-//		return (web) -> web.ignoring().antMatchers("/css/**", "/js/**", "/images/**",
-//				                                   "/lib/**", "/productimgs/**");
-//	}
-
-	@Override
-	public void webSecurityCustomizer(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/css/**", "/js/**", "/images/**",
-				"/lib/**", "/productimgs/**");
+	@Bean
+	public WebSecurityCustomizer webSecurityCustomizer() {
+		return (web) -> web.ignoring().antMatchers("/css/**", "/js/**", "/images/**",
+				                                   "/lib/**", "/productimgs/**");
 	}
+
+//	@Override
+//	public void configure(WebSecurity web) throws Exception {
+//		web.ignoring().antMatchers("/css/**", "/js/**", "/images/**",
+//				"/lib/**", "/productimgs/**");
+//	}
 
 	/* 3. HTTP요청에 대한 권한별 설정(세션 인증 -> 토큰 인증으로 인해 바뀐 부분 존재) */
 
-	@Override
-	protected void filterChain(HttpSecurity http) throws Exception {
-
-		http.csrf().disable()
-				.exceptionHandling()
-
-//	@Bean
-//	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+//	@Override
+//	protected void configure(HttpSecurity http) throws Exception {
 //
 //		http.csrf().disable()
-//			.exceptionHandling()
+//				.exceptionHandling()
+
+	@Bean
+	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
+		http.csrf().disable()
+			.exceptionHandling()
 
 			/* 기본 시큐리티 설정에서 JWT 토큰과 관련된 유효성과 권한 체크용 설정 */
 			.authenticationEntryPoint(jwtAuthenticationEntryPoint)	// 유효한 자격 증명 없을 시(401)
@@ -85,7 +85,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		    	.antMatchers("/api/v1/reviews/**").permitAll()
 //		    	.antMatchers("/api/**").hasRole("USER")
 //		    	.antMatchers("/api/**").hasRole("ADMIN")
-		    	.antMatchers("/api/**").hasAnyRole("USER", "ADMIN")
+				.antMatchers("/api/**").hasAnyRole("MEMBER", "ADMIN")
+
 //		    	.anyRequest().permitAll();	// 어떤 요청이든 허용 가능, 시큐리티를 활용한 로그인이 모두 완성 되지 않았을 때 활용할 것
 		    .and()
 
@@ -98,6 +99,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 		    	/* jwt 토큰 방식을 쓰겠다는 설정 */
 		    	.apply(new JwtSecurityConfig(tokenProvider));
+		return http.build();
 	}
 
 	/* 4. CORS 설정용 Bean(허용 할 origin과 httpMethod 종류와 header 값) */

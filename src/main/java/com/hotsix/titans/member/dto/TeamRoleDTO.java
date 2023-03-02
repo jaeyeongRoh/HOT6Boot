@@ -1,16 +1,16 @@
 package com.hotsix.titans.member.dto;
 
-public class MemberRoleDTO {
+public class TeamRoleDTO {
 	private int teamNo;
 	private int authorityCode;		// 엔티티를 작성하고 복합키 설정에 용이하기 위함이자 MemberRole insert나 update에서 필수!
 
 	private TeamDTO team;
 	private AuthorityDTO authority;
 
-	public MemberRoleDTO() {
+	public TeamRoleDTO() {
 	}
 
-	public MemberRoleDTO(int teamNo, int authorityCode, TeamDTO team, AuthorityDTO authority) {
+	public TeamRoleDTO(int teamNo, int authorityCode, TeamDTO team, AuthorityDTO authority) {
 		this.teamNo = teamNo;
 		this.authorityCode = authorityCode;
 		this.team = team;
@@ -51,7 +51,7 @@ public class MemberRoleDTO {
 
 	@Override
 	public String toString() {
-		return "MemberRoleDTO{" +
+		return "TeamRoleDTO{" +
 				"teamNo=" + teamNo +
 				", authorityCode=" + authorityCode +
 				", team=" + team +

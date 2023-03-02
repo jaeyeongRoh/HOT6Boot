@@ -4,7 +4,7 @@ package com.hotsix.titans.jwt;
 import com.hotsix.titans.exception.TokenException;
 import com.hotsix.titans.member.dto.TokenDTO;
 import com.hotsix.titans.member.entity.Member;
-import com.hotsix.titans.member.entity.MemberRole;
+import com.hotsix.titans.member.entity.TeamRole;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -78,14 +78,17 @@ public class TokenProvider {
 		
 		log.info("[TokenProvider] generateTokenDTO Start ===============================");
 		List<String> roles = new ArrayList<>();
-		for(MemberRole memberRole : member.getTeam().getMemberRole()) {
-			roles.add(memberRole.getAuthority().getAuthorityName());
+		for(TeamRole teamRole : member.getTeam().getTeamRole()) {
+			roles.add(teamRole.getAuthority().getAuthorityName());
 		}
 
 		log.info("[TokenProvider] authorities {}", roles); 		// SLF4J에서 제공하는 치환문자 활용(+(덧셈)같은 연산처리 작업 생략)
-		
-		/* 1. 사원번호를 "sub"이라는 클레임으로 토큰에 추가 */
-		Claims claims = Jwts.claims().setSubject(member.getMemberCode());
+
+		/* 0. 로그인한 사용자의 사번을 조회해서 팀이 인사팀인지 확인한다. */
+
+
+		/* 1. 팀번호를 "sub"이라는 클레임으로 토큰에 추가 */
+		Claims claims = Jwts.claims().setSubject(member.getTeam().getTeamCode() + "");  //@@
 		
 		/* 2. 회원의 권한들을 "auth"라는 클레임으로 토큰에 추가 */
 		claims.put(AUTHORITIES_KEY, roles);
@@ -112,36 +115,36 @@ public class TokenProvider {
 		return Jwts.parserBuilder()
 				   .setSigningKey(key).build()
 				   .parseClaimsJws(token)
-				   .getBody()					// payload의 Claims 추출 
+				   .getBody()					// payload의 Claims 추출
 				   .getSubject();				// Claim중에 등록 클레임에 해당하는 sub값 추출(사원 번호)
 	}
-	
+
 	/* 3. AccessToken으로 인증 객체 추출(이 클래스의 5번과 2번에 해당하는 메소드를 사용) */
 	public Authentication getAuthentication(String token) {
-		
+
 		log.info("[TokenProvider] getAuthentication Start ===============================");
-		
+
 		/* 토큰에서 claim들 추출(토큰 복호화) */
 		Claims claims = parseClaims(token);		// 아래 5번에서 만든 메소드
-		
+
 		if (claims.get(AUTHORITIES_KEY) == null) {
 			throw new RuntimeException("권한 정보가 없는 토큰입니다.");
 		}
-		
+
 		/* 클레임에서 권한 정보 가져오기 */
 		Collection<? extends GrantedAuthority> authorities =
 				Arrays.stream(claims.get(AUTHORITIES_KEY).toString().split(","))	// ex: "ROLE_ADMIN"이랑 "ROLE_MEMBER"같은 문자열이 들어있는 문자열 배열
 				      .map(role -> new SimpleGrantedAuthority(role))   				// 문자열 배열에 들어있는 권한 문자열 마다 SimpleGrantedAuthority 객체로 만듦
 				      .collect(Collectors.toList());								// List<SimpleGrantedAuthority>로 만듦
 		log.info("[TokenProvider] authorities {}", authorities);
-		
+
 		UserDetails userDetails = userDetailsService.loadUserByUsername(this.getUserId(token));
-				
+
 		log.info("[TokenProvider] getAuthentication End ===============================");
-		
-		return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());		
+
+		return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
 	}
-	
+
 	/* 4. 토큰 유효성 검사 */
 	public boolean validateToken(String token) {
 		try {
@@ -161,7 +164,7 @@ public class TokenProvider {
 			throw new TokenException("JWT 토큰이 잘못되었습니다.");
 		}
 	}
-	
+
 	/* 5. AccessToken에서 클레임 추출하는 메소드 */
 	private Claims parseClaims(String token) {
 		try {

@@ -25,12 +25,12 @@ public class MemberDTO implements UserDetails {
     private String memberTeam;
     private RankDTO rank;
     private TeamDTO team;
-    private List<MemberRoleDTO> memberRole;
+    private List<TeamRoleDTO> memberRole;
 
     public MemberDTO() {
     }
 
-    public MemberDTO(String memberCode, String memberPassword, String memberName, String memberEmail, String inlinePhone, String memberPhone, String memberAddress, String memberBirth, Date joinDate, String workingStatus, String memberGender, String memberMarried, String memberRank, String memberTeam, RankDTO rank, TeamDTO team, List<MemberRoleDTO> memberRole, Collection<GrantedAuthority> authorities) {
+    public MemberDTO(String memberCode, String memberPassword, String memberName, String memberEmail, String inlinePhone, String memberPhone, String memberAddress, String memberBirth, Date joinDate, String workingStatus, String memberGender, String memberMarried, String memberRank, String memberTeam, RankDTO rank, TeamDTO team, List<TeamRoleDTO> memberRole, Collection<GrantedAuthority> authorities) {
         this.memberCode = memberCode;
         this.memberPassword = memberPassword;
         this.memberName = memberName;
@@ -179,11 +179,11 @@ public class MemberDTO implements UserDetails {
         this.team = team;
     }
 
-    public List<MemberRoleDTO> getMemberRole() {
+    public List<TeamRoleDTO> getMemberRole() {
         return memberRole;
     }
 
-    public void setMemberRole(List<MemberRoleDTO> memberRole) {
+    public void setMemberRole(List<TeamRoleDTO> memberRole) {
         this.memberRole = memberRole;
     }
 

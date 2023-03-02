@@ -17,16 +17,16 @@ public class Team {
 
     @OneToMany
     @JoinColumn(name = "TEAM_CODE")
-    private List<MemberRole> memberRole;
+    private List<TeamRole> teamRole;
 
 
     public Team() {
     }
 
-    public Team(int teamCode, String teamName, List<MemberRole> memberRole) {
+    public Team(int teamCode, String teamName, List<TeamRole> teamRole) {
         this.teamCode = teamCode;
         this.teamName = teamName;
-        this.memberRole = memberRole;
+        this.teamRole = teamRole;
     }
 
     public int getTeamCode() {
@@ -45,12 +45,12 @@ public class Team {
         this.teamName = teamName;
     }
 
-    public List<MemberRole> getMemberRole() {
-        return memberRole;
+    public List<TeamRole> getTeamRole() {
+        return teamRole;
     }
 
-    public void setMemberRole(List<MemberRole> memberRole) {
-        this.memberRole = memberRole;
+    public void setTeamRole(List<TeamRole> teamRole) {
+        this.teamRole = teamRole;
     }
 
     @Override
@@ -58,8 +58,9 @@ public class Team {
         return "Team{" +
                 "teamCode=" + teamCode +
                 ", teamName='" + teamName + '\'' +
-                ", memberRole=" + memberRole +
+                ", memberRole=" + teamRole +
                 '}';
     }
+
 }
 

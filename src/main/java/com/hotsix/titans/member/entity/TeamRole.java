@@ -3,9 +3,9 @@ package com.hotsix.titans.member.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "TBL_MEMBER_ROLE")
-@IdClass(MemberRolePk.class)
-public class MemberRole {
+@Table(name = "TBL_TEAM_ROLE")
+@IdClass(TeamRolePk.class)
+public class TeamRole {
 
 	@Id
 	@Column(name = "TEAM_CODE")
@@ -20,10 +20,10 @@ public class MemberRole {
 	@JoinColumn(name = "AUTHORITY_CODE", insertable = false, updatable = false)
 	private Authority authority;
 
-	public MemberRole() {
+	public TeamRole() {
 	}
 
-	public MemberRole(int teamNo, int authorityCode, Authority authority) {
+	public TeamRole(int teamNo, int authorityCode, Authority authority) {
 		this.teamNo = teamNo;
 		this.authorityCode = authorityCode;
 		this.authority = authority;
