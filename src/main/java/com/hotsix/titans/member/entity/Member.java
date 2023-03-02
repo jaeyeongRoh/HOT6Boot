@@ -1,12 +1,19 @@
 package com.hotsix.titans.member.entity;
 
 
+import lombok.*;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name = "TBL_MEMBER")
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@ToString
 public class Member {
 
     @Id
@@ -43,16 +50,6 @@ public class Member {
     @Column(name = "MEMBER_MARRIED")
     private String memberMarried;       // 사원 결혼 여부
 
-    @ManyToOne
-    @JoinColumn(name = "TEAM_CODE")
-    private Team team;                  // 조직 테이블 다대일 매핑
-
-    @ManyToOne
-    @JoinColumn(name = "RANK_CODE")
-    private Rank rank;                  // 직급 테이블 다대일 매핑
-
-    @OneToMany
-    @JoinColumn(name = "MEMBER_CODE")
-    private List<RetireeHistory> retireeHistory; // 퇴직내역 일대다 매핑
+                  // 조직 테이블 다대일 매핑
 
 }

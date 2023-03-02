@@ -1,4 +1,13 @@
 package com.hotsix.titans.member.repository;
 
-public interface MemberRepository {
+import com.hotsix.titans.member.entity.Member;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
+
+public interface MemberRepository extends JpaRepository<Member, Integer> {
+
+    List<Member> findByWorkingStatus(String workingStatus);
+
+    List<Member> findByMemberNameContaining(String memberName);
 }
