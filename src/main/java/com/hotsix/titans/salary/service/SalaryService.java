@@ -26,7 +26,7 @@ public class SalaryService {
     }
 
     /* 날짜에 따른 급여 목록 조회 */
-    public List<SalaryDTO> selectMySalary(Date paymentDate) {
+    public List<SalaryDTO> checkDate(Date paymentDate) {
 
         List<Salary> salaryList = salaryRepository.findByPaymentDate(paymentDate);
 

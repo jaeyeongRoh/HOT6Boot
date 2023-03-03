@@ -1,5 +1,6 @@
 package com.hotsix.titans.salary.repository;
 
+import com.hotsix.titans.salary.dto.SalaryDTO;
 import com.hotsix.titans.salary.entity.Salary;
 import org.springframework.data.jpa.repository.JpaRepository;
 
