@@ -10,9 +10,9 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
-@Table(name = "TBL_MEMBER_ROLE")
-@IdClass(MemberRolePk.class)
-public class MemberRole {
+@Table(name = "TBL_TEAM_ROLE")
+@IdClass(TeamRolePk.class)
+public class TeamRole {
 
 	@Id
 	@Column(name = "TEAM_CODE")

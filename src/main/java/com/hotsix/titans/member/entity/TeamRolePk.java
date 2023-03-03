@@ -10,9 +10,9 @@ import java.io.Serializable;
 @Getter
 @Setter
 /* 복합키 타입을 정의할 때는 Serializable을 반드시 구현 */
-public class MemberRolePk implements Serializable {
+public class TeamRolePk implements Serializable {
 
-	private int memberNo;
+	private int teamNo;
 	private int authorityCode;
 
 }

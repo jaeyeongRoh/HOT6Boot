@@ -12,7 +12,7 @@ public interface MemberRepository extends JpaRepository<Member, Integer> {
 
     /* jpql과 @Query를 활용한 구문 */
     @Query("SELECT MAX(a.memberCode) FROM Member a")	// jpql에서 엔티티 이름은 대소문자까지 완벽히 일치할 것
-    int maxMemberCode();
+    String maxMemberCode();
 
     /* purchase 도메인 추가하면서 추가한 메소드 */
     @Query("SELECT a.memberCode FROM Member a WHERE a.memberCode = ?1")

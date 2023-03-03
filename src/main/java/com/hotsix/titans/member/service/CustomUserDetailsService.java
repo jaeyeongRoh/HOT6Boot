@@ -2,7 +2,7 @@ package com.hotsix.titans.member.service;
 
 import com.hotsix.titans.member.dto.MemberDTO;
 import com.hotsix.titans.member.entity.Member;
-import com.hotsix.titans.member.entity.MemberRole;
+import com.hotsix.titans.member.entity.TeamRole;
 import com.hotsix.titans.member.repository.MemberRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,8 +45,8 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         /* 엔티티로는 MemberDTO에 추가한 Collection<GrantedAuthority> authorities 속성이 옮겨담아지지 않는다. */
         List<GrantedAuthority> authorities = new ArrayList<>();
-        for(MemberRole memberRole : member.getTeam().getTeamRole()) {
-            String authorityName = memberRole.getAuthority().getAuthorityName();
+        for(TeamRole teamRole : member.getTeamRole()) {
+            String authorityName = teamRole.getAuthority().getAuthorityName();
             authorities.add(new SimpleGrantedAuthority(authorityName));
         }
 

@@ -63,7 +63,7 @@ public class Member {
 
     @OneToMany
     @JoinColumn(name = "TEAM_CODE")
-    private List<MemberRole> memberRole;
+    private List<TeamRole> teamRole;
 
     @OneToMany
     @JoinColumn(name = "MEMBER_CODE")

@@ -41,6 +41,7 @@ public class AuthController {
     @Operation(summary = "로그인 요청", description = "로그인 및 인증이 진행됩니다.", tags = {"AuthController"})
     @PostMapping("/login")
     public ResponseEntity<ResponseDTO> login(@RequestBody MemberDTO memberDTO) {
+        System.out.println("MemberDTO >>>>>>>>>>>>>>>>>>>>>>>>>>>>> " + memberDTO);
         return ResponseEntity
                 .ok()
                 .body(new ResponseDTO(HttpStatus.OK, "로그인 성공", authService.login(memberDTO)));

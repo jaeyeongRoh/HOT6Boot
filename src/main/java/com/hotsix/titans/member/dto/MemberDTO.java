@@ -29,7 +29,7 @@ public class MemberDTO implements UserDetails {
     private String memberMarried;
     private int teamCode;
     private int rankCode;
-    private List<MemberRoleDTO> memberRole;
+    private List<TeamRoleDTO> teamRole;
 
 
 

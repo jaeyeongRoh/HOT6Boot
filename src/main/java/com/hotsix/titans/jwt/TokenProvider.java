@@ -4,7 +4,7 @@ package com.hotsix.titans.jwt;
 import com.hotsix.titans.exception.TokenException;
 import com.hotsix.titans.member.dto.TokenDTO;
 import com.hotsix.titans.member.entity.Member;
-import com.hotsix.titans.member.entity.MemberRole;
+import com.hotsix.titans.member.entity.TeamRole;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -78,8 +78,8 @@ public class TokenProvider {
 		
 		log.info("[TokenProvider] generateTokenDTO Start ===============================");
 		List<String> roles = new ArrayList<>();
-		for(MemberRole memberRole : member.getTeam().getTeamRole()) {
-			roles.add(memberRole.getAuthority().getAuthorityName());
+		for(TeamRole teamRole : member.getTeamRole()) {
+			roles.add(teamRole.getAuthority().getAuthorityName());
 		}
 
 		log.info("[TokenProvider] authorities {}", roles); 		// SLF4J에서 제공하는 치환문자 활용(+(덧셈)같은 연산처리 작업 생략)
@@ -88,7 +88,7 @@ public class TokenProvider {
 
 
 		/* 1. 팀번호를 "sub"이라는 클레임으로 토큰에 추가 */
-		Claims claims = Jwts.claims().setSubject(member.getTeam().getTeamCode() + "");  //@@
+		Claims claims = Jwts.claims().setSubject(member.getMemberCode());
 		
 		/* 2. 회원의 권한들을 "auth"라는 클레임으로 토큰에 추가 */
 		claims.put(AUTHORITIES_KEY, roles);
