@@ -93,8 +93,8 @@ public class AuthService {
 //         *      (하지만 jpql에 의해 앞선 save와 jpql이 flush()로 쿼리와 함께 날아가고 회원이 이미 sequence객체 값
 //         *       증가와 함께 insert가 되 버린다. -> 결론은, maxMemberCode가 현재 가입하는 회원의 번호이다.)
 //         * */
-//        int maxMemberCode = (memberRepository.maxMemberCode()).subString(1, 6);	// jpql을 활용해서 회원번호 max값 추출
-//
+////        int maxMemberCode = Integer.parseInt(memberRepository.maxMemberCode());	// jpql을 활용해서 회원번호 max값 추출
+//        int maxMemberCode = memberRepository.maxMemberCode();
 //        TeamRole registMemberRole = new TeamRole(maxMemberCode, 2);
 //
 //        TeamRole result2 = teamRoleRepository.save(registMemberRole);
@@ -105,5 +105,4 @@ public class AuthService {
 //        log.info("[AuthService] Signup End ==================================");
 //        return memberDTO;
 //    }
-
 }

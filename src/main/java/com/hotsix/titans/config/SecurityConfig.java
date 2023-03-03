@@ -83,7 +83,7 @@ public class SecurityConfig /* extends WebSecurityConfigurerAdapter */ {
 		    	.antMatchers("/auth/**").permitAll()
 		    	.antMatchers("/api/v1/products/**").permitAll()
 		    	.antMatchers("/api/v1/reviews/**").permitAll()
-//		    	.antMatchers("/api/**").hasRole("USER")
+//		    	.antMatchers("/api/**").hasRole("MEMBER")
 //		    	.antMatchers("/api/**").hasRole("ADMIN")
 				.antMatchers("/api/**").hasAnyRole("MEMBER", "ADMIN")
 
