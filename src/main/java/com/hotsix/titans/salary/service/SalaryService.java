@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,19 +25,28 @@ public class SalaryService {
         this.modelMapper = modelMapper;
     }
 
-    public Object selectMySalary(Integer paymentYear, Integer paymentMonth) {
+    /* 날짜에 따른 급여 목록 조회 */
+    public List<SalaryDTO> selectMySalary(Date paymentDate) {
 
-        Salary salary = salaryRepository.findBySalaryCode(paymentYear, paymentMonth);
+        List<Salary> salaryList = salaryRepository.findByPaymentDate(paymentDate);
 
-        return modelMapper.map(salary, Salary.class);
+        System.out.println("salaryList = " + salaryList);
+
+        return salaryList.stream()
+                .map(salary -> modelMapper.map(salary, SalaryDTO.class))
+                .collect(Collectors.toList());
     }
 
     /* 지급 여부에 따른 급여 전체 목록 조회 */
-    public Object selectPaymentYNSalary(String salaryPaymentYn) {
+    public List<SalaryDTO> selectPaymentYNSalary(String paymentsYn) {
 
-        List<Salary> salaryListPaymentYN = salaryRepository.findBySalaryPayment(salaryPaymentYn);
+        List<Salary> salaryListPaymentYN = salaryRepository.findByPaymentsYn(paymentsYn);
 
-        return salaryListPaymentYN.stream().map(salary -> modelMapper.map(salary, SalaryDTO.class)).collect(Collectors.toList());
+        System.out.println("salaryListPaymentYN = " + salaryListPaymentYN);
 
+        return salaryListPaymentYN.stream()
+                .map(salary -> modelMapper.map(salary, SalaryDTO.class))
+                .collect(Collectors.toList());
     }
+
 }

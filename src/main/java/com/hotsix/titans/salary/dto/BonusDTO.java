@@ -12,7 +12,6 @@ import java.util.Date;
 public class BonusDTO {
 
     private String bonusCode;
-    private String salaryCode;
     private String bonusType;
     private Long bonusSalary;
     private Date paymentDate;

@@ -39,11 +39,8 @@ public class Salary {
     @Column(name = "NATIONAL_TAX")
     private Long nationalTax;
 
-    @Column(name = "PAYMENT_YEAR")
-    private Date paymentYear;
-
-    @Column(name = "PAYMENT_MONTH")
-    private Date paymentMonth;
+    @Column(name = "PAYMENT_DATE")
+    private Date paymentDate;
 
     @Column(name = "SALARY_PAYMENTS_YN")
     private String paymentsYn;
@@ -52,9 +49,9 @@ public class Salary {
     @JoinColumn(name = "TAX_CODE")
     private Tax tax;
 
-    @OneToMany
+    @OneToOne
     @JoinColumn(name = "BONUS_CODE")
-    private List<Bonus> bonusList;
+    private Bonus bonus;
 
     @ManyToOne
     @JoinColumn(name = "MEMBER_CODE")
@@ -63,7 +60,7 @@ public class Salary {
     public Salary() {
     }
 
-    public Salary(String salaryCode, Long basicSalary, Long beforeSalary, Long afterSalary, Long mealSalary, Long healthTax, Long nationalTax, Date paymentYear, Date paymentMonth, String paymentsYn, Tax tax, List<Bonus> bonusList, Member member) {
+    public Salary(String salaryCode, Long basicSalary, Long beforeSalary, Long afterSalary, Long mealSalary, Long healthTax, Long nationalTax, Date paymentDate, String paymentsYn, Tax tax, Bonus bonus, Member member) {
         this.salaryCode = salaryCode;
         this.basicSalary = basicSalary;
         this.beforeSalary = beforeSalary;
@@ -71,11 +68,10 @@ public class Salary {
         this.mealSalary = mealSalary;
         this.healthTax = healthTax;
         this.nationalTax = nationalTax;
-        this.paymentYear = paymentYear;
-        this.paymentMonth = paymentMonth;
+        this.paymentDate = paymentDate;
         this.paymentsYn = paymentsYn;
         this.tax = tax;
-        this.bonusList = bonusList;
+        this.bonus = bonus;
         this.member = member;
     }
 
@@ -135,20 +131,12 @@ public class Salary {
         this.nationalTax = nationalTax;
     }
 
-    public Date getPaymentYear() {
-        return paymentYear;
+    public Date getPaymentDate() {
+        return paymentDate;
     }
 
-    public void setPaymentYear(Date paymentYear) {
-        this.paymentYear = paymentYear;
-    }
-
-    public Date getPaymentMonth() {
-        return paymentMonth;
-    }
-
-    public void setPaymentMonth(Date paymentMonth) {
-        this.paymentMonth = paymentMonth;
+    public void setPaymentDate(Date paymentDate) {
+        this.paymentDate = paymentDate;
     }
 
     public String getPaymentsYn() {
@@ -167,12 +155,12 @@ public class Salary {
         this.tax = tax;
     }
 
-    public List<Bonus> getBonusList() {
-        return bonusList;
+    public Bonus getBonus() {
+        return bonus;
     }
 
-    public void setBonusList(List<Bonus> bonusList) {
-        this.bonusList = bonusList;
+    public void setBonus(Bonus bonus) {
+        this.bonus = bonus;
     }
 
     public Member getMember() {
@@ -193,11 +181,10 @@ public class Salary {
                 ", mealSalary=" + mealSalary +
                 ", healthTax=" + healthTax +
                 ", nationalTax=" + nationalTax +
-                ", paymentYear=" + paymentYear +
-                ", paymentMonth=" + paymentMonth +
+                ", paymentDate=" + paymentDate +
                 ", paymentsYn='" + paymentsYn + '\'' +
                 ", tax=" + tax +
-                ", bonusList=" + bonusList +
+                ", bonus=" + bonus +
                 ", member=" + member +
                 '}';
     }
