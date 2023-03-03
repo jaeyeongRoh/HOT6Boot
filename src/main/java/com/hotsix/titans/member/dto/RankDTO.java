@@ -7,10 +7,10 @@ import lombok.*;
 @ToString
 @Getter
 @Setter
-public class AuthorityDTO {
+public class RankDTO {
 
-    private int code;
-    private String name;
-
+    private int rankCode;
+    private String rankName;
+    private int hourlyMoney;
 
 }

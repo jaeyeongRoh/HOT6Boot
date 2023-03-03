@@ -1,43 +1,81 @@
 package com.hotsix.titans.member.dto;
 
-import com.hotsix.titans.member.entity.RetireeHistory;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 @Getter
 @Setter
-@ToString
-public class MemberDTO {
+public class MemberDTO implements UserDetails {
 
-    private String MemberCode;          // 사원 번호
+    private String memberCode;
+    private String memberPassword;
+    private String memberName;
+    private String memberEmail;
+    private String inlinePhone;
+    private String memberPhone;
+    private String memberAddress;
+    private String memberBirth;
+    private Date joinDate;
+    private String workingStatus;
+    private String memberGender;
+    private String memberMarried;
+    private int teamCode;
+    private int rankCode;
+    private List<TeamRoleDTO> teamRole;
 
-    private String memberName;          // 사원 이름
 
-    private String memberEmail;         // 사원 이메일
 
-    private String inlinePhone;         // 내선 번호
 
-    private String memberPhone;         // 사원 번호
 
-    private String memberAddress;       // 사원 주소
 
-    private String memberBirth;         // 사원 생일
 
-    private Date joinDate;              // 입사일
+    /* 이하 코드들을 UserDetails로부터 물려받는 추상메소드들을 오버라이딩 한 것이다.(필요한 것만 작성하자) */
+    /* MemberDTO는 Member와 매핑 될 DTO이자 UserDetails로써 속성을 추가로 가짐 */
+    private Collection<GrantedAuthority> authorities;
 
-    private String workingStatus;       // 재직 여부
+    /* setter 추가할 것 */
+    public void setAuthorities(Collection<GrantedAuthority> authorities) {
+        this.authorities = authorities;
+    }
 
-    private String memberGender;        // 사원 성별
-
-    private String memberMarried;       // 사원 결혼 여부
-
-    private List<RetireeHistory> retireeHistory; // 퇴직내역 일대다 매핑
-
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return this.authorities;
+    }
+    @Override
+    public String getPassword() {
+        return this.memberPassword;
+    }
+    @Override
+    public String getUsername() {
+        return this.memberCode;
+    }
+    @Override
+    public boolean isAccountNonExpired() {
+        // TODO Auto-generated method stub
+        return false;
+    }
+    @Override
+    public boolean isAccountNonLocked() {
+        // TODO Auto-generated method stub
+        return false;
+    }
+    @Override
+    public boolean isCredentialsNonExpired() {
+        // TODO Auto-generated method stub
+        return false;
+    }
+    @Override
+    public boolean isEnabled() {
+        // TODO Auto-generated method stub
+        return false;
+    }
 }
