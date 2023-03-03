@@ -7,18 +7,13 @@ import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
-@AllArgsConstructor
 @NoArgsConstructor
-@ToString
+@AllArgsConstructor
 @Getter
 @Setter
+@ToString
 @Entity
 @Table(name = "TBL_MEMBER")
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
-@ToString
 public class Member {
 
     @Id
@@ -62,9 +57,6 @@ public class Member {
 //    @JoinColumn(name = "TEAM_CODE")
 //    private Team team;                  // 조직 테이블 다대일 매핑
 
-//    @ManyToOne
-//    @JoinColumn(name = "RANK_CODE")
-//    private Rank rank;                  // 직급 테이블 다대일 매핑
     @ManyToOne
     @JoinColumn(name = "RANK_CODE")
     private Rank rank;
