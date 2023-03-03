@@ -48,6 +48,8 @@ public class MessageService {
         Message message = messageRepository.findByMessageCode(messageCode);
         log.info("[MessageService] {}", message);
 
+        System.out.println("message = " + message);
+        
         return modelMapper.map(message,MessageDTO.class);
     }
 

@@ -16,7 +16,7 @@ import java.util.List;
 @ToString
 public class MemberDTO {
 
-    private String MemberCode;          // 사원 번호
+    private String memberCode;          // 사원 번호
 
     private String memberName;          // 사원 이름
 

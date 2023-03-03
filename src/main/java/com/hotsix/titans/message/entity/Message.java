@@ -10,6 +10,11 @@ import java.util.List;
 
 @Entity
 @Table(name = "TBL_MESSAGE")
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+@ToString
 public class Message {
 
     @Id
