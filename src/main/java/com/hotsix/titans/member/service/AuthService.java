@@ -1,13 +1,11 @@
 package com.hotsix.titans.member.service;
 
 
-import com.hotsix.titans.exception.DuplicatedMemberEmailException;
 import com.hotsix.titans.exception.LoginFailedException;
 import com.hotsix.titans.jwt.TokenProvider;
 import com.hotsix.titans.member.dto.MemberDTO;
 import com.hotsix.titans.member.dto.TokenDTO;
 import com.hotsix.titans.member.entity.Member;
-import com.hotsix.titans.member.entity.TeamRole;
 import com.hotsix.titans.member.repository.MemberRepository;
 import com.hotsix.titans.member.repository.TeamRoleRepository;
 import org.modelmapper.ModelMapper;
@@ -16,8 +14,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
 
 @Service
 public class AuthService {

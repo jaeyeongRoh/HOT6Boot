@@ -4,7 +4,7 @@ package com.hotsix.titans.jwt;
 import com.hotsix.titans.exception.TokenException;
 import com.hotsix.titans.member.dto.TokenDTO;
 import com.hotsix.titans.member.entity.Member;
-import com.hotsix.titans.member.entity.TeamRole;
+import com.hotsix.titans.member.entity.MemberRole;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -78,8 +78,8 @@ public class TokenProvider {
 		
 		log.info("[TokenProvider] generateTokenDTO Start ===============================");
 		List<String> roles = new ArrayList<>();
-		for(TeamRole teamRole : member.getTeam().getTeamRole()) {
-			roles.add(teamRole.getAuthority().getAuthorityName());
+		for(MemberRole memberRole : member.getTeam().getTeamRole()) {
+			roles.add(memberRole.getAuthority().getAuthorityName());
 		}
 
 		log.info("[TokenProvider] authorities {}", roles); 		// SLF4J에서 제공하는 치환문자 활용(+(덧셈)같은 연산처리 작업 생략)
