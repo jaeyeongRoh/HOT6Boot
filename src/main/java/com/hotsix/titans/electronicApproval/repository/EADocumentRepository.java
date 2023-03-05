@@ -5,8 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface EADocumentRepository extends JpaRepository <Object, Integer>{
+public interface EADocumentRepository extends JpaRepository <EADocument, Integer>{
 
-    List<EADocument> findByEADocument();
+    List<EADocument> findAllBy();
 
 }

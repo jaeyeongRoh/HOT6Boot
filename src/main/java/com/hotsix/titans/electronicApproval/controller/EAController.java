@@ -1,9 +1,6 @@
 package com.hotsix.titans.electronicApproval.controller;
 
 import com.hotsix.titans.commons.ResponseDTO;
-import com.hotsix.titans.electronicApproval.dto.EADocumentAllDTO;
-import com.hotsix.titans.electronicApproval.dto.EADocumentDTO;
-import com.hotsix.titans.electronicApproval.entity.EADocument;
 import com.hotsix.titans.electronicApproval.service.EAService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,13 +20,16 @@ public class EAController {
     }
 
 
-    /**
-     * 모든 전자결재 문서 가져오기
-     */
-//    @GetMapping("/eaList")
-//    public ResponseEntity<EADocumentDTO> selectAllDocument(){
-//        return ResponseEntity.ok().body(new ResponseDTO((HttpStatus.OK,"전자결재 전체 목록 조회성공", eaService.selectAllDocument())
-//    }
+    @GetMapping("/eaList")
+    public ResponseEntity<ResponseDTO> selectAllDocument(){
+
+        ResponseDTO responseDTO = new ResponseDTO();
+        System.out.println("테스트1");
+        responseDTO.setData(eaService.selectAllDocument());
+        System.out.println("테스트3");
+        System.out.println(responseDTO);
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK,"전자결재 전체 목록 조회성공", responseDTO));
+    }
 
 
 

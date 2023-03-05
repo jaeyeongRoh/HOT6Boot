@@ -23,7 +23,9 @@ public class EAService {
     }
 
     public Object selectAllDocument() {
-        List<EADocument> eaList = eaDocumentRepository.findByEADocument();
+        System.out.println("테스트2");
+        List<EADocument> eaList = eaDocumentRepository.findAllBy();
+        System.out.println("테스트3");
         return eaList.stream().map(eaDocument -> modelMapper.map(eaDocument, EADocumentDTO.class)).collect(Collectors.toList());
     }
 }
