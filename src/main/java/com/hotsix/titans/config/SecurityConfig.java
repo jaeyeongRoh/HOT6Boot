@@ -83,10 +83,10 @@ public class SecurityConfig /* extends WebSecurityConfigurerAdapter */ {
 		    	.antMatchers("/auth/**").permitAll()
 				.antMatchers("/api/v1/annual/**").permitAll()
 		    	.antMatchers("/api/v1/reviews/**").permitAll()
+				.antMatchers("/api/v1/members/**").permitAll()
 //		    	.antMatchers("/api/**").hasRole("MEMBER")
 //		    	.antMatchers("/api/**").hasRole("ADMIN")
 				.antMatchers("/api/**").hasAnyRole("MEMBER", "ADMIN")
-
 //		    	.anyRequest().permitAll();	// 어떤 요청이든 허용 가능, 시큐리티를 활용한 로그인이 모두 완성 되지 않았을 때 활용할 것
 		    .and()
 
