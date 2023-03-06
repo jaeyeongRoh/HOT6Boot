@@ -3,9 +3,6 @@ package com.hotsix.titans.member.dto;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -24,9 +21,8 @@ public class MemberDTO implements UserDetails {
     private String inlinePhone;
     private String memberPhone;
     private String memberAddress;
-    @Temporal(TemporalType.DATE)
     private Date memberBirth;
-    private String joinDate;
+    private Date joinDate;
     private String workingStatus;
     private String memberGender;
     private String memberMarried;
