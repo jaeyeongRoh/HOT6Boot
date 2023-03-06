@@ -1,23 +1,27 @@
 package com.hotsix.titans.salary.entity;
 
 import com.hotsix.titans.member.entity.Member;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.List;
+import java.sql.Date;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 @Entity
 @Table(name = "TBL_SALARY")
-//@SequenceGenerator(
-//    name = "SALARY_SEQ_GENERATOR",
-//    sequenceName = "SEQ_SALARY",
-//    initialValue = 1,
-//    allocationSize = 50
-//)
 public class Salary {
 
     @Id
-//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_SALARY")
+//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "salary_generator")
+//    @GenericGenerator(name = "salary_generator", strategy = "com.hotsix.titan.generator.SalaryGenerator")
     @Column(name = "SALARY_CODE")
     private String salaryCode;              // 급여 코드
 
@@ -32,6 +36,9 @@ public class Salary {
 
     @Column(name = "MEAL_SALARY")
     private Long mealSalary;                // 식대
+
+    @Column(name = "INCOM_TAX")
+    private Long incomTax;
 
     @Column(name = "HEALTH_TAX")
     private Long healthTax;
@@ -57,120 +64,6 @@ public class Salary {
     @JoinColumn(name = "MEMBER_CODE")
     private Member member;
 
-    public Salary() {
-    }
-
-    public Salary(String salaryCode, Long basicSalary, Long beforeSalary, Long afterSalary, Long mealSalary, Long healthTax, Long nationalTax, Date paymentDate, String paymentsYn, Tax tax, Bonus bonus, Member member) {
-        this.salaryCode = salaryCode;
-        this.basicSalary = basicSalary;
-        this.beforeSalary = beforeSalary;
-        this.afterSalary = afterSalary;
-        this.mealSalary = mealSalary;
-        this.healthTax = healthTax;
-        this.nationalTax = nationalTax;
-        this.paymentDate = paymentDate;
-        this.paymentsYn = paymentsYn;
-        this.tax = tax;
-        this.bonus = bonus;
-        this.member = member;
-    }
-
-    public String getSalaryCode() {
-        return salaryCode;
-    }
-
-    public void setSalaryCode(String salaryCode) {
-        this.salaryCode = salaryCode;
-    }
-
-    public Long getBasicSalary() {
-        return basicSalary;
-    }
-
-    public void setBasicSalary(Long basicSalary) {
-        this.basicSalary = basicSalary;
-    }
-
-    public Long getBeforeSalary() {
-        return beforeSalary;
-    }
-
-    public void setBeforeSalary(Long beforeSalary) {
-        this.beforeSalary = beforeSalary;
-    }
-
-    public Long getAfterSalary() {
-        return afterSalary;
-    }
-
-    public void setAfterSalary(Long afterSalary) {
-        this.afterSalary = afterSalary;
-    }
-
-    public Long getMealSalary() {
-        return mealSalary;
-    }
-
-    public void setMealSalary(Long mealSalary) {
-        this.mealSalary = mealSalary;
-    }
-
-    public Long getHealthTax() {
-        return healthTax;
-    }
-
-    public void setHealthTax(Long healthTax) {
-        this.healthTax = healthTax;
-    }
-
-    public Long getNationalTax() {
-        return nationalTax;
-    }
-
-    public void setNationalTax(Long nationalTax) {
-        this.nationalTax = nationalTax;
-    }
-
-    public Date getPaymentDate() {
-        return paymentDate;
-    }
-
-    public void setPaymentDate(Date paymentDate) {
-        this.paymentDate = paymentDate;
-    }
-
-    public String getPaymentsYn() {
-        return paymentsYn;
-    }
-
-    public void setPaymentsYn(String paymentsYn) {
-        this.paymentsYn = paymentsYn;
-    }
-
-    public Tax getTax() {
-        return tax;
-    }
-
-    public void setTax(Tax tax) {
-        this.tax = tax;
-    }
-
-    public Bonus getBonus() {
-        return bonus;
-    }
-
-    public void setBonus(Bonus bonus) {
-        this.bonus = bonus;
-    }
-
-    public Member getMember() {
-        return member;
-    }
-
-    public void setMember(Member member) {
-        this.member = member;
-    }
-
     @Override
     public String toString() {
         return "Salary{" +
@@ -179,6 +72,7 @@ public class Salary {
                 ", beforeSalary=" + beforeSalary +
                 ", afterSalary=" + afterSalary +
                 ", mealSalary=" + mealSalary +
+                ", incomTax=" + incomTax +
                 ", healthTax=" + healthTax +
                 ", nationalTax=" + nationalTax +
                 ", paymentDate=" + paymentDate +

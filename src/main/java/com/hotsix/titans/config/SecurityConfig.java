@@ -29,8 +29,8 @@ public class SecurityConfig /* extends WebSecurityConfigurerAdapter */ {
 
 	@Autowired
 	public SecurityConfig(TokenProvider tokenProvider
-			            , JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint
-			            , JwtAccessDeniedHandler jwtAccessDeniedHandler) {
+			, JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint
+			, JwtAccessDeniedHandler jwtAccessDeniedHandler) {
 		this.tokenProvider = tokenProvider;
 		this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
 		this.jwtAccessDeniedHandler = jwtAccessDeniedHandler;
@@ -46,7 +46,7 @@ public class SecurityConfig /* extends WebSecurityConfigurerAdapter */ {
 	@Bean
 	public WebSecurityCustomizer webSecurityCustomizer() {
 		return (web) -> web.ignoring().antMatchers("/css/**", "/js/**", "/images/**",
-				                                   "/lib/**", "/productimgs/**");
+				"/lib/**", "/productimgs/**");
 	}
 
 //	@Override
@@ -67,38 +67,39 @@ public class SecurityConfig /* extends WebSecurityConfigurerAdapter */ {
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
 		http.csrf().disable()
-			.exceptionHandling()
+				.exceptionHandling()
 
-			/* 기본 시큐리티 설정에서 JWT 토큰과 관련된 유효성과 권한 체크용 설정 */
-			.authenticationEntryPoint(jwtAuthenticationEntryPoint)	// 유효한 자격 증명 없을 시(401)
-			.accessDeniedHandler(jwtAccessDeniedHandler)			// 필요한 권한 없이 접근 시(403)
-		    .and()
-		    .authorizeRequests()
-		    	.antMatchers("/").authenticated()
-		    	.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()		// cors를 위해 preflight 요청 처리용 options 요청 허용
-		    																			// preflight request란?
-		    																			// 요청 할 url이 외부 도메인일 경우 웹 브라우저에서 자체 실행되며
-		    																			// options 메소드로 사전 요청을 보내게 된다.
-		    																			// 사전에 요청이 안전한지 확인하기 위함(유효한지 서버에 미리 파악할 수 있도록 보내는 수단이다.)
-		    	.antMatchers("/auth/**").permitAll()
-		    	.antMatchers("/api/v1/products/**").permitAll()
-		    	.antMatchers("/api/v1/reviews/**").permitAll()
+				/* 기본 시큐리티 설정에서 JWT 토큰과 관련된 유효성과 권한 체크용 설정 */
+				.authenticationEntryPoint(jwtAuthenticationEntryPoint)	// 유효한 자격 증명 없을 시(401)
+				.accessDeniedHandler(jwtAccessDeniedHandler)			// 필요한 권한 없이 접근 시(403)
+				.and()
+				.authorizeRequests()
+				.antMatchers("/").authenticated()
+				.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()		// cors를 위해 preflight 요청 처리용 options 요청 허용
+				// preflight request란?
+				// 요청 할 url이 외부 도메인일 경우 웹 브라우저에서 자체 실행되며
+				// options 메소드로 사전 요청을 보내게 된다.
+				// 사전에 요청이 안전한지 확인하기 위함(유효한지 서버에 미리 파악할 수 있도록 보내는 수단이다.)
+				.antMatchers("/auth/**").permitAll()
+				.antMatchers("/api/v1/products/**").permitAll()
+				.antMatchers("/api/v1/reviews/**").permitAll()
+				.antMatchers("/api/v1/salary/**").permitAll()
 //		    	.antMatchers("/api/**").hasRole("MEMBER")
 //		    	.antMatchers("/api/**").hasRole("ADMIN")
 				.antMatchers("/api/**").hasAnyRole("MEMBER", "ADMIN")
 
 //		    	.anyRequest().permitAll();	// 어떤 요청이든 허용 가능, 시큐리티를 활용한 로그인이 모두 완성 되지 않았을 때 활용할 것
-		    .and()
+				.and()
 
-		    	/* 세션 인증 방식을 쓰지 않겠다는 설정 */
-		    	.sessionManagement()
-		    	.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-		    .and()
-		    	.cors()
-		    .and()
+				/* 세션 인증 방식을 쓰지 않겠다는 설정 */
+				.sessionManagement()
+				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+				.and()
+				.cors()
+				.and()
 
-		    	/* jwt 토큰 방식을 쓰겠다는 설정 */
-		    	.apply(new JwtSecurityConfig(tokenProvider));
+				/* jwt 토큰 방식을 쓰겠다는 설정 */
+				.apply(new JwtSecurityConfig(tokenProvider));
 		return http.build();
 	}
 
@@ -110,8 +111,8 @@ public class SecurityConfig /* extends WebSecurityConfigurerAdapter */ {
 		configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
 		configuration.setAllowedMethods(Arrays.asList("GET", "PUT", "POST", "DELETE"));
 		configuration.setAllowedHeaders(Arrays.asList("Access-Control-Allow-Origin", "Content-type"
-													, "Access-Control-Allow-Headers", "Authorization"
-													, "X-Requested-With"));
+				, "Access-Control-Allow-Headers", "Authorization"
+				, "X-Requested-With"));
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", configuration);
 		return source;
@@ -119,7 +120,3 @@ public class SecurityConfig /* extends WebSecurityConfigurerAdapter */ {
 
 
 }
-
-
-
-

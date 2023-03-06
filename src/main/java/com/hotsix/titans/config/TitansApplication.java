@@ -8,10 +8,8 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan("com.hotsix.titans")
 public class TitansApplication {
 
-
     public static void main(String[] args) {
         SpringApplication.run(TitansApplication.class, args);
-
     }
 
 }
