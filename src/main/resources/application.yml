@@ -2,7 +2,6 @@
 server:
   port: 8888
 
-
 spring:
   datasource:
     driver-class-name: oracle.jdbc.driver.OracleDriver
@@ -28,8 +27,6 @@ spring:
       hibernate:
         '[format_sql]': true
 
-
-
 jwt:
   secret: i2KAFlcHeoKfMAEdBCIpMEP3k5eVazNsA5naytmtrYIjUxNuz9QyitYJvHLaYK/u9iC9qTYNQwAcu0i+ryQjaA==
 
@@ -38,9 +35,7 @@ springdoc:
   swagger-ui:
     path: /swagger-ui.html
 
-
 image:
-
 
 #  add-resource-locations: classpath:/static/productimgs/
 #  add-resource-handler: /productimgs/**
