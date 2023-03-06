@@ -17,7 +17,6 @@ import javax.persistence.*;
 @Table(name = "TBL_LEAVE_CATEGORY")
 public class LeaveCategory {
 
-
     @Id
     @Column(name = "LEAVE_CATEGORY_CODE")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_LEAVE_CATEGORY_CODE")
