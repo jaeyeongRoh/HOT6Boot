@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -73,10 +74,27 @@ public class EAService {
 
     @Transactional
     public Object insertLeave(EALeaveDTO eaLeaveDTO) {
-        System.out.println("dd");
-        EALeave eaLeave = modelMapper.map(eaLeaveDTO, EALeave.class);
-        System.out.println("dd");
-        eaLeaveRepository.save(eaLeave);
+        EALeave eaLeave = new EALeave();
+        eaLeave.setEaCode(eaLeaveDTO.getEaCode());
+        eaLeave.setMemberDraft(eaLeaveDTO.getMemberDraft());
+        eaLeave.setMemberMiddleSigner(eaLeaveDTO.getMemberMiddleSigner());
+        eaLeave.setMemberFinalSigner(eaLeaveDTO.getMemberFinalSigner());
+        eaLeave.setEaSubject(eaLeaveDTO.getEaSubject());
+        eaLeave.setEaDetail(eaLeaveDTO.getEaDetail());
+        eaLeave.setEaCategory(eaLeaveDTO.getEaCategory());
+        eaLeave.setEaType(eaLeaveDTO.getEaType());
+        eaLeave.setEaDate(eaLeaveDTO.getEaDate());
+        eaLeave.setEaDraftStatus(eaLeaveDTO.getEaDraftStatus());
+        eaLeave.setEaMiddleStatus(eaLeaveDTO.getEaMiddleStatus());
+        eaLeave.setEaMiddleComment(eaLeaveDTO.getEaMiddleComment());
+        eaLeave.setEaFinalStatus(eaLeaveDTO.getEaFinalStatus());
+        eaLeave.setEaFinalComment(eaLeaveDTO.getEaFinalComment());
+        eaLeave.setEaDocuStatus(eaLeaveDTO.getEaDocuStatus());
+        eaLeave.setIsDeleted(eaLeaveDTO.getIsDeleted());
+        eaLeave.setLeaveStartDate(eaLeaveDTO.getLeaveStartDate());
+        eaLeave.setLeaveEndDate(eaLeaveDTO.getLeaveEndDate());
+
+        eaLeaveRepository.saveAndFlush(eaLeave);
         int result = 1;
         return result;
     }

@@ -59,8 +59,8 @@ public class EAController {
     }
 
 
-    @PostMapping("/eaLeave/{input}")
-    public ResponseEntity<ResponseDTO> insertLeave(@PathVariable String input){
+    @PostMapping("/eaLeave/insert")
+    public ResponseEntity<ResponseDTO> insertLeave(){
         ResponseDTO responseDTO = new ResponseDTO();
 
         EALeaveDTO eaLeaveDTO = new EALeaveDTO();
@@ -69,7 +69,7 @@ public class EAController {
         eaLeaveDTO.setMemberMiddleSigner("150006");
         eaLeaveDTO.setMemberFinalSigner("160009");
         eaLeaveDTO.setEaSubject("휴가신청합니다");
-        eaLeaveDTO.setEaDetail("휴가신청합니다" + input);
+        eaLeaveDTO.setEaDetail("휴가신청합니다");
         eaLeaveDTO.setEaCategory("연차");
         eaLeaveDTO.setEaType("A");
         eaLeaveDTO.setEaDate(LocalDate.now());
