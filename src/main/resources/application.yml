@@ -27,9 +27,8 @@ spring:
     properties:
       hibernate:
         '[format_sql]': true
-
-
-
+        id:
+          new_generator_mappings=true:
 jwt:
   secret: i2KAFlcHeoKfMAEdBCIpMEP3k5eVazNsA5naytmtrYIjUxNuz9QyitYJvHLaYK/u9iC9qTYNQwAcu0i+ryQjaA==
 
@@ -53,3 +52,6 @@ image:
 logging:
   level:
     root: info
+
+
+

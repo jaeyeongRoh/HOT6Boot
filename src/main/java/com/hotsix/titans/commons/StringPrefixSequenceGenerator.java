@@ -19,7 +19,7 @@ public class StringPrefixSequenceGenerator extends SequenceStyleGenerator {
 
     @Override
     public Serializable generate(SharedSessionContractImplementor session, Object object) throws HibernateException {
-        return valuePrefix + super.generate(session, object).toString();
+        return valuePrefix + super.generate(session, object);
     }
 
     @Override
