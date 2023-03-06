@@ -39,7 +39,7 @@ public class Member {
     private String memberAddress;       // 사원 주소
 
     @Column(name = "MEMBER_BIRTH")
-    private String memberBirth;         // 사원 생일
+    private Date memberBirth;         // 사원 생일
 
     @Column(name = "JOIN_DATE")
     private Date joinDate;              // 입사일
@@ -53,9 +53,9 @@ public class Member {
     @Column(name = "MEMBER_MARRIED")
     private String memberMarried;       // 사원 결혼 여부
 
-//    @ManyToOne
-//    @JoinColumn(name = "TEAM_CODE")
-//    private Team team;                  // 조직 테이블 다대일 매핑
+    @ManyToOne
+    @JoinColumn(name = "TEAM_CODE")
+    private Team team;                  // 조직 테이블 다대일 매핑
 
     @ManyToOne
     @JoinColumn(name = "RANK_CODE")
