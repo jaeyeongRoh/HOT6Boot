@@ -2,8 +2,12 @@ package com.hotsix.titans.attendanceManagement.controller;
 
 import com.hotsix.titans.attendanceManagement.dto.LeaveCategoryAndLeavePaymentHistoryDTO;
 import com.hotsix.titans.attendanceManagement.dto.LeaveCategoryDTO;
+import com.hotsix.titans.attendanceManagement.dto.LeavePaymentHistoryDTO;
+import com.hotsix.titans.attendanceManagement.entity.LeavePaymentHistory;
+import com.hotsix.titans.attendanceManagement.repository.LeavePaymentHistoryRepository;
 import com.hotsix.titans.attendanceManagement.service.LeaveService;
 import com.hotsix.titans.commons.ResponseDTO;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,5 +47,13 @@ public class LeaveController {
     public ResponseEntity<ResponseDTO> deleteLeaveCategory(@PathVariable String leaveCategoryCode) {
 
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK,"휴가기준 삭제 성공",leaveService.deleteLeaveCategory(leaveCategoryCode)));
+    }
+
+    @GetMapping("/mypage/main/{memberCode}")
+    public ResponseEntity<ResponseDTO> selectMyMemberInfo(@PathVariable String memberCode) {
+
+        System.out.println("ddddddd" + memberCode);
+        List<LeavePaymentHistoryDTO> leavePaymentHistoryList = leaveService.selectMyLeaveInfo(memberCode);
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK,"조회성공",(Object) leavePaymentHistoryList));
     }
 }
