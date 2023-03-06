@@ -21,13 +21,15 @@ spring:
 
   ## jpa config
   jpa:
+    hibernate:
+      ddl-auto: none
     generate-ddl: false
     show-sql: true
     database: oracle
     properties:
       hibernate:
-        '[format_sql]': true
 
+        '[format_sql]': true
 
 
 jwt:

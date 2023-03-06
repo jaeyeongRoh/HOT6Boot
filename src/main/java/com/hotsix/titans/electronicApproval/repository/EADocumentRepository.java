@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface EADocumentRepository extends JpaRepository <EADocument, Integer>{
 
-    List<EADocument> findAllBy();
+    List<EADocument> findAll();
+
+    EADocument findByEaCode(String eaCode);
 
 }

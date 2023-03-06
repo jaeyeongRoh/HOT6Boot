@@ -11,7 +11,7 @@ import java.sql.Date;
 @Entity
 @Table(name="TBL_EA")
 @Inheritance(strategy = InheritanceType.JOINED)
-//@DiscriminatorColumn(name="DTYPE")
+@DiscriminatorColumn(name="EA_TYPE")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -33,6 +33,9 @@ public class EADocument {
 
     @Column(name = "EA_SUBJECT")
     private String eaSubject;
+
+    @Column(name = "EA_TYPE")
+    private String eaType;
 
     @Column(name = "EA_DETAIL")
     private String eaDetail;
@@ -61,23 +64,4 @@ public class EADocument {
     @Column(name = "EA_DOCU_STATUS")
     private Integer eaDocuStatus;
 
-    @Override
-    public String toString() {
-        return "EADocument{" +
-                "eaCode='" + eaCode + '\'' +
-                ", memberDraft='" + memberDraft + '\'' +
-                ", memberMiddleSigner='" + memberMiddleSigner + '\'' +
-                ", memberFinalSigner='" + memberFinalSigner + '\'' +
-                ", eaSubject='" + eaSubject + '\'' +
-                ", eaDetail='" + eaDetail + '\'' +
-                ", eaCategory='" + eaCategory + '\'' +
-                ", eaDate=" + eaDate +
-                ", eaDraftStatus=" + eaDraftStatus +
-                ", eaMiddleStatus=" + eaMiddleStatus +
-                ", eaMiddleComment=" + eaMiddleComment +
-                ", eaFinalStatus=" + eaFinalStatus +
-                ", eaFinalComment=" + eaFinalComment +
-                ", eaDocuStatus=" + eaDocuStatus +
-                '}';
-    }
 }

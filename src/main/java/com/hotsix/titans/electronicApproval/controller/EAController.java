@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,17 +20,36 @@ public class EAController {
         this.eaService = eaService;
     }
 
+    @GetMapping("/eaDocument/{eaCode}")
+    public ResponseEntity<ResponseDTO> selectDocumentCode(@PathVariable String eaCode){
+        ResponseDTO responseDTO = new ResponseDTO();
+        responseDTO.setData(eaService.selectDocumentCode(eaCode));
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK,"전자결재 전체 목록 조회성공", responseDTO));
+    }
 
     @GetMapping("/eaList")
     public ResponseEntity<ResponseDTO> selectAllDocument(){
-
         ResponseDTO responseDTO = new ResponseDTO();
-        System.out.println("테스트1");
         responseDTO.setData(eaService.selectAllDocument());
-        System.out.println("테스트3");
-        System.out.println(responseDTO);
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK,"전자결재 전체 목록 조회성공", responseDTO));
     }
+
+    @GetMapping("/eaLeaveList")
+    public ResponseEntity<ResponseDTO> selectAllLeave(){
+        ResponseDTO responseDTO = new ResponseDTO();
+        responseDTO.setData(eaService.selectAllLeave());
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK,"전자결재 전체 목록 조회성공", responseDTO));
+    }
+
+
+
+
+
+
+
+
+
+
 
 
 
