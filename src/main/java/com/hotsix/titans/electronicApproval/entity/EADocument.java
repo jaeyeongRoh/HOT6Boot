@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.time.LocalDate;
 
 @Entity
 @Table(name="TBL_EA")
@@ -44,7 +45,7 @@ public class EADocument {
     private String eaCategory;
 
     @Column(name = "EA_DATE")
-    private Date eaDate;
+    private LocalDate eaDate;
 
     @Column(name = "EA_DRAFT_STATUS")
     private Integer eaDraftStatus;
@@ -53,15 +54,18 @@ public class EADocument {
     private Integer eaMiddleStatus;
 
     @Column(name = "EA_MIDDLE_COMMENT")
-    private Integer eaMiddleComment;
+    private String eaMiddleComment;
 
     @Column(name = "EA_FINAL_STATUS")
     private Integer eaFinalStatus;
 
     @Column(name = "EA_FINAL_COMMENT")
-    private Integer eaFinalComment;
+    private String eaFinalComment;
 
     @Column(name = "EA_DOCU_STATUS")
     private Integer eaDocuStatus;
+
+    @Column(name = "IS_DELETED")
+    private String isDeleted;
 
 }

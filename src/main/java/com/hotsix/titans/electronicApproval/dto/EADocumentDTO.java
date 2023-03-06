@@ -4,6 +4,7 @@ package com.hotsix.titans.electronicApproval.dto;
 import lombok.*;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -11,7 +12,6 @@ import java.sql.Date;
 @Setter
 @ToString
 public class EADocumentDTO {
-
 
     private String eaCode;
     private String memberDraft;
@@ -21,13 +21,13 @@ public class EADocumentDTO {
     private String eaDetail;
     private String eaCategory;
     private String eaType;
-    private Date eaDate;
+    private LocalDate eaDate;
     private Integer eaDraftStatus;
     private Integer eaMiddleStatus;
-    private Integer eaMiddleComment;
+    private String eaMiddleComment;
     private Integer eaFinalStatus;
-    private Integer eaFinalComment;
+    private String eaFinalComment;
     private Integer eaDocuStatus;
-
+    private String isDeleted;
 
 }

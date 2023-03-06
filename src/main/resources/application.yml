@@ -25,7 +25,6 @@ spring:
     show-sql: true
     database: oracle
     properties:
-      hibernate:
         '[format_sql]': true
 
 jwt:

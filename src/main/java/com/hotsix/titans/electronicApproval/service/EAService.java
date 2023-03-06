@@ -2,13 +2,17 @@ package com.hotsix.titans.electronicApproval.service;
 
 import com.hotsix.titans.electronicApproval.dto.EADocumentDTO;
 import com.hotsix.titans.electronicApproval.dto.EALeaveDTO;
+import com.hotsix.titans.electronicApproval.dto.EASalayDTO;
 import com.hotsix.titans.electronicApproval.entity.EADocument;
 import com.hotsix.titans.electronicApproval.entity.EALeave;
+import com.hotsix.titans.electronicApproval.entity.EASalary;
 import com.hotsix.titans.electronicApproval.repository.EADocumentRepository;
 import com.hotsix.titans.electronicApproval.repository.EALeaveRepository;
+import com.hotsix.titans.electronicApproval.repository.EASalaryRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,12 +21,14 @@ import java.util.stream.Collectors;
 public class EAService {
 
     private final EADocumentRepository eaDocumentRepository;
+    private final EASalaryRepository eaSalaryRepository;
     private final EALeaveRepository eaLeaveRepository;
     private final ModelMapper modelMapper;
 
     @Autowired
-    public EAService(EADocumentRepository eaDocumentRepository, EALeaveRepository eaLeaveRepository, ModelMapper modelMapper) {
+    public EAService(EADocumentRepository eaDocumentRepository, EASalaryRepository eaSalaryRepository, EALeaveRepository eaLeaveRepository, ModelMapper modelMapper) {
         this.eaDocumentRepository = eaDocumentRepository;
+        this.eaSalaryRepository = eaSalaryRepository;
         this.eaLeaveRepository = eaLeaveRepository;
         this.modelMapper = modelMapper;
     }
@@ -46,11 +52,32 @@ public class EAService {
 
     /**
      * 전자결재 단일 건을 조회하는 메소드
+     *
      * @param eaCode 전자결재 pk값
      * @return
      */
     public Object selectDocumentCode(String eaCode) {
         EADocument eaDocument = eaDocumentRepository.findByEaCode(eaCode);
         return modelMapper.map(eaDocument, EADocumentDTO.class);
+    }
+
+    public Object selectAllSalary() {
+        List<EASalary> eaSalaryList = eaSalaryRepository.findAll();
+        return eaSalaryList.stream().map(eaSalary -> modelMapper.map(eaSalary, EASalayDTO.class)).collect(Collectors.toList());
+    }
+
+    public Object selectSalary(String eaCode) {
+        EASalary eaSalary = eaSalaryRepository.findByEaCode(eaCode);
+        return modelMapper.map(eaSalary, EASalayDTO.class);
+    }
+
+    @Transactional
+    public Object insertLeave(EALeaveDTO eaLeaveDTO) {
+        System.out.println("dd");
+        EALeave eaLeave = modelMapper.map(eaLeaveDTO, EALeave.class);
+        System.out.println("dd");
+        eaLeaveRepository.save(eaLeave);
+        int result = 1;
+        return result;
     }
 }

@@ -10,7 +10,7 @@ import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import java.sql.Date;
+import java.time.LocalDate;
 
 
 @Entity
@@ -23,8 +23,8 @@ import java.sql.Date;
 public class EALeave extends EADocument {
 
     @Column(name = "LEAVE_START_DATE")
-    private Date leaveStartDate;
+    private LocalDate leaveStartDate;
 
     @Column(name = "LEAVE_END_DATE")
-    private Date leadvEndDate;
+    private LocalDate leaveEndDate;
 }
