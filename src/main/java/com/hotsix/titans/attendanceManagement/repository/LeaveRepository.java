@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface LeaveRepository extends JpaRepository<LeaveCategory, Integer> {
 
+    int deleteByLeaveCategoryCode(String leaveCategoryCode);
 }
+
