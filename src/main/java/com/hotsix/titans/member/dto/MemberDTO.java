@@ -4,6 +4,8 @@ import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -22,13 +24,14 @@ public class MemberDTO implements UserDetails {
     private String inlinePhone;
     private String memberPhone;
     private String memberAddress;
-    private String memberBirth;
-    private Date joinDate;
+    @Temporal(TemporalType.DATE)
+    private Date memberBirth;
+    private String joinDate;
     private String workingStatus;
     private String memberGender;
     private String memberMarried;
-    private TeamDTO teamCode;
-    private RankDTO rankCode;
+    private String teamName;
+    private String rankName;
     private List<TeamRoleDTO> teamRole;
 
     /* 이하 코드들을 UserDetails로부터 물려받는 추상메소드들을 오버라이딩 한 것이다.(필요한 것만 작성하자) */
