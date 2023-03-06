@@ -22,7 +22,7 @@ public class MemberDTO implements UserDetails {
     private String inlinePhone;
     private String memberPhone;
     private String memberAddress;
-    private String memberBirth;
+    private Date memberBirth;
     private Date joinDate;
     private String workingStatus;
     private String memberGender;
