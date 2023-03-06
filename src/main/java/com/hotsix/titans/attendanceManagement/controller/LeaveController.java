@@ -1,15 +1,14 @@
 package com.hotsix.titans.attendanceManagement.controller;
 
+import com.hotsix.titans.attendanceManagement.dto.LeaveCategoryAndLeavePaymentHistoryDTO;
 import com.hotsix.titans.attendanceManagement.dto.LeaveCategoryDTO;
 import com.hotsix.titans.attendanceManagement.service.LeaveService;
 import com.hotsix.titans.commons.ResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -27,8 +26,15 @@ public class LeaveController {
     @GetMapping("/annual/standardsManagement")
     public ResponseEntity<ResponseDTO> listAllPrint(){
 
-        List<LeaveCategoryDTO> leaveCAtegoryList = leaveService.listAll();
+        List<LeaveCategoryAndLeavePaymentHistoryDTO> leaveCAtegoryList = leaveService.listAll();
 
        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK,"조회성공",(Object) leaveCAtegoryList));
+    }
+
+    @PostMapping(value = "/annual/standardsManagement")
+    public ResponseEntity<ResponseDTO> insertLeave(@ModelAttribute LeaveCategoryDTO leaveCategoryDTO) {
+
+        System.out.println("-------------" + leaveCategoryDTO);
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "휴가기준 입력 성공",  leaveService.insertLeaveCategory(leaveCategoryDTO)));
     }
 }
