@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
+//@ToString
 @Getter
 @Setter
 @Entity
@@ -16,7 +16,7 @@ public class TeamRole {
 
 	@Id
 	@Column(name = "TEAM_CODE")
-	private int teamNo;
+	private int teamCode;
 
 	@Id
 	@Column(name = "AUTHORITY_CODE")

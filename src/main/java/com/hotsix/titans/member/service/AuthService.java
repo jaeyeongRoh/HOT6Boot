@@ -39,11 +39,12 @@ public class AuthService {
     public Object login(MemberDTO memberDTO) {
         log.info("[AuthService] Login Start ======================================");
 //		log.info("[AuthService] " + memberDTO);
-        log.info("[AuthService] {}", memberDTO);
+        log.info("[AuthService] {}", memberDTO.getMemberCode());
 
         /* 1. 사번 조회 */
         Member member = memberRepository.findByMemberCode(memberDTO.getMemberCode());
-
+        log.info("[getMemberCode] {}", member.getMemberCode());
+        log.info("[getMemberPassword] {}", member.getMemberPassword());
         if (member == null) {
             throw new LoginFailedException(memberDTO.getMemberCode() + "를 찾을 수 없습니다.");
         }
