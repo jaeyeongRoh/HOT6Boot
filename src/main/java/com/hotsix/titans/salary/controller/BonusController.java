@@ -33,26 +33,26 @@ public class BonusController {
         return date;
     }
 
-//    @GetMapping("/salary/bonus")
-//    public ResponseEntity<ResponseDTO> selectBonusList(@RequestParam(required = false) Date date) {
-//
-//        if (date == null) {
-//            date = new Date(System.currentTimeMillis());
-//        }
-//
-//        int year = date.getYear() + 1900;
-//        int month = date.getMonth() + 1;
-//        System.out.println("year = " + year);
-//        System.out.println("month = " + month);
-//
-//        ConvertDate convertDate = changeDate(year, month);
-//
-//        Date start = Date.valueOf(convertDate.getStartDate());
-//        Date end = Date.valueOf(convertDate.getEndDate());
-//
-//        List<BonusDTO> bonusList = bonusService.selectBonusList(start, end);
-//
-//        System.out.println("bonusList = " + bonusList);
-//        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "이번 달 상여금 명단 조회 성공", bonusList));
-//    }
+    @GetMapping("/salary/bonus")
+    public ResponseEntity<ResponseDTO> selectBonusList(@RequestParam(required = false) Date date) {
+
+        if (date == null) {
+            date = new Date(System.currentTimeMillis());
+        }
+
+        int year = date.getYear() + 1900;
+        int month = date.getMonth() + 1;
+        System.out.println("year = " + year);
+        System.out.println("month = " + month);
+
+        ConvertDate convertDate = changeDate(year, month);
+
+        Date start = Date.valueOf(convertDate.getStartDate());
+        Date end = Date.valueOf(convertDate.getEndDate());
+
+        List<BonusDTO> bonusList = bonusService.selectBonusList(start, end);
+
+        System.out.println("bonusList = " + bonusList);
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "이번 달 상여금 명단 조회 성공", bonusList));
+    }
 }

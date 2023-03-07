@@ -21,13 +21,13 @@ public class BonusService {
         this.bonusRepository = bonusRepository;
     }
 
-//    public List<BonusDTO> selectBonusList(Date start, Date end) {
-//
-//        List<Bonus> bonusList = bonusRepository.findByBonusPaymentsDateBetween(start, end);
-//
-//        return bonusList.stream()
-//                .map(bonus -> modelMapper.map(bonus, BonusDTO.class))
-//                .collect(Collectors.toList());
-//    }
+    public List<BonusDTO> selectBonusList(Date start, Date end) {
+
+        List<Bonus> bonusList = bonusRepository.findByBonusPaymentsDateBetween(start, end);
+
+        return bonusList.stream()
+                .map(bonus -> modelMapper.map(bonus, BonusDTO.class))
+                .collect(Collectors.toList());
+    }
 
 }
