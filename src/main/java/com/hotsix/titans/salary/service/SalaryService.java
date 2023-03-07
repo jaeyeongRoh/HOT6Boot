@@ -29,50 +29,6 @@ public class SalaryService {
         this.modelMapper = modelMapper;
     }
 
-    /* 날짜에 따른 세전, 세후 급여 조회 */
-//    public List<SalaryDTO> selectPaymentDateSalary(Date start, Date end){
-////                                                   int memberCode) {
-//
-//        List<Salary> salaryList = salaryRepository.findByPaymentDateBetween(start, end);
-////        List<Salary> salaryList = salaryRepository.findByPaymentDateBetween(start, end, memberCode);
-//        System.out.println("salaryList = " + salaryList);
-//        List<SalaryDTO> selectSalary = new ArrayList<>();
-//        for(Salary salary : salaryList) {
-//            Bonus bonus = salary.getBonus();
-//            Long bonusSalary = bonus != null ? bonus.getBonusSalary() : 0L;
-//            Tax tax = salary.getTax();
-//
-//            System.out.println("bonus = " + bonus);
-//            System.out.println("bonusSalary = " + bonusSalary);
-//            System.out.println("tax = " + tax);
-//
-//            Long beforeSalary = salary.getBasicSalary() + salary.getMealSalary() + bonusSalary;
-//
-//            System.out.println("beforeSalary = " + beforeSalary);
-//
-//            Double incomTaxRate = tax.getIncomTaxRate();
-//            Double healthTaxRate = tax.getHealthTaxRate();
-//            Double natinalTaxRate = tax.getNationalTaxRate();
-//
-//            Long incomTax = Math.round(beforeSalary * incomTaxRate);
-//            Long healthTax = Math.round(beforeSalary * healthTaxRate);
-//            Long nationalTax = Math.round(beforeSalary * natinalTaxRate);
-//
-//            Long afterSalary = beforeSalary - (incomTax + healthTax + nationalTax);
-//
-//            SalaryDTO salaryDTO = modelMapper.map(salary, SalaryDTO.class);
-//            salaryDTO.setBeforeSalary(beforeSalary);
-//            salaryDTO.setAfterSalary(afterSalary);
-//            salaryDTO.setIncomTax(incomTax);
-//            salaryDTO.setHealthTax(healthTax);
-//            salaryDTO.setNationalTax(nationalTax);
-//
-//            selectSalary.add(salaryDTO);
-//        }
-//
-//        return selectSalary;
-//
-//    }
 
     /* 지급 여부에 따른 급여 전체 목록 조회 */
     public List<SalaryDTO> selectPaymentYNSalary(String paymentsYn, Date start, Date end) {
@@ -119,12 +75,32 @@ public class SalaryService {
                 .collect(Collectors.toList());
     }
 
-    /* 급여 지급 */
+    /* 급여 등록 */
+    public Object insertSalary(SalaryDTO salaryDTO) {
+
+        int result = 0;
+
+        try {
+
+            Salary insertSalary = modelMapper.map(salaryDTO, Salary.class);
+
+            salaryRepository.save(insertSalary);
+
+            result = 1;
+        } catch (Exception e) {
+
+            throw new RuntimeException(e);
+        }
+
+        return (result > 0) ? "등록 성공" : "등록 실패";
+    }
+
+    /* 급여 지급하여 급여상태 변경 */
     public Object updateSalaryPaymentsYn(String salaryCode) {
 
         Salary salary = salaryRepository.findById(salaryCode).orElseThrow(() -> new RuntimeException(salaryCode));
         if (salary.getPaymentsYn().equals("N")) {
-                salary.setPaymentsYn("Y");
+            salary.setPaymentsYn("Y");
         } else {
             throw new SalaryPaymentsYnException("이미 급여가 지급되었습니다.");
         }

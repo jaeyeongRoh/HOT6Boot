@@ -3,7 +3,6 @@ package com.hotsix.titans.salary.controller;
 import com.hotsix.titans.commons.ResponseDTO;
 import com.hotsix.titans.salary.dto.SalaryDTO;
 import com.hotsix.titans.salary.service.SalaryService;
-import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +23,7 @@ public class SalaryController {
         this.salaryService = salaryService;
     }
 
-    /* 지급 여부에 따른 급여 조회 */
+    /* 지급 여부와 날짜에 따른 급여 조회 */
     @GetMapping("/salary/check/{year}/{month}/{paymentsYn}")
     public ResponseEntity<ResponseDTO> selectPaymentYNSalary(@PathVariable String paymentsYn,
                                                              @PathVariable int year,
@@ -41,6 +40,15 @@ public class SalaryController {
 
         System.out.println("salaryList = " + salaryList);
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "지급여부와 날짜에 따른 급여 조회 성공", salaryList));
+    }
+
+    /* 급여 등록하기 */
+    @PostMapping(value = "/salary/check/insert")
+    public ResponseEntity<ResponseDTO> insertSalary(@ModelAttribute SalaryDTO salaryDTO) {
+
+        System.out.println("salaryDTO = " + salaryDTO);
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK,"조회성공", salaryService.insertSalary(salaryDTO)));
     }
 
     /* 급여 지급하여 지급여부 상태 변경 */
