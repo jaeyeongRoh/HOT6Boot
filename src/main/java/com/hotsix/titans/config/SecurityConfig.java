@@ -7,9 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -21,7 +19,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import java.util.Arrays;
 
 @EnableWebSecurity
-public class SecurityConfig /* extends WebSecurityConfigurerAdapter */ {
+public class SecurityConfig {
 
 	private final TokenProvider tokenProvider;
 	private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
@@ -49,19 +47,7 @@ public class SecurityConfig /* extends WebSecurityConfigurerAdapter */ {
 				                                   "/lib/**", "/productimgs/**");
 	}
 
-//	@Override
-//	public void configure(WebSecurity web) throws Exception {
-//		web.ignoring().antMatchers("/css/**", "/js/**", "/images/**",
-//				"/lib/**", "/productimgs/**");
-//	}
-
 	/* 3. HTTP요청에 대한 권한별 설정(세션 인증 -> 토큰 인증으로 인해 바뀐 부분 존재) */
-
-//	@Override
-//	protected void configure(HttpSecurity http) throws Exception {
-//
-//		http.csrf().disable()
-//				.exceptionHandling()
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -83,12 +69,13 @@ public class SecurityConfig /* extends WebSecurityConfigurerAdapter */ {
 		    	.antMatchers("/auth/**").permitAll()
 				.antMatchers("/api/v1/annual/**").permitAll()
 		    	.antMatchers("/api/v1/reviews/**").permitAll()
-				.antMatchers("/api/v1/members/**").permitAll()
+				.antMatchers("/api/v1/members/**").permitAll()	//@@ 페이지 권한
+				.antMatchers("/auth/signup/**").permitAll()	//@@ 신규 사원 등록
+				.antMatchers("/api/v1/mypage/**").permitAll()
 				.antMatchers("/api/v1/salary/**").permitAll()
 //		    	.antMatchers("/api/**").hasRole("MEMBER")
 //		    	.antMatchers("/api/**").hasRole("ADMIN")
 				.antMatchers("/api/**").hasAnyRole("MEMBER", "ADMIN")
-
 //		    	.anyRequest().permitAll();	// 어떤 요청이든 허용 가능, 시큐리티를 활용한 로그인이 모두 완성 되지 않았을 때 활용할 것
 		    .and()
 

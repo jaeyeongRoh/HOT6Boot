@@ -3,7 +3,6 @@ package com.hotsix.titans.member.dto;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -27,15 +26,14 @@ public class MemberDTO implements UserDetails {
     private String workingStatus;
     private String memberGender;
     private String memberMarried;
+
     private int teamCode;
+
     private int rankCode;
+    private String teamName;
+    private String rankName;
     private List<TeamRoleDTO> teamRole;
-
-
-
-
-
-
+    private List<ProfileImageDTO> profileImageDTOList;
 
     /* 이하 코드들을 UserDetails로부터 물려받는 추상메소드들을 오버라이딩 한 것이다.(필요한 것만 작성하자) */
     /* MemberDTO는 Member와 매핑 될 DTO이자 UserDetails로써 속성을 추가로 가짐 */
