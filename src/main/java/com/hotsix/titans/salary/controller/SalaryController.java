@@ -24,15 +24,11 @@ public class SalaryController {
         this.salaryService = salaryService;
     }
 
-
-    /* 세금 계산까지 마친 급여 조회*/
-    @Operation(summary = "내 급여 조회 요청", description = "선택한 년월의 급여가 조회됩니다.", tags = { "SalaryController" })
-    @GetMapping("/salary/check/{year}/{month}")
-    public ResponseEntity<ResponseDTO> getPaymentDateSalary(@PathVariable int year,
-                                                            @PathVariable int month){
-//                                                            @RequestParam int memberCode) {
-
-//        System.out.println("memberCode = " + memberCode);
+    /* 지급 여부에 따른 급여 조회 */
+    @GetMapping("/salary/check/{year}/{month}/{paymentsYn}")
+    public ResponseEntity<ResponseDTO> selectPaymentYNSalary(@PathVariable String paymentsYn,
+                                                             @PathVariable int year,
+                                                             @PathVariable int month) {
 
         String startDate = year + "-" + month + "-" + "01";
         Date start = Date.valueOf(startDate);
@@ -41,22 +37,10 @@ public class SalaryController {
         Date end = Date.valueOf(endDate);
         System.out.println("end =-============ " + end); // 2015-03-31
 
-        List<SalaryDTO> salaryList = salaryService.selectPaymentDateSalary(start, end);
-//        List<SalaryDTO> salaryList = salaryService.selectPaymentDateSalary(start, end, memberCode);
-
-
-//        return null;
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "날짜에 따른 급여 조회 성공", salaryList));
-
-    }
-
-    /* 지급 여부에 따른 급여 조회 */
-    @GetMapping("/salary/check/{paymentsYn}")
-    public ResponseEntity<ResponseDTO> selectPaymentYNSalary(@PathVariable String paymentsYn) {
-        List<SalaryDTO> salaryList = salaryService.selectPaymentYNSalary(paymentsYn);
+        List<SalaryDTO> salaryList = salaryService.selectPaymentYNSalary(paymentsYn, start, end);
 
         System.out.println("salaryList = " + salaryList);
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "지급여부에 따른 급여 조회 성공", salaryList));
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "지급여부와 날짜에 따른 급여 조회 성공", salaryList));
     }
 
     /* 급여 지급하여 지급여부 상태 변경 */
