@@ -14,17 +14,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1")
 public class RetireeController {
 
-//    private final RetireeService retireeService;
-//
-//    public RetireeController(RetireeService retireeService) {
-//        this.retireeService = retireeService;
-//    }
-//
-//    @Operation(summary = "퇴직자 급여 조회 요청", description = "퇴직 급여 목록이 조회됩니다.", tags = { "RetireeController" })
-//    @GetMapping("/salary/severance/{severancePaymentsYN}")
-//    public ResponseEntity<ResponseDTO> selectRetireeSalary(@PathVariable String severancePaymentsYN) {
-//
-//
-//        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 성공", retireeService.selectRetireeSalary(severancePaymentsYN)));
-//    }
+    private final RetireeService retireeService;
+
+    public RetireeController(RetireeService retireeService) {
+        this.retireeService = retireeService;
+    }
+
+    @Operation(summary = "퇴직자 급여 조회 요청", description = "퇴직 급여 목록이 조회됩니다.", tags = { "RetireeController" })
+    @GetMapping("/salary/severance/{severancePaymentsYN}")
+    public ResponseEntity<ResponseDTO> selectRetireeSalary(@PathVariable String severancePaymentsYN) {
+
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 성공", retireeService.selectRetireeSalary(severancePaymentsYN)));
+    }
 }
