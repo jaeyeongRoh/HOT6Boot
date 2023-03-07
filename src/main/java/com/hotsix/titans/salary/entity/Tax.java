@@ -11,27 +11,20 @@ import javax.persistence.*;
 @ToString
 @Entity
 @Table(name = "TBL_TAX")
-//@SequenceGenerator(
-//    name = "TAX_SEQ_GENERATOR",
-//    sequenceName = "SEQ_TAX",
-//    initialValue = 1,
-//    allocationSize = 50
-//)
 public class Tax {
 
     @Id
-//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_TAX")
     @Column(name = "TAX_CODE")
-    private String taxCode;
+    private int taxCode;
 
     @Column(name = "INCOM_TAX_RATE")
-    private Double incomTaxRate;
+    private Double incomTaxRate = 0.066;
 
     @Column(name = "HEALTH_TAX_RATE")
-    private Double healthTaxRate;
+    private Double healthTaxRate = 0.0306;
 
     @Column(name = "NATIONAL_TAX_RATE")
-    private Double nationalTaxRate;
+    private Double nationalTaxRate = 0.081;
 
 
 }

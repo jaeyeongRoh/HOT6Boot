@@ -1,11 +1,12 @@
 package com.hotsix.titans.attendanceManagement.entity;
 
+import com.hotsix.titans.commons.StringPrefixSequenceGenerator;
 import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.annotations.Type;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,6 +19,11 @@ public class LeaveCategory {
 
     @Id
     @Column(name = "LEAVE_CATEGORY_CODE")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_LEAVE_CATEGORY_CODE")
+    @GenericGenerator(name = "SEQ_LEAVE_CATEGORY_CODE", strategy = "com.hotsix.titans.commons.StringPrefixSequenceGenerator",
+            parameters = {
+                    @Parameter(name = StringPrefixSequenceGenerator.VALUE_PREFIX_PARAMETER, value = "LC")
+            })
     private String leaveCategoryCode;       // 휴가구분번호
 
     @Column(name = "LEAVE_CATEGORY_NAME")

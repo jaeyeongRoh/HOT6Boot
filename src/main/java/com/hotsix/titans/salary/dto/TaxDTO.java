@@ -1,6 +1,10 @@
 package com.hotsix.titans.salary.dto;
 
+import com.hotsix.titans.salary.entity.Salary;
 import lombok.*;
+
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 
 @Getter
 @Setter
@@ -13,4 +17,8 @@ public class TaxDTO {
     private Double incomTaxRate;
     private Double healthTaxRate;
     private Double NationalTaxRate;
+
+    @OneToMany
+    @JoinColumn(name = "TAX_CODE")
+    private Salary salary;
 }
