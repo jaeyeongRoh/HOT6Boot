@@ -7,18 +7,21 @@ import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
-@Entity
-@Table(name = "TBL_MEMBER")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @ToString
+@Entity
+@Table(name = "TBL_MEMBER")
 public class Member {
 
     @Id
     @Column(name = "MEMBER_CODE")
-    private String MemberCode;          // 사원 번호
+    private String memberCode;          // 사원 번호
+
+    @Column(name = "MEMBER_PASSWORD")
+    private String memberPassword;          // 비밀번호
 
     @Column(name = "MEMBER_NAME")
     private String memberName;          // 사원 이름
@@ -30,7 +33,7 @@ public class Member {
     private String inlinePhone;         // 내선 번호
 
     @Column(name = "MEMBER_PHONE")
-    private String memberPhone;         // 사원 번호
+    private String memberPhone;         // 사원 전화번호
 
     @Column(name = "MEMBER_ADDRESS")
     private String memberAddress;       // 사원 주소
@@ -50,6 +53,20 @@ public class Member {
     @Column(name = "MEMBER_MARRIED")
     private String memberMarried;       // 사원 결혼 여부
 
-                  // 조직 테이블 다대일 매핑
+//    @ManyToOne
+//    @JoinColumn(name = "TEAM_CODE")
+//    private Team team;                  // 조직 테이블 다대일 매핑
+
+    @ManyToOne
+    @JoinColumn(name = "RANK_CODE")
+    private Rank rank;
+
+    @OneToMany
+    @JoinColumn(name = "TEAM_CODE")
+    private List<TeamRole> teamRole;
+
+    @OneToMany
+    @JoinColumn(name = "MEMBER_CODE")
+    private List<RetireeHistory> retireeHistory; // 퇴직내역 일대다 매핑
 
 }

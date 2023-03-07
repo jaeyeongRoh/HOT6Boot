@@ -4,7 +4,7 @@ import com.hotsix.titans.salary.entity.Salary;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Date;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -33,7 +33,7 @@ public class Bonus {
     private Long bonusSalary;
 
     @Column(name = "BONUS_PAYMENTS_DATE")       // 지급일
-    private Date paymentDate;
+    private Date bonusPaymentsDate;
 
 }
 

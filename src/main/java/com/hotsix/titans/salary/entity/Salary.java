@@ -1,20 +1,27 @@
 package com.hotsix.titans.salary.entity;
 
-import javax.persistence.*;
-import java.util.List;
+import com.hotsix.titans.member.entity.Member;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
 
+import javax.persistence.*;
+import java.sql.Date;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 @Entity
 @Table(name = "TBL_SALARY")
-//@SequenceGenerator(
-//    name = "SALARY_SEQ_GENERATOR",
-//    sequenceName = "SEQ_SALARY",
-//    initialValue = 1,
-//    allocationSize = 50
-//)
 public class Salary {
 
     @Id
-//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_SALARY")
+//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "salary_generator")
+//    @GenericGenerator(name = "salary_generator", strategy = "com.hotsix.titan.generator.SalaryGenerator")
     @Column(name = "SALARY_CODE")
     private String salaryCode;              // 급여 코드
 
@@ -30,82 +37,32 @@ public class Salary {
     @Column(name = "MEAL_SALARY")
     private Long mealSalary;                // 식대
 
+    @Column(name = "INCOM_TAX")
+    private Long incomTax;
+
+    @Column(name = "HEALTH_TAX")
+    private Long healthTax;
+
+    @Column(name = "NATIONAL_TAX")
+    private Long nationalTax;
+
+    @Column(name = "PAYMENT_DATE")
+    private Date paymentDate;
+
+    @Column(name = "SALARY_PAYMENTS_YN")
+    private String paymentsYn;
+
     @ManyToOne
     @JoinColumn(name = "TAX_CODE")
     private Tax tax;
 
-    @OneToMany
+    @OneToOne
     @JoinColumn(name = "BONUS_CODE")
-    private List<Bonus> bonusList;
+    private Bonus bonus;
 
-    public Salary() {
-    }
-
-    public Salary(String salaryCode, Long basicSalary, Long beforeSalary, Long afterSalary, Long mealSalary, Tax tax, List<Bonus> bonusList) {
-        this.salaryCode = salaryCode;
-        this.basicSalary = basicSalary;
-        this.beforeSalary = beforeSalary;
-        this.afterSalary = afterSalary;
-        this.mealSalary = mealSalary;
-        this.tax = tax;
-        this.bonusList = bonusList;
-    }
-
-    public String getSalaryCode() {
-        return salaryCode;
-    }
-
-    public void setSalaryCode(String salaryCode) {
-        this.salaryCode = salaryCode;
-    }
-
-    public Long getBasicSalary() {
-        return basicSalary;
-    }
-
-    public void setBasicSalary(Long basicSalary) {
-        this.basicSalary = basicSalary;
-    }
-
-    public Long getBeforeSalary() {
-        return beforeSalary;
-    }
-
-    public void setBeforeSalary(Long beforeSalary) {
-        this.beforeSalary = beforeSalary;
-    }
-
-    public Long getAfterSalary() {
-        return afterSalary;
-    }
-
-    public void setAfterSalary(Long afterSalary) {
-        this.afterSalary = afterSalary;
-    }
-
-    public Long getMealSalary() {
-        return mealSalary;
-    }
-
-    public void setMealSalary(Long mealSalary) {
-        this.mealSalary = mealSalary;
-    }
-
-    public Tax getTax() {
-        return tax;
-    }
-
-    public void setTax(Tax tax) {
-        this.tax = tax;
-    }
-
-    public List<Bonus> getBonusList() {
-        return bonusList;
-    }
-
-    public void setBonusList(List<Bonus> bonusList) {
-        this.bonusList = bonusList;
-    }
+    @ManyToOne
+    @JoinColumn(name = "MEMBER_CODE")
+    private Member member;
 
     @Override
     public String toString() {
@@ -115,8 +72,14 @@ public class Salary {
                 ", beforeSalary=" + beforeSalary +
                 ", afterSalary=" + afterSalary +
                 ", mealSalary=" + mealSalary +
+                ", incomTax=" + incomTax +
+                ", healthTax=" + healthTax +
+                ", nationalTax=" + nationalTax +
+                ", paymentDate=" + paymentDate +
+                ", paymentsYn='" + paymentsYn + '\'' +
                 ", tax=" + tax +
-                ", bonusList=" + bonusList +
+                ", bonus=" + bonus +
+                ", member=" + member +
                 '}';
     }
 }

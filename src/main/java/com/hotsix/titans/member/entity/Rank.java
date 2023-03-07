@@ -23,5 +23,4 @@ public class Rank {
     @Column(name = "HOURLY_MONEY")
     private Long hourlyMoney;
 
-
 }
