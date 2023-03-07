@@ -38,12 +38,14 @@ public class AuthService {
 
     public Object login(MemberDTO memberDTO) {
         log.info("[AuthService] Login Start ======================================");
-//		log.info("[AuthService] " + memberDTO);
         log.info("[AuthService] {}", memberDTO);
 
+        log.info("'''''''''''''''''''''' " + memberDTO.getMemberCode());
+        String memberCode = memberDTO.getMemberCode();
         /* 1. 사번 조회 */
-        Member member = memberRepository.findByMemberCode(memberDTO.getMemberCode());
-
+        Member member = memberRepository.findByMemberCode(memberCode);
+        log.info("++++++++++++ ");
+        System.out.println("=======" + member);
         if (member == null) {
             throw new LoginFailedException(memberDTO.getMemberCode() + "를 찾을 수 없습니다.");
         }
@@ -62,43 +64,4 @@ public class AuthService {
         log.info("[AuthService] Login End ======================================");
         return tokenDTO;
     }
-
-//    @Transactional            // DML 작업은 Transactional 어노테이션 추가
-//    public MemberDTO signup(MemberDTO memberDTO) {
-//        log.info("[AuthService] Signup Start ==================================");
-//        log.info("[AuthService] memberDTO {}", memberDTO);
-//
-//        /* 이메일 중복 유효성 검사(선택적) */
-//        if (memberRepository.findByMemberEmail(memberDTO.getMemberEmail()) != null) {
-//            log.info("[AuthService] 이메일이 중복됩니다.");
-//            throw new DuplicatedMemberEmailException("이메일이 중복됩니다.");
-//        }
-//
-//        /* 우선 repository를 통해 쿼리를 날리기 전에 DTO에 담긴 값을 Entity로 옮기자. */
-//        Member registMember = modelMapper.map(memberDTO, Member.class);
-//
-//        /* 1. TBL_MEMBER 테이블에 회원 insert */
-//        /* 비밀번호 암호화 후 insert */
-//        registMember.setMemberPassword(passwordEncoder.encode(registMember.getMemberPassword()));
-//        Member result1 = memberRepository.save(registMember);		// 반환형이 int값이 아님
-//
-//        /* 2. TBL_MEMBER_ROLE 테이블에 회원별 권한 insert(현재 엔티티에는 회원가입 후 pk값이 없음) */
-//        /* 2-1. 일반 권한의 회원을 추가(AuthorityCode값이 2번) */
-//        /*
-//         * 2-2. 엔티티에는 추가 할 회원의 pk값이 아직 없으므로 기존 회원의 마지막 회원 번호를 조회
-//         *      (하지만 jpql에 의해 앞선 save와 jpql이 flush()로 쿼리와 함께 날아가고 회원이 이미 sequence객체 값
-//         *       증가와 함께 insert가 되 버린다. -> 결론은, maxMemberCode가 현재 가입하는 회원의 번호이다.)
-//         * */
-////        int maxMemberCode = Integer.parseInt(memberRepository.maxMemberCode());	// jpql을 활용해서 회원번호 max값 추출
-//        int maxMemberCode = memberRepository.maxMemberCode();
-//        TeamRole registMemberRole = new TeamRole(maxMemberCode, 2);
-//
-//        TeamRole result2 = teamRoleRepository.save(registMemberRole);
-//
-//        log.info("[AuthService] Member Insert Result {}",
-//                (result1 != null && result2 != null) ? "회원 가입 성공" : "회원 가입 실패");
-//
-//        log.info("[AuthService] Signup End ==================================");
-//        return memberDTO;
-//    }
 }

@@ -2,6 +2,7 @@ package com.hotsix.titans.member.entity;
 
 
 import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -14,6 +15,7 @@ import java.util.List;
 @ToString
 @Entity
 @Table(name = "TBL_MEMBER")
+@DynamicInsert
 public class Member {
 
     @Id
@@ -60,10 +62,6 @@ public class Member {
     @ManyToOne
     @JoinColumn(name = "RANK_CODE")
     private Rank rank;
-
-    @OneToMany
-    @JoinColumn(name = "TEAM_CODE")
-    private List<TeamRole> teamRole;
 
     @OneToMany
     @JoinColumn(name = "MEMBER_CODE")

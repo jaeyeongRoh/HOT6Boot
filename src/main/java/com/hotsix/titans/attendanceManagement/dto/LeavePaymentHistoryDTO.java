@@ -2,8 +2,6 @@ package com.hotsix.titans.attendanceManagement.dto;
 
 import lombok.*;
 
-import java.util.Date;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -11,13 +9,13 @@ import java.util.Date;
 @ToString
 public class LeavePaymentHistoryDTO {
 
-    private String leavePaymentHistorycode; // 휴가발생내역번호
+    private String leavePaymentHistoryCode; // 휴가발생내역번호
 
     private String memberCode;              // 사원번호
 
-    private LeaveCategoryDTO leaveCategoryCode;       // 휴가구분번호
+    private String leaveCategoryCode;       // 휴가구분번호
 
-    private Date leavePaymentDate;          // 발생날짜
+    private String leavePaymentDate;          // 발생날짜
 
     private int leavePaymentCount;          // 발생갯수
 
