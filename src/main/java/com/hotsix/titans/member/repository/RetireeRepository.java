@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface RetireeRepository extends JpaRepository<Retiree, String> {
-//    List<Retiree> findBySeverancePaymentsYN(String severancePaymentsYN);
+    List<Retiree> findBySeverancePaymentsYN(String severancePaymentsYN);
 }
