@@ -84,9 +84,6 @@ public class TokenProvider {
 
 		log.info("[TokenProvider] authorities {}", roles); 		// SLF4J에서 제공하는 치환문자 활용(+(덧셈)같은 연산처리 작업 생략)
 
-		/* 0. 로그인한 사용자의 사번을 조회해서 팀이 인사팀인지 확인한다. */
-
-
 		/* 1. 팀번호를 "sub"이라는 클레임으로 토큰에 추가 */
 		Claims claims = Jwts.claims().setSubject(member.getMemberCode());
 		
