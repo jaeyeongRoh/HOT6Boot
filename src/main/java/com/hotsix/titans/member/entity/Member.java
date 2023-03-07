@@ -1,8 +1,10 @@
 package com.hotsix.titans.member.entity;
 
 
+import com.hotsix.titans.commons.StringPrefixSequenceGenerator;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -20,6 +22,12 @@ public class Member {
 
     @Id
     @Column(name = "MEMBER_CODE")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_MEMBER_CODE")
+    @GenericGenerator(name = "SEQ_MEMBER_CODE", strategy = "com.hotsix.titans.commons.StringPrefixSequenceGenerator",
+            parameters = {
+                    @org.hibernate.annotations.Parameter(name = StringPrefixSequenceGenerator.VALUE_PREFIX_PARAMETER,
+                                                        value = "TT")
+                    })
     private String memberCode;          // 사원 번호
 
     @Column(name = "MEMBER_PASSWORD")
@@ -67,4 +75,7 @@ public class Member {
     @JoinColumn(name = "MEMBER_CODE")
     private List<RetireeHistory> retireeHistory; // 퇴직내역 일대다 매핑
 
+    @OneToMany
+    @JoinColumn(name = "MEMBER_CODE")
+    private List<ProfileImage> profileImage;
 }
