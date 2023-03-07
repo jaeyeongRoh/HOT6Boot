@@ -1,6 +1,10 @@
-
 server:
   port: 8888
+
+hibernate:
+  discriminator:
+    ignore_explicit_for_joined: 'true'
+
 
 
 spring:
@@ -25,7 +29,11 @@ spring:
     show-sql: true
     database: oracle
     properties:
-        '[format_sql]': true
+      '[format_sql]': 'true'
+      hibernate:
+        hql:
+          bulk_id_strategy: 'org.hibernate.hql.spi.id.inline.InlineIdsInClauseBulkIdStrategy'
+
 
 jwt:
   secret: i2KAFlcHeoKfMAEdBCIpMEP3k5eVazNsA5naytmtrYIjUxNuz9QyitYJvHLaYK/u9iC9qTYNQwAcu0i+ryQjaA==

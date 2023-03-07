@@ -82,7 +82,7 @@ public class EAService {
         eaLeave.setEaSubject(eaLeaveDTO.getEaSubject());
         eaLeave.setEaDetail(eaLeaveDTO.getEaDetail());
         eaLeave.setEaCategory(eaLeaveDTO.getEaCategory());
-        eaLeave.setEaType(eaLeaveDTO.getEaType());
+//        eaLeave.setEaType(eaLeaveDTO.getEaType());
         eaLeave.setEaDate(eaLeaveDTO.getEaDate());
         eaLeave.setEaDraftStatus(eaLeaveDTO.getEaDraftStatus());
         eaLeave.setEaMiddleStatus(eaLeaveDTO.getEaMiddleStatus());
@@ -94,7 +94,7 @@ public class EAService {
         eaLeave.setLeaveStartDate(eaLeaveDTO.getLeaveStartDate());
         eaLeave.setLeaveEndDate(eaLeaveDTO.getLeaveEndDate());
 
-        eaLeaveRepository.saveAndFlush(eaLeave);
+        eaLeaveRepository.save(eaLeave);
         int result = 1;
         return result;
     }

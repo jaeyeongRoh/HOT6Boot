@@ -59,33 +59,37 @@ public class EAController {
     }
 
 
+    /**
+     * 휴가신청 insert
+     * @return
+     */
     @PostMapping("/eaLeave/insert")
     public ResponseEntity<ResponseDTO> insertLeave(){
         ResponseDTO responseDTO = new ResponseDTO();
 
         EALeaveDTO eaLeaveDTO = new EALeaveDTO();
-        eaLeaveDTO.setEaCode("1");
+        eaLeaveDTO.setEaCode("13");
         eaLeaveDTO.setMemberDraft("150003");
         eaLeaveDTO.setMemberMiddleSigner("150006");
         eaLeaveDTO.setMemberFinalSigner("160009");
-        eaLeaveDTO.setEaSubject("휴가신청합니다");
-        eaLeaveDTO.setEaDetail("휴가신청합니다");
+        eaLeaveDTO.setEaSubject("휴가");
+        eaLeaveDTO.setEaDetail("휴가");
         eaLeaveDTO.setEaCategory("연차");
-        eaLeaveDTO.setEaType("A");
-        eaLeaveDTO.setEaDate(LocalDate.now());
-        eaLeaveDTO.setEaDraftStatus(2);
-        eaLeaveDTO.setEaMiddleStatus(2);
+//        eaLeaveDTO.setEaType("A");
+        eaLeaveDTO.setEaDate(new java.util.Date());
+        eaLeaveDTO.setEaDraftStatus(1);
+        eaLeaveDTO.setEaMiddleStatus(1);
         eaLeaveDTO.setEaMiddleComment("없음");
-        eaLeaveDTO.setEaFinalStatus(2);
+        eaLeaveDTO.setEaFinalStatus(1);
         eaLeaveDTO.setEaFinalComment("없음");
-        eaLeaveDTO.setEaDocuStatus(2);
+        eaLeaveDTO.setEaDocuStatus(1);
         eaLeaveDTO.setIsDeleted("N");
 
         eaLeaveDTO.setLeaveStartDate(LocalDate.now());
         eaLeaveDTO.setLeaveEndDate(LocalDate.now());
 
         System.out.println(eaLeaveDTO);
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK,"전자결재 급여정정 개별 조회성공",eaService.insertLeave(eaLeaveDTO)));
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK,"전자결재 휴가신청 insert 성공",eaService.insertLeave(eaLeaveDTO)));
     }
 
 

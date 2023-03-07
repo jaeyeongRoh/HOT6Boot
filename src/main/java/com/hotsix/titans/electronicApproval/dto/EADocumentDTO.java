@@ -3,8 +3,8 @@ package com.hotsix.titans.electronicApproval.dto;
 
 import lombok.*;
 
-import java.sql.Date;
 import java.time.LocalDate;
+import java.util.Date;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,7 +21,7 @@ public class EADocumentDTO {
     private String eaDetail;
     private String eaCategory;
     private String eaType;
-    private LocalDate eaDate;
+    private Date eaDate;
     private Integer eaDraftStatus;
     private Integer eaMiddleStatus;
     private String eaMiddleComment;

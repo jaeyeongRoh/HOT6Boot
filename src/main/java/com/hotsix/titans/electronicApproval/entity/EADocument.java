@@ -6,8 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.sql.Date;
 import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 @Table(name="TBL_EA")
@@ -35,8 +35,8 @@ public class EADocument {
     @Column(name = "EA_SUBJECT")
     private String eaSubject;
 
-    @Column(name = "EA_TYPE")
-    private String eaType;
+//    @Column(name = "EA_TYPE")
+//    private String eaType;
 
     @Column(name = "EA_DETAIL")
     private String eaDetail;
@@ -45,7 +45,7 @@ public class EADocument {
     private String eaCategory;
 
     @Column(name = "EA_DATE")
-    private LocalDate eaDate;
+    private Date eaDate;
 
     @Column(name = "EA_DRAFT_STATUS")
     private Integer eaDraftStatus;
