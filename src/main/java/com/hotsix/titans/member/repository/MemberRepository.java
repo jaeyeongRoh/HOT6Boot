@@ -4,9 +4,9 @@ import com.hotsix.titans.member.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-public interface MemberRepository extends JpaRepository<Member, Integer> {
+public interface MemberRepository extends JpaRepository<Member, String> {
 
-    Member findByMemberCode(String string);
+    Member findByMemberCode(String memberCode);
 
     Member findByMemberEmail(String memberEmail);
 

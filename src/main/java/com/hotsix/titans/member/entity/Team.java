@@ -22,5 +22,7 @@ public class Team {
     @Column(name = "TEAM_NAME")
     private String teamName;
 
-
+    @OneToMany
+    @JoinColumn(name = "TEAM_CODE")
+    private List<TeamRole> temRole;
 }

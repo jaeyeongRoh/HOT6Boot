@@ -38,7 +38,7 @@ public class LeaveController {
     @PostMapping(value = "/annual/standardsManagement")
     public ResponseEntity<ResponseDTO> insertLeave(@ModelAttribute LeaveCategoryDTO leaveCategoryDTO) {
 
-        System.out.println("-------------" + leaveCategoryDTO);
+        System.out.println("-----------------------" + leaveCategoryDTO);
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "휴가기준 입력 성공",  leaveService.insertLeaveCategory(leaveCategoryDTO)));
     }
 
@@ -52,7 +52,6 @@ public class LeaveController {
     @GetMapping("/mypage/main/{memberCode}")
     public ResponseEntity<ResponseDTO> selectMyMemberInfo(@PathVariable String memberCode) {
 
-        System.out.println("ddddddd" + memberCode);
         List<LeavePaymentHistoryDTO> leavePaymentHistoryList = leaveService.selectMyLeaveInfo(memberCode);
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK,"조회성공",(Object) leavePaymentHistoryList));
     }
