@@ -1,6 +1,6 @@
 package com.hotsix.titans.salary.service;
 
-import com.hotsix.titans.member.dto.MemberDTO;
+import com.hotsix.titans.exception.SalaryPaymentsYnException;
 import com.hotsix.titans.salary.dto.SalaryDTO;
 import com.hotsix.titans.salary.entity.Bonus;
 import com.hotsix.titans.salary.entity.Salary;
@@ -11,7 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.sql.Date;
 import java.util.List;
@@ -87,7 +86,17 @@ public class SalaryService {
                 .collect(Collectors.toList());
     }
 
+    /* 급여 지급 */
+    public Object updateSalaryPaymentsYn(String salaryCode) {
 
+        Salary salary = salaryRepository.findById(salaryCode).orElseThrow(() -> new RuntimeException(salaryCode));
+        if (salary.getPaymentsYn().equals("N")) {
+                salary.setPaymentsYn("Y");
+        } else {
+            throw new SalaryPaymentsYnException("이미 급여가 지급되었습니다.");
+        }
+        salaryRepository.save(salary);
 
-
+        return salary;
+    }
 }
