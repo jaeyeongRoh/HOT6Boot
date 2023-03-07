@@ -12,6 +12,4 @@ public class TeamDTO {
     private int teamCode;
     private String teamName;
 
-//    private List<TeamRole> teamRole;
-
 }
