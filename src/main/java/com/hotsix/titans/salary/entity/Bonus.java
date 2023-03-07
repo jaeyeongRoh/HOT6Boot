@@ -1,7 +1,9 @@
 package com.hotsix.titans.salary.entity;
 
+import com.hotsix.titans.commons.StringPrefixSequenceGenerator;
 import com.hotsix.titans.salary.entity.Salary;
 import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -22,8 +24,12 @@ import java.sql.Date;
 public class Bonus {
 
     @Id
-//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_BONUS")
-    @Column(name = "BONUS_CODE")                // 상여 코드
+    @Column(name = "BONUS_CODE")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_BONUS_CODE")
+    @GenericGenerator(name = "SEQ_BONUS_CODE", strategy = "com.hotsix.titans.commons.StringPrefixSequenceGenerator",
+            parameters = {
+                    @org.hibernate.annotations.Parameter(name = StringPrefixSequenceGenerator.VALUE_PREFIX_PARAMETER, value = "BS")
+            })
     private String bonusCode;
 
     @Column(name = "BONUS_SALARY_TYPE")         // 상여 구분

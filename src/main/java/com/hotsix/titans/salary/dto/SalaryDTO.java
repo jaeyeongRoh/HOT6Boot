@@ -2,6 +2,7 @@ package com.hotsix.titans.salary.dto;
 
 import com.hotsix.titans.member.dto.MemberDTO;
 import com.hotsix.titans.member.entity.Member;
+import com.hotsix.titans.salary.entity.Salary;
 import lombok.*;
 
 import java.sql.Date;

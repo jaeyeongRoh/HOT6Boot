@@ -1,5 +1,6 @@
 package com.hotsix.titans.salary.entity;
 
+import com.hotsix.titans.commons.StringPrefixSequenceGenerator;
 import com.hotsix.titans.member.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,9 +21,12 @@ import java.sql.Date;
 public class Salary {
 
     @Id
-//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "salary_generator")
-//    @GenericGenerator(name = "salary_generator", strategy = "com.hotsix.titan.generator.SalaryGenerator")
     @Column(name = "SALARY_CODE")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_SALARY_CODE")
+    @GenericGenerator(name = "SEQ_SALARY_CODE", strategy = "com.hotsix.titans.commons.StringPrefixSequenceGenerator",
+            parameters = {
+                    @Parameter(name = StringPrefixSequenceGenerator.VALUE_PREFIX_PARAMETER, value = "SAL")
+            })
     private String salaryCode;              // 급여 코드
 
     @Column(name = "BASIC_SALARY")
