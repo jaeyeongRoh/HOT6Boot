@@ -28,8 +28,8 @@ public class MemberDTO implements UserDetails {
     private String memberMarried;
     private int teamCode;
     private int rankCode;
-    private String teamName;
-    private String rankName;
+    private String teamName;    //@@
+    private String rankName;    //@@
     private List<TeamRoleDTO> teamRole;
     private List<ProfileImageDTO> profileImageDTOList;
 
