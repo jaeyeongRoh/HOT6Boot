@@ -3,7 +3,6 @@ package com.hotsix.titans.salary.repository;
 import com.hotsix.titans.salary.entity.Salary;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.time.LocalDate;
 import java.sql.Date;
 import java.util.List;
 

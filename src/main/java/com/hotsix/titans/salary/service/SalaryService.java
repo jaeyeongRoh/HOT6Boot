@@ -30,37 +30,6 @@ public class SalaryService {
         this.modelMapper = modelMapper;
     }
 
-//    /* 세전 총급여(기본급 + 식대 + 상여금) 계산 */
-//    public Long basicSalary(Salary salary) {
-//        Bonus bonus = salary.getBonus();
-//        Long bonusSalary = bonus != null ? bonus.getBonusSalary() : 0L;
-//
-//        return salary.getBasicSalary() + salary.getMealSalary() + bonusSalary;
-//    }
-
-    /* 세후 총급여 계산 */
-//    public Long afterSalary(Salary salary) {
-//
-//        Bonus bonus = salary.getBonus();
-//        Long bonusSalary = bonus != null ? bonus.getBonusSalary() : 0L;
-//        Tax tax = salary.getTax();
-//
-//        Long beforeSalary = salary.getBasicSalary() + salary.getMealSalary() + bonusSalary;
-//
-//        Double incomTaxRate = tax.getIncomTaxRate(); //
-//        Double healthTaxRate = tax.getHealthTaxRate();
-//        Double natinalTaxRate = tax.getNationalTaxRate();
-//
-//        Long incomTax = Math.round(beforeSalary * incomTaxRate);
-//        Long healthTax = Math.round(beforeSalary * healthTaxRate);
-//        Long nationalTax = Math.round(beforeSalary * natinalTaxRate);
-//
-//        Long afterSalary = beforeSalary - (incomTax + healthTax + nationalTax);
-//
-//        return afterSalary;
-//
-//    }
-
     /* 날짜에 따른 세전, 세후 급여 조회 */
     public List<SalaryDTO> selectPaymentDateSalary(Date start, Date end){
 //                                                   int memberCode) {

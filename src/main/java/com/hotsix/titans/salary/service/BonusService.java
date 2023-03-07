@@ -1,0 +1,33 @@
+package com.hotsix.titans.salary.service;
+
+import com.hotsix.titans.salary.dto.BonusDTO;
+import com.hotsix.titans.salary.entity.Bonus;
+import com.hotsix.titans.salary.repository.BonusRepository;
+import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Service;
+
+import java.sql.Date;
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Service
+public class BonusService {
+
+    private final ModelMapper modelMapper;
+    private final BonusRepository bonusRepository;
+
+    public BonusService(ModelMapper modelMapper, BonusRepository bonusRepository) {
+        this.modelMapper = modelMapper;
+        this.bonusRepository = bonusRepository;
+    }
+
+//    public List<BonusDTO> selectBonusList(Date start, Date end) {
+//
+//        List<Bonus> bonusList = bonusRepository.findByBonusPaymentsDateBetween(start, end);
+//
+//        return bonusList.stream()
+//                .map(bonus -> modelMapper.map(bonus, BonusDTO.class))
+//                .collect(Collectors.toList());
+//    }
+
+}

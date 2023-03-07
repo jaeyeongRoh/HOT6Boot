@@ -2,7 +2,7 @@ package com.hotsix.titans.salary.dto;
 
 import lombok.*;
 
-import java.util.Date;
+import java.sql.Date;
 
 @Getter
 @Setter
@@ -14,5 +14,5 @@ public class BonusDTO {
     private String bonusCode;
     private String bonusType;
     private Long bonusSalary;
-    private Date paymentDate;
+    private Date bonusPaymentsDate;
 }
