@@ -58,6 +58,7 @@ public class Member {
     @ManyToOne
     @JoinColumn(name = "TEAM_CODE")
     private Team team;                  // 조직 테이블 다대일 매핑
+
     @ManyToOne
     @JoinColumn(name = "RANK_CODE")
     private Rank rank;
