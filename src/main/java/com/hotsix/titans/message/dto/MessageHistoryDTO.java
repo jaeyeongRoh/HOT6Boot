@@ -16,7 +16,13 @@ public class MessageHistoryDTO {
 
     private String memberCode;
 
+    private String memberName;
+
     private String messageCode;
+
+    private String messageReceiver;
+
+    private String messageReceiverEmail;
 
     private MemberDTO member;
 

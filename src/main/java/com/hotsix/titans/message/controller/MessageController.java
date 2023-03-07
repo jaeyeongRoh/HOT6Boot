@@ -48,7 +48,7 @@ public class MessageController {
 
 
 
-//
+    /*메세지 보내기 버튼 누를 때 작동*/
     @PostMapping("/message")
     public ResponseEntity<ResponseDTO> insertMessage(@RequestBody MessageDTO messageDTO){
 
@@ -61,6 +61,36 @@ public class MessageController {
         test.add("메세지입니다.");
 
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "메세지 전송성공", messageService.insertMessage(messageDTO)));
+    }
+
+    /*받은 편지함*/
+    @GetMapping("/messageReceived")
+    public ResponseEntity<ResponseDTO> checkReceivedEmail(){
+
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회성공", messageService.checkReceivedEmail()));
+    }
+
+    /*받은 편지함 카운트*/
+    @GetMapping("/messageReceivedCount")
+    public ResponseEntity<ResponseDTO> checkReceivedEmailCount(){
+
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회성공", messageService.checkReceivedEmail().size()));
+    }
+
+
+    /*보낸 편지함*/
+    @GetMapping("/messageSent")
+    public ResponseEntity<ResponseDTO> checkSentEmail(){
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회성공", messageService.checkSentEmail()));
+    }
+
+
+    /*보낸 편지함 카운트*/
+    @GetMapping("/messageSentCount")
+    public ResponseEntity<ResponseDTO> checkSentEmailCount(){
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회성공", messageService.checkSentEmail().size()));
     }
 
 }

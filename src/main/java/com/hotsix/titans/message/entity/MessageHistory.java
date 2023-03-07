@@ -31,9 +31,9 @@ public class MessageHistory implements Serializable {
     @Column(name = "MESSAGE_RECEIVER_EMAIL")
     private String messageReceiverEmail;
 
-    @ManyToOne
-    @JoinColumn(name = "MEMBER_CODE", insertable = false, updatable = false)
-    private Member member;
+
+
+
 
 
     @Override
@@ -48,4 +48,5 @@ public class MessageHistory implements Serializable {
     public int hashCode() {
         return Objects.hash(memberCode, messageCode, messageReceiver, messageReceiverEmail);
     }
+
 }

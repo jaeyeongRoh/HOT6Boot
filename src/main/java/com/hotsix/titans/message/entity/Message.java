@@ -2,12 +2,14 @@ package com.hotsix.titans.message.entity;
 
 
 import com.hotsix.titans.commons.StringPrefixSequenceGenerator;
+import com.hotsix.titans.member.entity.Member;
 import com.hotsix.titans.message.dto.AttachmentDTO;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -17,7 +19,6 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
 
 
 public class Message {
@@ -49,19 +50,39 @@ public class Message {
     @Column(name = "MESSAGE_DELETE_DATE")
     private Date messageDeleteDate;
 
-
     @Column(name = "MEMBER_CODE")
     private String memberCode;
+
+
 
     @OneToMany(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "MESSAGE_CODE")
     private List<Attachment> attachment;
 
 
+
     @OneToMany(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "MESSAGE_CODE")
     private List<MessageHistory> messageHistory;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "MEMBER_CODE", referencedColumnName = "MEMBER_CODE", insertable = false, updatable = false)
+    private Member member;
 
 
+    @Override
+    public String toString() {
+        return "Message{" +
+                "messageCode='" + messageCode + '\'' +
+                ", messageTitle='" + messageTitle + '\'' +
+                ", messageContent='" + messageContent + '\'' +
+                ", messageSendDate=" + messageSendDate +
+                ", messageReadYn='" + messageReadYn + '\'' +
+                ", messageDeleteYn='" + messageDeleteYn + '\'' +
+                ", messageDeleteDate=" + messageDeleteDate +
+                ", memberCode='" + memberCode + '\'' +
+                ", attachment=" + attachment +
+                ", messageHistory=" + messageHistory +
+                '}';
+    }
 }

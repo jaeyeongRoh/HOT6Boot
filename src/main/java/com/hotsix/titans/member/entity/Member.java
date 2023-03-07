@@ -1,6 +1,8 @@
 package com.hotsix.titans.member.entity;
 
 
+import com.hotsix.titans.message.entity.Attachment;
+import com.hotsix.titans.message.entity.Message;
 import lombok.*;
 
 import javax.persistence.*;
@@ -18,7 +20,7 @@ public class Member {
 
     @Id
     @Column(name = "MEMBER_CODE")
-    private String MemberCode;          // 사원 번호
+    private String memberCode;          // 사원 번호
 
     @Column(name = "MEMBER_NAME")
     private String memberName;          // 사원 이름
@@ -50,6 +52,8 @@ public class Member {
     @Column(name = "MEMBER_MARRIED")
     private String memberMarried;       // 사원 결혼 여부
 
+    @OneToMany(mappedBy = "member")
+    private List<Message> messages;
                   // 조직 테이블 다대일 매핑
 
 }

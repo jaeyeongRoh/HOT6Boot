@@ -1,6 +1,7 @@
 package com.hotsix.titans.member.dto;
 
 
+import com.hotsix.titans.message.dto.MessageDTO;
 import lombok.*;
 
 import javax.persistence.Column;
@@ -45,7 +46,7 @@ public class MemberDTO {
 
     private String memberMarried;       // 사원 결혼 여부
 
-
+    private List<MessageDTO> message;
 
 
 
