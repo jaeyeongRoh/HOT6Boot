@@ -1,8 +1,11 @@
 package com.hotsix.titans.salary.dto;
 
+import com.hotsix.titans.member.dto.MemberDTO;
+import com.hotsix.titans.member.entity.Member;
+import com.hotsix.titans.salary.entity.Salary;
 import lombok.*;
 
-import java.util.Date;
+import java.sql.Date;
 
 @Getter
 @Setter
@@ -12,10 +15,8 @@ import java.util.Date;
 public class SalaryDTO {
 
     private String salaryCode;
-    private String memberCode;
-    private String taxCode;
     private Date paymentDate;
-    private String SalaryPaymentYn;
+    private String paymentsYn;
     private Long basicSalary;
     private Long beforeSalary;
     private Long afterSalary;
@@ -23,5 +24,8 @@ public class SalaryDTO {
     private Long incomTax;
     private Long healthTax;
     private Long nationalTax;
+    private BonusDTO bonus;
+    private TaxDTO tax;
+    private MemberDTO member;
 
 }

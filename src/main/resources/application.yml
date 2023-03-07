@@ -43,9 +43,7 @@ springdoc:
   swagger-ui:
     path: /swagger-ui.html
 
-
 image:
-
 
 #  add-resource-locations: classpath:/static/productimgs/
 #  add-resource-handler: /productimgs/**
@@ -58,3 +56,6 @@ image:
 logging:
   level:
     root: info
+
+
+
