@@ -1,8 +1,8 @@
 package com.hotsix.titans.salary.entity;
 
 import com.hotsix.titans.commons.StringPrefixSequenceGenerator;
-import com.hotsix.titans.salary.entity.Salary;
 import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -14,12 +14,7 @@ import java.sql.Date;
 @Setter
 @ToString
 @Entity
-//@SequenceGenerator(
-//    name = "SALARY_SEQ_GENERATOR",
-//    sequenceName = "SEQ_SALARY",
-//    initialValue = 1,
-//    allocationSize = 50
-//)
+@DynamicInsert
 @Table(name = "TBL_BONUS_SALARY")
 public class Bonus {
 
