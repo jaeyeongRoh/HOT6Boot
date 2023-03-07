@@ -44,6 +44,7 @@ public class AuthService {
         log.info("[AuthService] {}", memberDTO);
 
         log.info("MemberCode >>>>>>>>>>>>>>>>>>>" + memberDTO.getMemberCode());
+
         /* 1. 사번 조회 */
         Member member = memberRepository.findByMemberCode(memberDTO.getMemberCode());
         log.info("[사원 조회 ] >>>>>>>>>>>>>>>>>>>>>>>>>", member);
@@ -61,7 +62,6 @@ public class AuthService {
         /* 3. 토큰 발급 */
         TokenDTO tokenDTO = tokenProvider.generateTokenDTO(member);
         log.info("[AuthService] tokenDTO {}", tokenDTO);
-
         log.info("[AuthService] Login End ======================================");
         return tokenDTO;
     }
@@ -86,8 +86,7 @@ public class AuthService {
         Member result = memberRepository.save(registMember);		// 반환형이 int값이 아님
 
         /* 2. TBL_MEMBER_ROLE 테이블에 회원별 권한 insert(현재 엔티티에는 회원가입 후 pk값이 없음) */
-        /* 2-1. 일반 권한의 회원을 추가(AuthorityCode값이 2번) */
-        /*
+        /* 2-1. 일반 권한의 회원을 추가(AuthorityCode값이 2번)
          * 2-2. 엔티티에는 추가 할 회원의 pk값이 아직 없으므로 기존 회원의 마지막 회원 번호를 조회
          *      (하지만 jpql에 의해 앞선 save와 jpql이 flush()로 쿼리와 함께 날아가고 회원이 이미 sequence객체 값
          *       증가와 함께 insert가 되 버린다. -> 결론은, maxMemberCode가 현재 가입하는 회원의 번호이다.)

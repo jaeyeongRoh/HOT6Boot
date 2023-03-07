@@ -27,15 +27,9 @@ public class MemberController {
     @GetMapping("/members/{memberCode}")
     public ResponseEntity<ResponseDTO> selectMyMemberInfo(@PathVariable String memberCode) {
         System.out.println("======================123" + memberService.selectMyInfo(memberCode));
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 성공", memberService.selectMyInfo(memberCode)));
+        return ResponseEntity
+                .ok()
+                .body(new ResponseDTO(HttpStatus.OK, "조회 성공", memberService.selectMyInfo(memberCode)));
     }
-
-//    @PostMapping(value = "/members")
-//    public ResponseEntity<ResponseDTO> registMember(@ModelAttribute MemberDTO memberDTO, MultipartFile memberImage) {
-//
-//        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "신규 사원 등록 성공",  memberService.registMember(memberDTO, memberImage)));
-//    }
-
-
 
 }
