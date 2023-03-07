@@ -11,7 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -55,5 +57,12 @@ public class LeaveService {
         }
 
         return (result > 0) ? "입력 성공" : "입력 실패";
+    }
+
+    @Transactional
+    public Object deleteLeaveCategory(String leaveCategoryCode) {
+
+        int result = leaveRepository.deleteByLeaveCategoryCode(leaveCategoryCode);
+        return (result > 0) ? "휴가 기준 삭제 성공" : "휴가 기준 삭제 실패";
     }
 }
