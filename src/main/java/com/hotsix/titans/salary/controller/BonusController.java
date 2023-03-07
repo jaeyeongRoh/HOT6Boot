@@ -21,17 +21,17 @@ public class BonusController {
         this.bonusService = bonusService;
     }
 
-//    public static ConvertDate changeDate(int year, int month){
-//
-//        String startDate = year + "-" + month + "-" + "01";
-//        Date start = Date.valueOf(startDate);
-//
-//        String endDate = year + "-" + month + "-" + start.toLocalDate().lengthOfMonth();
-//        Date end = Date.valueOf(endDate);
-//
-//        ConvertDate date = new ConvertDate(startDate, endDate);
-//        return date;
-//    }
+    public static ConvertDate changeDate(int year, int month){
+
+        String startDate = year + "-" + month + "-" + "01";
+        Date start = Date.valueOf(startDate);
+
+        String endDate = year + "-" + month + "-" + start.toLocalDate().lengthOfMonth();
+        Date end = Date.valueOf(endDate);
+
+        ConvertDate date = new ConvertDate(startDate, endDate);
+        return date;
+    }
 
 //    @GetMapping("/salary/bonus")
 //    public ResponseEntity<ResponseDTO> selectBonusList(@RequestParam(required = false) Date date) {
