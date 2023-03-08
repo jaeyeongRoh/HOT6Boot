@@ -6,6 +6,10 @@ import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.GenericGenerator;
 
+import com.hotsix.titans.message.entity.Attachment;
+import com.hotsix.titans.message.entity.Message;
+
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -74,6 +78,10 @@ public class Member {
     @OneToMany
     @JoinColumn(name = "MEMBER_CODE")
     private List<RetireeHistory> retireeHistory; // 퇴직내역 일대다 매핑
+
+    @OneToMany(mappedBy = "member")
+    private List<Message> messages;
+                  // 조직 테이블 다대일 매핑
 
     @OneToMany
     @JoinColumn(name = "MEMBER_CODE")
