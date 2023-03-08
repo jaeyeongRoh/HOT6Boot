@@ -16,8 +16,8 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@DynamicInsert
 @Table(name = "TBL_MEMBER")
+@DynamicInsert
 public class Member {
 
     @Id
@@ -70,10 +70,6 @@ public class Member {
     @ManyToOne
     @JoinColumn(name = "RANK_CODE")
     private Rank rank;
-
-    @OneToMany
-    @JoinColumn(name = "TEAM_CODE")
-    private List<TeamRole> teamRole;
 
     @OneToMany
     @JoinColumn(name = "MEMBER_CODE")

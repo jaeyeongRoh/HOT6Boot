@@ -1,6 +1,5 @@
 package com.hotsix.titans.jwt;
 
-
 import com.hotsix.titans.exception.TokenException;
 import com.hotsix.titans.member.dto.TokenDTO;
 import com.hotsix.titans.member.entity.Member;
@@ -61,9 +60,7 @@ public class TokenProvider {
 	private static final String AUTHORITIES_KEY = "auth";
 	private static final String BEARER_TYPE = "Bearer";
 	private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 24;	// 30분(ms 단위)
-	
 	private final UserDetailsService userDetailsService;
-	
 	private final Key key;		// java.security.Key로 임포트 할 것
 
 	public TokenProvider(@Value("${jwt.secret}")String secretKey,
@@ -78,10 +75,10 @@ public class TokenProvider {
 		
 		log.info("[TokenProvider] generateTokenDTO Start ===============================");
 		List<String> roles = new ArrayList<>();
-		for(TeamRole teamRole : member.getTeamRole()) {
+		System.out.println(member.toString());
+		for(TeamRole teamRole : member.getTeam().getTemRole()) {
 			roles.add(teamRole.getAuthority().getAuthorityName());
 		}
-
 		log.info("[TokenProvider] authorities {}", roles); 		// SLF4J에서 제공하는 치환문자 활용(+(덧셈)같은 연산처리 작업 생략)
 
 		/* 1. 팀번호를 "sub"이라는 클레임으로 토큰에 추가 */

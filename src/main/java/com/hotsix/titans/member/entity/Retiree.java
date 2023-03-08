@@ -32,7 +32,7 @@ public class Retiree {
     private Long severanceMoney;
 
     @Column(name = "SEVERANCE_PAYMENTS_YN")
-    private String severancePaymentYN;
+    private String severancePaymentsYN;
 
     @Column(name = "PAYMENTS_DATE")
     private Date paymentsDate;

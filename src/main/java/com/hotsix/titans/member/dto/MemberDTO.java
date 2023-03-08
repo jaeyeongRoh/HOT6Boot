@@ -9,9 +9,9 @@ import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 @Getter
 @Setter
-@ToString
 public class MemberDTO implements UserDetails {
 
     private String memberCode;
@@ -26,10 +26,12 @@ public class MemberDTO implements UserDetails {
     private String workingStatus;
     private String memberGender;
     private String memberMarried;
+
     private int teamCode;
+
     private int rankCode;
-    private String teamName;    //@@
-    private String rankName;    //@@
+    private String teamName;
+    private String rankName;
     private List<TeamRoleDTO> teamRole;
     private List<ProfileImageDTO> profileImageDTOList;
 
@@ -73,30 +75,5 @@ public class MemberDTO implements UserDetails {
     public boolean isEnabled() {
         // TODO Auto-generated method stub
         return false;
-    }
-
-    @Override
-    public String toString() {
-        return "MemberDTO{" +
-                "memberCode='" + memberCode + '\'' +
-                ", memberPassword='" + memberPassword + '\'' +
-                ", memberName='" + memberName + '\'' +
-                ", memberEmail='" + memberEmail + '\'' +
-                ", inlinePhone='" + inlinePhone + '\'' +
-                ", memberPhone='" + memberPhone + '\'' +
-                ", memberAddress='" + memberAddress + '\'' +
-                ", memberBirth=" + memberBirth +
-                ", joinDate=" + joinDate +
-                ", workingStatus='" + workingStatus + '\'' +
-                ", memberGender='" + memberGender + '\'' +
-                ", memberMarried='" + memberMarried + '\'' +
-                ", teamCode=" + teamCode +
-                ", rankCode=" + rankCode +
-                ", teamName='" + teamName + '\'' +
-                ", rankName='" + rankName + '\'' +
-                ", teamRole=" + teamRole +
-                ", profileImageDTOList=" + profileImageDTOList +
-                ", authorities=" + authorities +
-                '}';
     }
 }
