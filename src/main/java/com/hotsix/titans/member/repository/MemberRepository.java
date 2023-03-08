@@ -4,6 +4,8 @@ import com.hotsix.titans.member.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
+
 public interface MemberRepository extends JpaRepository<Member, Integer> {
 
     Member findByMemberCode(String string);
@@ -17,4 +19,8 @@ public interface MemberRepository extends JpaRepository<Member, Integer> {
     /* purchase 도메인 추가하면서 추가한 메소드 */
     @Query("SELECT a.memberCode FROM Member a WHERE a.memberCode = ?1")
     int findMemberCodeByMemberCode(String orderMemberCode);
+
+    List<Member> findByWorkingStatus(String workingStatus);
+
+    List<Member> findByMemberNameContaining(String memberName);
 }
