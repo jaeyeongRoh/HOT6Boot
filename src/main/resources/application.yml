@@ -49,8 +49,8 @@ image:
 #  add-resource-handler: /productimgs/**
 
 
-#  image-dir: src/main/resources/static/productimgs
-#  image-url: http://localhost:8080/productimgs/
+  image-dir: src/main/resources/static/profileImages
+  image-url: http://localhost:8888/profileImages
 
 # Logging Level
 logging:
