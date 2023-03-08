@@ -26,9 +26,7 @@ public class MemberDTO implements UserDetails {
     private String workingStatus;
     private String memberGender;
     private String memberMarried;
-
     private int teamCode;
-
     private int rankCode;
     private String teamName;
     private String rankName;

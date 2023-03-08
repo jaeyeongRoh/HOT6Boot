@@ -11,9 +11,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.transaction.Transactional;
+import java.io.IOException;
 import java.util.UUID;
 
 @Service
@@ -45,69 +46,25 @@ public class MemberService {
         return modelMapper.map(member, MemberDTO.class);
     }
 
-//    @Transactional
-//    public Object registMember(MemberDTO memberDTO, MultipartFile memberImage) {
-//        log.info("[MemberService] registMember Start ===================================");
-//        log.info("[MemberService] memberDTO : " + memberDTO);
-//
-//        String imageName = UUID.randomUUID().toString().replace("-", "");
-//        String replaceFileName = null;
-//        int result = 0;
-//
-//        try {
-//
-//            /* util 패키지에 FileUploadUtils 추가 */
-//            replaceFileName = FileUploadUtils.saveFile(IMAGE_DIR, imageName, memberImage);
-//
-////            memberDTO.setProductImageUrl(replaceFileName);
-//
-//            memberDTO.getProfileImageDTOList().set(0, replaceFileName);
-//
-//            log.info("[MemberService] insert Image Name : ", replaceFileName);
-//
-//            Member registMember = modelMapper.map(memberDTO, Member.class);
-//
-//            memberRepository.save(registMember);
-//
-//            result = 1;
-//        } catch (Exception e) {
-//            FileUploadUtils.deleteFile(IMAGE_DIR, replaceFileName);
-//            throw new RuntimeException(e);
-//        }
-//
-//        return (result > 0) ? "신규 사원 등록 성공" : "신규 사원 등록 실패";
-//    }
+    @Transactional
+    public Object updateMyInfo(MemberDTO memberDTO) {
+        log.info("[MemberService] updateMyInfo Start ===================================");
 
-//    @Transactional
-//    public Object registMember(MemberDTO memberDTO, MultipartFile memberImage) {
-//        log.info("[MemberService] registMember Start ===================================");
-//        log.info("[MemberService] memberDTO : " + memberDTO);
-//
-//        String imageName = UUID.randomUUID().toString().replace("-", "");
-//        String replaceFileName = null;
-//        int result = 0;
-//
-//        try {
-//
-//            /* util 패키지에 FileUploadUtils 추가 */
-//            replaceFileName = FileUploadUtils.saveFile(IMAGE_DIR, imageName, memberImage);
-//
-////            memberDTO.setProductImageUrl(replaceFileName);
-//
-////            memberDTO.getProfileImageDTOList().set(0, replaceFileName);
-//
-//            log.info("[MemberService] insert Image Name : ", replaceFileName);
-//
-//            Member registMember = modelMapper.map(memberDTO, Member.class);
-//
-//            memberRepository.save(registMember);
-//
-//            result = 1;
-//        } catch (Exception e) {
-//            FileUploadUtils.deleteFile(IMAGE_DIR, replaceFileName);
-//            throw new RuntimeException(e);
-//        }
-//
-//        return (result > 0) ? "신규 사원 등록 성공" : "신규 사원 등록 실패";
-//    }
+        int result = 0;
+
+        /* 엔티티 조회 */
+        Member member = memberRepository.findById(memberDTO.getMemberCode()).get();
+
+        /* update를 위한 엔티티 값 수정 */
+        member.setMemberPhone(memberDTO.getMemberPhone());
+        member.setMemberEmail(memberDTO.getMemberEmail());
+        member.setMemberAddress(memberDTO.getMemberAddress());
+
+        if(member.getMemberPhone() == memberDTO.getMemberPhone()){
+            result = 1;
+        }
+
+        log.info("[MemberService] updateMyInfo End ===================================");
+        return (result > 0) ? "정보 업데이트 성공" : "정보 업데이트 실패";
+    }
 }

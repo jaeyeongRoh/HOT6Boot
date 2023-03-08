@@ -29,12 +29,11 @@ public class MemberController {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 성공", memberService.selectMyInfo(memberCode)));
     }
 
-//    @PostMapping(value = "/members")
-//    public ResponseEntity<ResponseDTO> registMember(@ModelAttribute MemberDTO memberDTO, MultipartFile memberImage) {
-//
-//        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "신규 사원 등록 성공",  memberService.registMember(memberDTO, memberImage)));
-//    }
+    @PutMapping(value = "/mypage/management/update/{memberCode}")
+    public ResponseEntity<ResponseDTO> updateProduct(@ModelAttribute MemberDTO memberDTO) {
 
+        System.out.println("memberDTO = " + memberDTO);
 
-
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "상품 수정 성공",  memberService.updateMyInfo(memberDTO)));
+    }
 }
