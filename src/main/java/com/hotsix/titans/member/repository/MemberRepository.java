@@ -4,9 +4,15 @@ import com.hotsix.titans.member.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
+
 public interface MemberRepository extends JpaRepository<Member, String> {
 
     Member findByMemberCode(String string);
+
+    List<Member> findByWorkingStatus(String workingStatus);
+
+    List<Member> findByMemberNameContaining(String memberName);
 //
 //    Member findByMemberEmail(String memberEmail);
 //

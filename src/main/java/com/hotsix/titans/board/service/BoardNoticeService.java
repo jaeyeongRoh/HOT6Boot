@@ -26,7 +26,9 @@ public class BoardNoticeService {
 
     public List<BoardNoticeDTO> listAll() {
 
-        List<BoardNotice> boardNoticeList = boardNoticeRepository.findAll();
+        char deleteYn = 'N';
+
+        List<BoardNotice> boardNoticeList = boardNoticeRepository.findByNoticeDeleteYN(deleteYn);
 
         System.out.println("boardNoticeList : " + boardNoticeList);
         return boardNoticeList.stream().map(boardNotice -> modelMapper.map(boardNotice, BoardNoticeDTO.class)).collect(Collectors.toList());

@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface BoardNoticeRepository extends JpaRepository<BoardNotice, String> {
 
-    List<BoardNotice> findAll();
+    List<BoardNotice> findByNoticeDeleteYN(char deleteYn);
 }
