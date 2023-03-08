@@ -1,14 +1,14 @@
 package com.hotsix.titans.electronicApproval.dto;
 
 import lombok.*;
-import java.sql.Date;
+import java.util.Date;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @ToString
-public class EASalayDTO {
+public class EASalaryDTO extends EADocumentDTO {
 
     private Date salCorrectionDate;
 }

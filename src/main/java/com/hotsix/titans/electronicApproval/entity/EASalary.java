@@ -20,5 +20,4 @@ public class EASalary extends EADocument {
 
     @Column(name = "SAL_CORRECTION_DATE")
     private Date salCorrectionDate;
-
 }
