@@ -65,7 +65,8 @@ public class SecurityConfig {
 		    																			// preflight request란?
 		    																			// 요청 할 url이 외부 도메인일 경우 웹 브라우저에서 자체 실행되며
 		    																			// options 메소드로 사전 요청을 보내게 된다.
-		    																			// 사전에 요청이 안전한지 확인하기 위함(유효한지 서버에 미리 파악할 수 있도록 보내는 수단이다.)
+				.antMatchers("/ea/**").permitAll()
+				.antMatchers("/ea/eaLeave/**").permitAll()// 사전에 요청이 안전한지 확인하기 위함(유효한지 서버에 미리 파악할 수 있도록 보내는 수단이다.)
 		    	.antMatchers("/auth/**").permitAll()
 				.antMatchers("/api/v1/annual/**").permitAll()
 		    	.antMatchers("/api/v1/reviews/**").permitAll()
