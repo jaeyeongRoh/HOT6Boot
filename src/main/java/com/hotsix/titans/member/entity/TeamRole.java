@@ -15,7 +15,7 @@ public class TeamRole {
 
 	@Id
 	@Column(name = "TEAM_CODE")
-	private int teamCode;
+	private int teamNo;
 
 	@Id
 	@Column(name = "AUTHORITY_CODE")
