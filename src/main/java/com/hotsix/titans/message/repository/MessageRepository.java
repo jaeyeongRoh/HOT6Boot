@@ -13,4 +13,6 @@ public interface MessageRepository extends JpaRepository<Message, Integer>  {
 
 
     List<Message> findByMemberCode(String memberCode);
+
+    Message findByMessageDeleteYn(String n);
 }
