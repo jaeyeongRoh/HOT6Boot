@@ -35,9 +35,6 @@ public class EADocument {
     @Column(name = "EA_SUBJECT")
     private String eaSubject;
 
-//    @Column(name = "EA_TYPE")
-//    private String eaType;
-
     @Column(name = "EA_DETAIL")
     private String eaDetail;
 

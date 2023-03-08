@@ -29,8 +29,8 @@ spring:
     show-sql: true
     database: oracle
     properties:
-      '[format_sql]': 'true'
       hibernate:
+        format_sql: 'true'
         hql:
           bulk_id_strategy: 'org.hibernate.hql.spi.id.inline.InlineIdsInClauseBulkIdStrategy'
 
