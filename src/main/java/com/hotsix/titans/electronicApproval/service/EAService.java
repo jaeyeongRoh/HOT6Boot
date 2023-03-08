@@ -2,7 +2,7 @@ package com.hotsix.titans.electronicApproval.service;
 
 import com.hotsix.titans.electronicApproval.dto.EADocumentDTO;
 import com.hotsix.titans.electronicApproval.dto.EALeaveDTO;
-import com.hotsix.titans.electronicApproval.dto.EASalayDTO;
+import com.hotsix.titans.electronicApproval.dto.EASalaryDTO;
 import com.hotsix.titans.electronicApproval.entity.EADocument;
 import com.hotsix.titans.electronicApproval.entity.EALeave;
 import com.hotsix.titans.electronicApproval.entity.EASalary;
@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -64,12 +63,12 @@ public class EAService {
 
     public Object selectAllSalary() {
         List<EASalary> eaSalaryList = eaSalaryRepository.findAll();
-        return eaSalaryList.stream().map(eaSalary -> modelMapper.map(eaSalary, EASalayDTO.class)).collect(Collectors.toList());
+        return eaSalaryList.stream().map(eaSalary -> modelMapper.map(eaSalary, EASalaryDTO.class)).collect(Collectors.toList());
     }
 
     public Object selectSalary(String eaCode) {
         EASalary eaSalary = eaSalaryRepository.findByEaCode(eaCode);
-        return modelMapper.map(eaSalary, EASalayDTO.class);
+        return modelMapper.map(eaSalary, EASalaryDTO.class);
     }
 
     @Transactional
@@ -91,10 +90,38 @@ public class EAService {
         eaLeave.setEaFinalComment(eaLeaveDTO.getEaFinalComment());
         eaLeave.setEaDocuStatus(eaLeaveDTO.getEaDocuStatus());
         eaLeave.setIsDeleted(eaLeaveDTO.getIsDeleted());
+        
         eaLeave.setLeaveStartDate(eaLeaveDTO.getLeaveStartDate());
         eaLeave.setLeaveEndDate(eaLeaveDTO.getLeaveEndDate());
 
         eaLeaveRepository.save(eaLeave);
+        int result = 1;
+        return result;
+    }
+
+    @Transactional
+    public Object insertSalary(EASalaryDTO eaSalaryDTO) {
+        EASalary eaSalary = new EASalary();
+        eaSalary.setEaCode(eaSalaryDTO.getEaCode());
+        eaSalary.setMemberDraft(eaSalaryDTO.getMemberDraft());
+        eaSalary.setMemberMiddleSigner(eaSalaryDTO.getMemberMiddleSigner());
+        eaSalary.setMemberFinalSigner(eaSalaryDTO.getMemberFinalSigner());
+        eaSalary.setEaSubject(eaSalaryDTO.getEaSubject());
+        eaSalary.setEaDetail(eaSalaryDTO.getEaDetail());
+        eaSalary.setEaCategory(eaSalaryDTO.getEaCategory());
+//        eaSalary.setEaType(eaSalaryDTO.getEaType());
+        eaSalary.setEaDate(eaSalaryDTO.getEaDate());
+        eaSalary.setEaDraftStatus(eaSalaryDTO.getEaDraftStatus());
+        eaSalary.setEaMiddleStatus(eaSalaryDTO.getEaMiddleStatus());
+        eaSalary.setEaMiddleComment(eaSalaryDTO.getEaMiddleComment());
+        eaSalary.setEaFinalStatus(eaSalaryDTO.getEaFinalStatus());
+        eaSalary.setEaFinalComment(eaSalaryDTO.getEaFinalComment());
+        eaSalary.setEaDocuStatus(eaSalaryDTO.getEaDocuStatus());
+        eaSalary.setIsDeleted(eaSalaryDTO.getIsDeleted());
+
+        eaSalary.setSalCorrectionDate(eaSalaryDTO.getSalCorrectionDate());
+
+        eaSalaryRepository.save(eaSalary);
         int result = 1;
         return result;
     }

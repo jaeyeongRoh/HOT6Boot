@@ -1,4 +1,4 @@
 package com.hotsix.titans.electronicApproval.dto;
 
-public class EAEntrDTO {
+public class EAEntireDTO {
 }

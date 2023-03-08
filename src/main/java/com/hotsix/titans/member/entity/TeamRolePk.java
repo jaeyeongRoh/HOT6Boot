@@ -12,7 +12,7 @@ import java.io.Serializable;
 /* 복합키 타입을 정의할 때는 Serializable을 반드시 구현 */
 public class TeamRolePk implements Serializable {
 
-	private int teamCode;
+	private int teamNo;
 	private int authorityCode;
 
 }
