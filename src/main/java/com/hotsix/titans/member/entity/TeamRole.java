@@ -4,7 +4,6 @@ import lombok.*;
 
 import javax.persistence.*;
 
-@AllArgsConstructor
 @NoArgsConstructor
 @ToString
 @Getter
@@ -27,5 +26,9 @@ public class TeamRole {
 	@JoinColumn(name = "AUTHORITY_CODE", insertable = false, updatable = false)
 	private Authority authority;
 
+	public TeamRole(int teamNo, int authorityCode) {
+		this.teamNo = teamNo;
+		this.authorityCode = authorityCode;
+	}
 }
 

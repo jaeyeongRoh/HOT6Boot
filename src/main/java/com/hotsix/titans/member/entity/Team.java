@@ -8,7 +8,6 @@ import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 @Getter
 @Setter
 @Entity
@@ -22,5 +21,7 @@ public class Team {
     @Column(name = "TEAM_NAME")
     private String teamName;
 
-
+    @OneToMany
+    @JoinColumn(name = "TEAM_CODE")
+    private List<TeamRole> temRole;
 }

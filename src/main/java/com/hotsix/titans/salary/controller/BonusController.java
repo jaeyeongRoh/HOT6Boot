@@ -1,5 +1,6 @@
 package com.hotsix.titans.salary.controller;
 
+import com.hotsix.titans.attendanceManagement.dto.LeaveCategoryDTO;
 import com.hotsix.titans.commons.ResponseDTO;
 import com.hotsix.titans.salary.dto.BonusDTO;
 import com.hotsix.titans.salary.service.BonusService;
@@ -33,6 +34,7 @@ public class BonusController {
         return date;
     }
 
+    /* 상여금 명단 조회 */
     @GetMapping("/salary/bonus")
     public ResponseEntity<ResponseDTO> selectBonusList(@RequestParam(required = false) Date date) {
 
@@ -54,5 +56,14 @@ public class BonusController {
 
         System.out.println("bonusList = " + bonusList);
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "이번 달 상여금 명단 조회 성공", bonusList));
+    }
+
+    /* 상여 명단 추가 */
+    @PostMapping("/salary/bonus/insert")
+    public ResponseEntity<ResponseDTO> insertBonus(@ModelAttribute BonusDTO bonusDTO) {
+
+        System.out.println("bonusDTO = " + bonusDTO);
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "상여 명단 등록 성공", bonusService.insertBonus(bonusDTO)));
     }
 }
