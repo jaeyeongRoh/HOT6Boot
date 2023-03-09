@@ -2,6 +2,7 @@ package com.hotsix.titans.member.entity;
 
 
 import com.hotsix.titans.commons.StringPrefixSequenceGenerator;
+import com.hotsix.titans.salary.entity.Salary;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.GenericGenerator;
@@ -11,12 +12,13 @@ import com.hotsix.titans.message.entity.Message;
 
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 @Getter
 @Setter
 @Entity
@@ -81,9 +83,49 @@ public class Member {
 
     @OneToMany(mappedBy = "member")
     private List<Message> messages;
-                  // 조직 테이블 다대일 매핑
 
     @OneToMany
     @JoinColumn(name = "MEMBER_CODE")
     private List<ProfileImage> profileImage;
+
+    @OneToMany
+    @JoinColumn(name = "MEMBER_CODE")
+    private List<Salary> salaryList;
+
+//    @OneToMany(mappedBy = "member")
+//    private List<Salary> salaryList = new ArrayList<>();
+
+//    public List<Salary> getSalaryList() {
+//        return salaryList.stream().collect(Collectors.toList());
+//    }
+
+
+//    @OneToMany
+//    @JoinColumn(name = "MEMBER_CODE")
+//    private List<AttenDance> attenDanceList;
+
+
+    @Override
+    public String toString() {
+        return "Member{" +
+                "memberCode='" + memberCode + '\'' +
+                ", memberPassword='" + memberPassword + '\'' +
+                ", memberName='" + memberName + '\'' +
+                ", memberEmail='" + memberEmail + '\'' +
+                ", inlinePhone='" + inlinePhone + '\'' +
+                ", memberPhone='" + memberPhone + '\'' +
+                ", memberAddress='" + memberAddress + '\'' +
+                ", memberBirth=" + memberBirth +
+                ", joinDate=" + joinDate +
+                ", workingStatus='" + workingStatus + '\'' +
+                ", memberGender='" + memberGender + '\'' +
+                ", memberMarried='" + memberMarried + '\'' +
+                ", team=" + team +
+                ", rank=" + rank +
+                ", retireeHistory=" + retireeHistory +
+                ", messages=" + messages +
+                ", profileImage=" + profileImage +
+                ", salaryList=" + salaryList +
+                '}';
+    }
 }

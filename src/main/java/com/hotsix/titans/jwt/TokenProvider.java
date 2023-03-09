@@ -76,7 +76,7 @@ public class TokenProvider {
 		log.info("[TokenProvider] generateTokenDTO Start ===============================");
 		List<String> roles = new ArrayList<>();
 		System.out.println(member.toString());
-		for(TeamRole teamRole : member.getTeam().getTemRole()) {
+		for(TeamRole teamRole : member.getTeam().getTeamRole()) {
 			roles.add(teamRole.getAuthority().getAuthorityName());
 		}
 		log.info("[TokenProvider] authorities {}", roles); 		// SLF4J에서 제공하는 치환문자 활용(+(덧셈)같은 연산처리 작업 생략)

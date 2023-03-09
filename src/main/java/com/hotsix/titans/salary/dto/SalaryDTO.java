@@ -24,8 +24,12 @@ public class SalaryDTO {
     private Long incomTax;
     private Long healthTax;
     private Long nationalTax;
+    private Long totalTax;
+    private int totalTime;
+    private String rankName;
+    private String teamName;
     private BonusDTO bonus;
     private TaxDTO tax;
-    private MemberDTO member;
+    private String member;
 
 }

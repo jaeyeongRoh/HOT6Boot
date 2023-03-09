@@ -29,6 +29,7 @@ public class BonusService {
         return bonusList.stream()
                 .map(bonus -> modelMapper.map(bonus, BonusDTO.class))
                 .collect(Collectors.toList());
+
     }
 
     @Transactional

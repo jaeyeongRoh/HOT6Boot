@@ -5,7 +5,6 @@ import lombok.*;
 import javax.persistence.*;
 
 @NoArgsConstructor
-@ToString
 @Getter
 @Setter
 @Entity
@@ -29,6 +28,15 @@ public class TeamRole {
 	public TeamRole(int teamNo, int authorityCode) {
 		this.teamNo = teamNo;
 		this.authorityCode = authorityCode;
+	}
+
+	@Override
+	public String toString() {
+		return "TeamRole{" +
+				"teamNo=" + teamNo +
+				", authorityCode=" + authorityCode +
+				", authority=" + authority +
+				'}';
 	}
 }
 

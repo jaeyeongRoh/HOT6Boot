@@ -56,6 +56,9 @@ public class Salary {
     @Column(name = "SALARY_PAYMENTS_YN")
     private String paymentsYn;
 
+    @Column(name = "MEMBER_CODE")
+    private String memberCode;
+
     @ManyToOne
     @JoinColumn(name = "TAX_CODE")
     private Tax tax;
@@ -63,10 +66,6 @@ public class Salary {
     @OneToOne
     @JoinColumn(name = "BONUS_CODE")
     private Bonus bonus;
-
-    @ManyToOne
-    @JoinColumn(name = "MEMBER_CODE")
-    private Member member;
 
     @Override
     public String toString() {
@@ -81,9 +80,9 @@ public class Salary {
                 ", nationalTax=" + nationalTax +
                 ", paymentDate=" + paymentDate +
                 ", paymentsYn='" + paymentsYn + '\'' +
+                ", memberCode='" + memberCode + '\'' +
                 ", tax=" + tax +
                 ", bonus=" + bonus +
-                ", member=" + member +
                 '}';
     }
 }
