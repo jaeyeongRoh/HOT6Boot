@@ -34,6 +34,7 @@ public class EAController {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 개별 조회성공", eaService.selectDocumentCode(eaCode)));
     }
 
+
     /**
      * 전자결재 전체 리스트 조회 API
      *
@@ -55,7 +56,7 @@ public class EAController {
         ResponseDTO responseDTO = new ResponseDTO();
 
         EALeaveDTO eaLeaveDTO = new EALeaveDTO();
-        eaLeaveDTO.setEaCode("25");
+        eaLeaveDTO.setEaCode("104");
         eaLeaveDTO.setMemberDraft("150003");
         eaLeaveDTO.setMemberMiddleSigner("150006");
         eaLeaveDTO.setMemberFinalSigner("160009");
@@ -74,10 +75,9 @@ public class EAController {
 
         eaLeaveDTO.setLeaveStartDate(LocalDate.now());
         eaLeaveDTO.setLeaveEndDate(LocalDate.now());
-
-        System.out.println(eaLeaveDTO);
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 휴가신청 insert 성공", eaService.insertLeave(eaLeaveDTO)));
     }
+
 
     /**
      * 전자결재 휴가신청 전체 리스트 조회 API
@@ -91,6 +91,17 @@ public class EAController {
 
 
     /**
+     * 전자결재 휴가신청 개별 조회 API
+     * @param eaCode
+     * @return
+     */
+    @GetMapping("/eaLeave/{eaCode}")
+    public ResponseEntity<ResponseDTO> selectLeave(@PathVariable String eaCode){
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 휴가신청 개별 조회 성공", eaService.selectLeave(eaCode)));
+    }
+
+
+    /**
      * 전자결재 급여정정 전체 리스트 조회 API
      *
      * @return
@@ -99,6 +110,7 @@ public class EAController {
     public ResponseEntity<ResponseDTO> selectAllSalary() {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 급여정정 리스트 조회성공", eaService.selectAllSalary()));
     }
+
 
     /**
      * 전자결재 급여정정 개별 조회 API
@@ -112,16 +124,14 @@ public class EAController {
 
 
     /**
-     * 급여정정 insert API
+     * 전자결재 급여정정 insert API
      *
      * @return
      */
     @PostMapping("/eaSalary/insert")
     public ResponseEntity<ResponseDTO> insertSalary() {
-        ResponseDTO responseDTO = new ResponseDTO();
-
         EASalaryDTO eaSalaryDTO = new EASalaryDTO();
-        eaSalaryDTO.setEaCode("27");
+        eaSalaryDTO.setEaCode("201");
         eaSalaryDTO.setMemberDraft("150003");
         eaSalaryDTO.setMemberMiddleSigner("150006");
         eaSalaryDTO.setMemberFinalSigner("160009");
@@ -143,6 +153,20 @@ public class EAController {
         System.out.println(eaSalaryDTO);
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 급여정정 insert 성공", eaService.insertSalary(eaSalaryDTO)));
     }
+
+
+    @GetMapping("/")
+    public ResponseEntity<ResponseDTO> selectAllLoa(){
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 급여정정 리스트 조회성공", eaService.selectAllLoa()));
+    }
+
+
+
+
+
+
+
+
 
 
     /* 전자결재 결재자 승인/반려 처리

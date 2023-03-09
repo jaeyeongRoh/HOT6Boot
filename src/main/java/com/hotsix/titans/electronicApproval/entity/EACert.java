@@ -12,11 +12,11 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "TBL_EA_CERT")
+@DiscriminatorValue("증명서 신청")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-@DiscriminatorValue("증명서 신청")
 public class EACert extends EADocument {
 
     @Column(name = "CERT_CATEGORY")

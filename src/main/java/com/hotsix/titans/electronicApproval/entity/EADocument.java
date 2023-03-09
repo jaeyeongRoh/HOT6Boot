@@ -12,7 +12,7 @@ import java.util.Date;
 @Entity
 @Table(name="TBL_EA")
 @Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn(name="EA_TYPE")
+@DiscriminatorColumn
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -34,6 +34,10 @@ public class EADocument {
 
     @Column(name = "EA_SUBJECT")
     private String eaSubject;
+
+    /* 읽기 전용으로 설정해야 DTO에 mapping이 가능함. */
+    @Column(name = "DTYPE", insertable=false, updatable = false)
+    private String dtype;
 
     @Column(name = "EA_DETAIL")
     private String eaDetail;
@@ -64,5 +68,6 @@ public class EADocument {
 
     @Column(name = "IS_DELETED")
     private String isDeleted;
+
 
 }
