@@ -1,6 +1,9 @@
 package com.hotsix.titans.salary.service;
 
 import com.hotsix.titans.exception.SalaryPaymentsYnException;
+import com.hotsix.titans.member.dto.MemberDTO;
+import com.hotsix.titans.member.entity.Member;
+import com.hotsix.titans.member.repository.MemberRepository;
 import com.hotsix.titans.salary.dto.SalaryDTO;
 import com.hotsix.titans.salary.entity.Bonus;
 import com.hotsix.titans.salary.entity.Salary;
@@ -23,10 +26,12 @@ public class SalaryService {
 
     private final SalaryRepository salaryRepository;
     private final ModelMapper modelMapper;
+    private final MemberRepository memberRepository;
 
-    public SalaryService(SalaryRepository salaryRepository, ModelMapper modelMapper) {
+    public SalaryService(SalaryRepository salaryRepository, ModelMapper modelMapper, MemberRepository memberRepository) {
         this.salaryRepository = salaryRepository;
         this.modelMapper = modelMapper;
+        this.memberRepository = memberRepository;
     }
 
 
@@ -107,5 +112,16 @@ public class SalaryService {
         salaryRepository.save(salary);
 
         return salary;
+    }
+
+
+    public MemberDTO selectMemberName(String memberName) {
+
+        Member members = memberRepository.findByMemberName(memberName);
+
+        System.out.println("members = " + members);
+
+        return modelMapper.map(members, MemberDTO.class);
+//                members.stream().map(member -> modelMapper.map(member, MemberDTO.class)).collect(Collectors.toList());
     }
 }

@@ -58,5 +58,13 @@ public class SalaryController {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "급여 지급상태 변경 성공", salaryService.updateSalaryPaymentsYn(salaryCode)));
     }
 
+    /* 사원이름 입력받아 검색 */
+    @GetMapping("/salary/check/insert/{memberName}")
+    public ResponseEntity<ResponseDTO> selectMemberName(@PathVariable String memberName) {
+
+        System.out.println("memberName =================== " + memberName);
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 성공", salaryService.selectMemberName(memberName)));
+    }
+
 
 }
