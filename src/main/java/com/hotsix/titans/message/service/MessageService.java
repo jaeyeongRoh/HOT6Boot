@@ -105,6 +105,7 @@ public class MessageService {
             message.setMessageSendDate(new Date());
             message.setMessageReadYn("N");
             message.setMessageDeleteYn("N");
+
             message.setMemberCode(memberCode);
 //          message.setMessageDeleteDate();
 
@@ -126,6 +127,8 @@ public class MessageService {
                    messageHistory.setMessageCode((message.getMessageCode()));
                    messageHistory.setMessageReceiver(messageDTO.getRecipients().get(i).getName());
                    messageHistory.setMessageReceiverEmail(messageDTO.getRecipients().get(i).getEmail());
+                   messageHistory.setMessageReceiverDeleteYn("N");
+                   messageHistory.setMessageReceiverDeleteYnFinal("N");
                    log.info("==============" + i);
                    messageHistoryRepository.save(messageHistory);
                }
@@ -147,7 +150,7 @@ public class MessageService {
         String memberEmail = "jominseo@titan.com";
 
 
-        List<MessageHistory> messageHistory = messageHistoryRepository.findByMessageReceiverEmail(memberEmail);
+        List<MessageHistory> messageHistory = messageHistoryRepository.findByMessageReceiverEmailAndMessageReceiverDeleteYn(memberEmail, "N");
         List<String> ReceivedMessage = new ArrayList<>();
 
         for(int i=0; i<messageHistory.size(); i++){

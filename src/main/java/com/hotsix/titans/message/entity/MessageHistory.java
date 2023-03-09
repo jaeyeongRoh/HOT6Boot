@@ -31,7 +31,11 @@ public class MessageHistory implements Serializable {
     @Column(name = "MESSAGE_RECEIVER_EMAIL")
     private String messageReceiverEmail;
 
+    @Column(name = "MESSAGE_RECEIVER_DELETE_YN")
+    private String messageReceiverDeleteYn;
 
+    @Column(name = "MESSAGE_RECEIVER_DELETE_YN_FINAL")
+    private String messageReceiverDeleteYnFinal;
 
 
 
