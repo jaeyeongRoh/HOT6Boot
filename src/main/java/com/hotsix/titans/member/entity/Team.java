@@ -24,4 +24,13 @@ public class Team {
     @OneToMany
     @JoinColumn(name = "TEAM_CODE")
     private List<TeamRole> temRole;
+
+    @Override
+    public String toString() {
+        return "Team{" +
+                "teamCode=" + teamCode +
+                ", teamName='" + teamName + '\'' +
+                '}';
+    }
 }
+

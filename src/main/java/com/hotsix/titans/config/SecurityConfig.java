@@ -73,6 +73,7 @@ public class SecurityConfig {
 				.antMatchers("/auth/signup/**").permitAll()	//@@ 신규 사원 등록
 				.antMatchers("/api/v1/mypage/**").permitAll()
 				.antMatchers("/api/v1/salary/**").permitAll()
+				.antMatchers("/api/v1/organization/**").permitAll()
 //		    	.antMatchers("/api/**").hasRole("MEMBER")
 //		    	.antMatchers("/api/**").hasRole("ADMIN")
 				.antMatchers("/api/**").hasAnyRole("MEMBER", "ADMIN")
