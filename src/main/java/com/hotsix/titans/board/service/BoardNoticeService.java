@@ -4,7 +4,10 @@ import com.hotsix.titans.board.dto.BoardNoticeDTO;
 import com.hotsix.titans.board.entity.BoardNotice;
 import com.hotsix.titans.board.repository.BoardNoticeRepository;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -14,8 +17,15 @@ import java.util.stream.Collectors;
 @Service
 public class BoardNoticeService {
 
+    private static final Logger log = LoggerFactory.getLogger(BoardNoticeService.class);
     private final BoardNoticeRepository boardNoticeRepository;
     private final ModelMapper modelMapper;
+
+    /* 이미지 저장 할 위치 및 응답 할 이미지 주소(WebConfig 설정파일 추가하기) */
+//    @Value("${image.image-dir}")
+//    private String IMAGE_DIR;
+//    @Value("${image.image-url}")
+//    private String IMAGE_URL;
 
     @Autowired
     public BoardNoticeService(BoardNoticeRepository boardNoticeRepository, ModelMapper modelMapper) {
@@ -35,26 +45,6 @@ public class BoardNoticeService {
         // 엔티티 객체로 받아온 것을 DTO로 변환 왜
     }
 
-//    @Transactional
-//    public Object insertBoardNotice(BoardNoticeDTO boardNoticeDTO) {
-//
-//        int result = 0;
-//
-//        try {
-//
-//            BoardNotice insertBoardNotice = modelMapper.map(boardNoticeDTO, BoardNotice.class);
-//
-//            boardNoticeRepository.save(insertBoardNotice);
-//
-//            result = 1;
-//        } catch (Exception e) {
-//
-//            throw new RuntimeException(e);
-//        }
-//
-//        return (result > 0) ? "입력 성공" : "입력 실패";
-//    }
-
     @Transactional
     public Object insertBoardNotice(BoardNoticeDTO boardNoticeDTO) {
         BoardNotice boardNotice = new BoardNotice();
@@ -70,31 +60,4 @@ public class BoardNoticeService {
         int result = 1;
         return result;
     }
-//
-//    @Transactional
-//    public Object insertBoardNoticeCategory(BoardNoticeCategoryDTO boardNoticeCategoryDTO) {
-//
-//        int result = 0;
-//
-//        try {
-//
-//            BoardNoticeCategory insertBoardNoticeCategory = modelMapper.map(boardNoticeCategoryDTO, BoardNoticeCategory.class);
-//
-//            boardNoticeRepository.save(insertBoardNoticeCategory);
-//
-//            result = 1;
-//        } catch (Exception e) {
-//
-//            throw new RuntimeException(e);
-//        }
-//
-//        return (result > 0) ? "입력 성공" : "입력 실패";
-//    }
-//
-//    @Transactional
-//    public Object deleteBoardNoticeCategory(String boardNoticeCategoryCode) {
-//
-//        int result = boardNoticeRepository.deleteByBoardNoticeCategoryCode(boardNoticeCategoryCode);
-//        return (result > 0) ? "휴가 기준 삭제 성공" : "휴가 기준 삭제 실패";
-//    }
 }

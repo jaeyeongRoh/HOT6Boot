@@ -1,5 +1,6 @@
 package com.hotsix.titans.board.dto;
 
+import com.hotsix.titans.member.dto.MemberDTO;
 import lombok.*;
 
 import java.sql.Date;
@@ -18,4 +19,5 @@ public class BoardNoticeDTO {
     private int noticeCount;
     private String noticeContent;
     private char noticeDeleteYN;
+    private MemberDTO member;
 }

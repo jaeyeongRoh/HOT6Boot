@@ -1,7 +1,7 @@
 package com.hotsix.titans.board.entity;
 
+import com.hotsix.titans.member.entity.Member;
 import lombok.*;
-import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -43,6 +43,10 @@ public class BoardNotice {
 
     @Column(name = "NOTICE_DELETE_YN")
     private char noticeDeleteYN;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "MEMBER_CODE", insertable = false, updatable = false)
+    private Member member;
 
 }
 
