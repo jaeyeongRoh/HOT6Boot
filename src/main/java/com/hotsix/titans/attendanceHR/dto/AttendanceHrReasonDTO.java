@@ -9,7 +9,7 @@ import java.util.Date;
 @Getter
 @Setter
 @ToString
-public class AttendanceHrReason {
+public class AttendanceHrReasonDTO {
 
     private String	reasonCode;
     private String	commuteNo;
@@ -23,6 +23,7 @@ public class AttendanceHrReason {
     private Date    reasonFcreate;
     private String	reasonStatus;
     private String	reasonDyn;
+    private AttendanceHrDTO attendanceHr;
 
 
 }
