@@ -20,6 +20,22 @@ public class MessageDTO {
     private String messageDeleteYn;
     private Date messageDeleteDate;
     private List<AttachmentDTO> attachment;
+    private List<Recipient> recipients; // 수신자들
+    private List<MessageHistoryDTO> messageHistoryDTO;
+    private String memberCode;
+    private String memberName;
+    private String memberEmail;
+    private String messageReceiver;
+
+    public List<Recipient> getRecipients() {
+        return recipients;
+    }
+
+    public void setRecipients(List<Recipient> recipients) {
+        this.recipients = recipients;
+    }
+
+
 
 
 }
