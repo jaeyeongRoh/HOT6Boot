@@ -8,7 +8,8 @@ import lombok.*;
 @Getter
 @Setter
 public class TeamRoleDTO {
-	private int teamNo;
+
+	private int teamCode;
 	private int authorityCode;		// 엔티티를 작성하고 복합키 설정에 용이하기 위함이자 MemberRole insert나 update에서 필수!
 	private AuthorityDTO authority;
 
