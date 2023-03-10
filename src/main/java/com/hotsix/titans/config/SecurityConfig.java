@@ -73,6 +73,7 @@ public class SecurityConfig {
 				.antMatchers("/api/v1/reviews/**").permitAll()
 				.antMatchers("/api/v1/members/**").permitAll()	//@@ 페이지 권한
 				.antMatchers("/auth/signup/**").permitAll()	//@@ 신규 사원 등록
+				.antMatchers("/api/v2/board/**").permitAll() // 추후 수정 필요
 				.antMatchers("/api/v1/mypage/**").permitAll()
 				.antMatchers("/api/v1/salary/**").permitAll()
 //		    	.antMatchers("/api/**").hasRole("MEMBER")
