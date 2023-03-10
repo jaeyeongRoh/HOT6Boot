@@ -44,7 +44,7 @@ public class BoardNotice {
     @Column(name = "NOTICE_DELETE_YN")
     private char noticeDeleteYN;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne // (fetch = FetchType.LAZY)
     @JoinColumn(name = "MEMBER_CODE", insertable = false, updatable = false)
     private Member member;
 
