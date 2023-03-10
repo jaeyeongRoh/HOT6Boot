@@ -12,10 +12,12 @@ import java.util.Date;
 public class ProfileImageDTO {
 
     private String profileImageCode;
+    private String memberCode;
     private String profileImageOriginName;
     private String profileImageChangeName;
     private String profileImageType;
     private String profileImageLocation;
     private Date profileImageCreateDate;
     private String profileImageDeleteYn;
+
 }

@@ -2,6 +2,8 @@ package com.hotsix.titans.member.controller;
 
 import com.hotsix.titans.commons.ResponseDTO;
 import com.hotsix.titans.member.dto.MemberDTO;
+import com.hotsix.titans.member.dto.ProfileImageDTO;
+import com.hotsix.titans.member.entity.ProfileImage;
 import com.hotsix.titans.member.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,8 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.web.multipart.MultipartFile;
 
-/*
- * @RestController, @ResponseBody, ResponseEntity, CORS
+/* @RestController, @ResponseBody, ResponseEntity, CORS
  *
  * 1. @RestController(@Controller + @ResponseBody)란
  *    @ResponseBody를 포함한 컨트롤러로 응답 body에 담긴 데이터는 Spring boot에서 기본적으로 제공하는
@@ -44,26 +45,30 @@ public class AuthController {
                 .ok()
                 .body(new ResponseDTO(HttpStatus.OK, "로그인 성공", authService.login(memberDTO)));
 
-        /*
-         * ResponseEntity의 body메소드를 통해 Response객체의 body에 담기는 ResponseDTO는 JSON문자열이 되고
+        /* ResponseEntity의 body메소드를 통해 Response객체의 body에 담기는 ResponseDTO는 JSON문자열이 되고
          * 화면단이 React인 곳으로 가면 결국 Store에 해당 리듀서가 관리하는 state 값이 된다.(가장 중요!!!!!!!!!!)
          */
     }
 
-//    @Operation(summary = "신규 사원 등록 요청", description = "신규 사원 등록이 진행됩니다.", tags = {"AuthController"})
-//    @PostMapping("/signup")
-//    public ResponseEntity<ResponseDTO> signup(@RequestBody MemberDTO memberDTO) {	// 신규 사원 정보를 받아 냄
-//        return ResponseEntity
-//                .ok()
-//                .body(new ResponseDTO(HttpStatus.CREATED, "신규 사원 등록 성공", authService.signup(memberDTO)));
-//    }
-
+    @Operation(summary = "신규 사원 등록 요청", description = "신규 사원 등록이 진행됩니다.", tags = {"AuthController"})
     @PostMapping(value = "/signup")
-    public ResponseEntity<ResponseDTO> registMember(@ModelAttribute MemberDTO memberDTO, MultipartFile memberImage) {
+    public ResponseEntity<ResponseDTO> registMember(@ModelAttribute MemberDTO memberDTO, @ModelAttribute ProfileImageDTO profileImageDTO, @RequestParam("memberImage") MultipartFile memberImage) { // 신규 사원 정보를 받아 냄
 
         System.out.println("memberDTO = " + memberDTO);
+        System.out.println("profileImageDTO = " + profileImageDTO);
+        System.out.println("memberImage = " + memberImage);
 
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "신규 사원 등록 성공", authService.registMember(memberDTO)));
+        return ResponseEntity
+                .ok()
+                .body(new ResponseDTO(HttpStatus.OK, "신규 사원 등록 성공", authService.registMember(memberDTO, profileImageDTO, memberImage)));
     }
+
+//    @PostMapping(value = "/signup")
+//    public ResponseEntity<ResponseDTO> profileImageUpload(@ModelAttribute ProfileImageDTO profileImageDTO, MultipartFile memberImage) {
+//
+//        return ResponseEntity
+//                .ok()
+//                .body(new ResponseDTO(HttpStatus.OK, "프로필 이미지 업로드 성공", authService.profileImageUpload(profileImageDTO, memberImage)));
+//    }
 
 }
