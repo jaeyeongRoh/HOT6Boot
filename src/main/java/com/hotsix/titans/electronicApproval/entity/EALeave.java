@@ -19,7 +19,6 @@ import java.time.LocalDate;
 @Table(name = "TBL_EA_LEAVE")
 public class EALeave extends EADocument {
 
-
     @Column(name = "LEAVE_START_DATE")
     private LocalDate leaveStartDate;
 

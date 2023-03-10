@@ -7,6 +7,7 @@ import com.hotsix.titans.attendanceManagement.entity.LeavePaymentHistory;
 import com.hotsix.titans.attendanceManagement.repository.LeavePaymentHistoryRepository;
 import com.hotsix.titans.attendanceManagement.service.LeaveService;
 import com.hotsix.titans.commons.ResponseDTO;
+import com.hotsix.titans.member.dto.MemberAndEaLeaveDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,7 +20,6 @@ import java.util.List;
 public class LeaveController {
 
     private final LeaveService leaveService;
-
     @Autowired
     public LeaveController(LeaveService leaveService) {
         this.leaveService = leaveService;
@@ -49,10 +49,19 @@ public class LeaveController {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK,"휴가기준 삭제 성공",leaveService.deleteLeaveCategory(leaveCategoryCode)));
     }
 
+    /* 마이페이지 나의 휴가 정보 */
     @GetMapping("/mypage/main/{memberCode}")
     public ResponseEntity<ResponseDTO> selectMyMemberInfo(@PathVariable String memberCode) {
 
         List<LeavePaymentHistoryDTO> leavePaymentHistoryList = leaveService.selectMyLeaveInfo(memberCode);
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK,"조회성공",(Object) leavePaymentHistoryList));
+    }
+
+    /* 휴가 결제 완료 리스트 */
+    @GetMapping("/annual/payment")
+    public ResponseEntity<ResponseDTO> selectMemberAndEaLeave() {
+
+        List<MemberAndEaLeaveDTO> memberAndEaLeaveList = leaveService.selectMemberAndEaLeave();
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK,"조회성공",(Object) memberAndEaLeaveList));
     }
 }
