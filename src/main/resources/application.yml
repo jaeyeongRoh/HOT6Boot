@@ -1,12 +1,6 @@
 server:
   port: 8888
 
-hibernate:
-  discriminator:
-    ignore_explicit_for_joined: 'true'
-
-
-
 spring:
   datasource:
     driver-class-name: oracle.jdbc.driver.OracleDriver
@@ -33,6 +27,7 @@ spring:
         format_sql: 'true'
         hql:
           bulk_id_strategy: 'org.hibernate.hql.spi.id.inline.InlineIdsInClauseBulkIdStrategy'
+
 
 
 jwt:

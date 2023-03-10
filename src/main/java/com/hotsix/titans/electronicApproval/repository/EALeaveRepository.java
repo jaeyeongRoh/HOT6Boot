@@ -8,4 +8,5 @@ import java.util.List;
 public interface EALeaveRepository extends JpaRepository<EALeave, Integer> {
 
     List<EALeave> findAll();
+    EALeave findByEaCode(String eaCode);
 }

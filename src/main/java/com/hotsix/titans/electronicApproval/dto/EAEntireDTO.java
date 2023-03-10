@@ -1,6 +1,5 @@
 package com.hotsix.titans.electronicApproval.dto;
 
-
 import lombok.*;
 
 import java.util.Date;
@@ -10,9 +9,7 @@ import java.util.Date;
 @Getter
 @Setter
 @ToString
-public class EALoaDTO {
+public class EAEntireDTO extends EADocumentDTO {
 
-
-    private Date loaDate;
-    private String loaCategory;
+    private Date entireDate;
 }

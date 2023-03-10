@@ -1,5 +1,6 @@
 package com.hotsix.titans.electronicApproval.entity;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,19 +10,16 @@ import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import java.util.Date;
 
 @Entity
-@Table(name = "TBL_EA_CERT")
-@DiscriminatorValue("증명서 신청")
+@Table(name = "TBL_EA_ENTR")
+@DiscriminatorValue("퇴직신청")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class EACert extends EADocument {
-
-    @Column(name = "CERT_CATEGORY")
-    private String certCategory;
-
-    @Column(name = "CERT_REQUIRE_COUNT")
-    private Integer certRequireCount;
+public class EAEntire extends EADocument {
+    @Column(name = "ENTIRE_DATE")
+    private Date entireDate;
 }
