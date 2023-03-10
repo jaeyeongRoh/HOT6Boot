@@ -17,8 +17,4 @@ public class TaxDTO {
     private Double incomTaxRate;
     private Double healthTaxRate;
     private Double NationalTaxRate;
-
-    @OneToMany
-    @JoinColumn(name = "TAX_CODE")
-    private Salary salary;
 }

@@ -8,15 +8,12 @@ import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.GenericGenerator;
 
-import com.hotsix.titans.message.entity.Attachment;
 import com.hotsix.titans.message.entity.Message;
 
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @NoArgsConstructor
