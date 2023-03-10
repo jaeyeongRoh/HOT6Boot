@@ -34,6 +34,50 @@ public class SalaryService {
         this.memberRepository = memberRepository;
     }
 
+    /* 날짜에 따른 내 급여 조회 */
+    public List<SalaryDTO> selectMySalary(String memberCode, Date start, Date end) {
+
+        List<Salary> salaryList = salaryRepository.findByMemberCodeAndPaymentDateBetween(memberCode, start, end);
+
+        List<SalaryDTO> selectSalary = new ArrayList<>();
+        for(Salary salary : salaryList) {
+            Bonus bonus = salary.getBonus();
+            Long bonusSalary = bonus != null ? bonus.getBonusSalary() : 0L;
+            Tax tax = salary.getTax();
+
+            System.out.println("bonus = " + bonus);
+            System.out.println("bonusSalary = " + bonusSalary);
+            System.out.println("tax = " + tax);
+
+            Long beforeSalary = salary.getBasicSalary() + salary.getMealSalary() + bonusSalary;
+
+            System.out.println("beforeSalary = " + beforeSalary);
+
+            Double incomTaxRate = tax.getIncomTaxRate();
+            Double healthTaxRate = tax.getHealthTaxRate();
+            Double natinalTaxRate = tax.getNationalTaxRate();
+
+            Long incomTax = Math.round(beforeSalary * incomTaxRate);
+            Long healthTax = Math.round(beforeSalary * healthTaxRate);
+            Long nationalTax = Math.round(beforeSalary * natinalTaxRate);
+
+            Long afterSalary = beforeSalary - (incomTax + healthTax + nationalTax);
+
+            SalaryDTO salaryDTO = modelMapper.map(salary, SalaryDTO.class);
+            salaryDTO.setBeforeSalary(beforeSalary);
+            salaryDTO.setAfterSalary(afterSalary);
+            salaryDTO.setIncomTax(incomTax);
+            salaryDTO.setHealthTax(healthTax);
+            salaryDTO.setNationalTax(nationalTax);
+
+            selectSalary.add(salaryDTO);
+        }
+
+
+        return salaryList.stream()
+                .map(salary -> modelMapper.map(salary, SalaryDTO.class))
+                .collect(Collectors.toList());
+    }
 
     /* 지급 여부에 따른 급여 전체 목록 조회 */
     public List<SalaryDTO> selectPaymentYNSalary(String paymentsYn, Date start, Date end) {
@@ -80,7 +124,46 @@ public class SalaryService {
                 .collect(Collectors.toList());
     }
 
-    /* 급여 등록 */
+    /* 급여 지급하여 급여상태 변경 */
+    public Object updateSalaryPaymentsYn(String salaryCode) {
+
+        Salary salary = salaryRepository.findById(salaryCode).orElseThrow(() -> new RuntimeException(salaryCode));
+        if (salary.getPaymentsYn().equals("N")) {
+            salary.setPaymentsYn("Y");
+        } else {
+            throw new SalaryPaymentsYnException("이미 급여가 지급되었습니다.");
+        }
+        salaryRepository.save(salary);
+
+        return salary;
+    }
+
+
+    /* 사원 이름 입력하여 정보 가져오기 */
+    public MemberDTO selectMemberName(String memberName) {
+
+        Member members = memberRepository.findByMemberName(memberName);
+
+        System.out.println("members = " + members);
+
+        /* 저번 달의 1일~말일의 총 근무시간 */
+//        int totalTime = members.getAttendenceList();
+
+        /* 사원 시급 */
+//        Long hourlyMoney = members.getRank().getHourlyMoney();
+
+        /* 지급 될 기본 급(총 근무시간 * 사원 시급) */
+//        Long basicSalary = totalTime * hourlyMoney;
+        
+        /* 세전 급액 계산 */
+
+//        Long beforeSalary = basicSalary + mealSalary + bonusSalary;
+
+        return modelMapper.map(members, MemberDTO.class);
+//                members.stream().map(member -> modelMapper.map(member, MemberDTO.class)).collect(Collectors.toList());
+    }
+
+    /* 입력받은 사원 정보에서 급여 등록 */
     public Object insertSalary(SalaryDTO salaryDTO) {
 
         int result = 0;
@@ -98,30 +181,5 @@ public class SalaryService {
         }
 
         return (result > 0) ? "등록 성공" : "등록 실패";
-    }
-
-    /* 급여 지급하여 급여상태 변경 */
-    public Object updateSalaryPaymentsYn(String salaryCode) {
-
-        Salary salary = salaryRepository.findById(salaryCode).orElseThrow(() -> new RuntimeException(salaryCode));
-        if (salary.getPaymentsYn().equals("N")) {
-            salary.setPaymentsYn("Y");
-        } else {
-            throw new SalaryPaymentsYnException("이미 급여가 지급되었습니다.");
-        }
-        salaryRepository.save(salary);
-
-        return salary;
-    }
-
-
-    public MemberDTO selectMemberName(String memberName) {
-
-        Member members = memberRepository.findByMemberName(memberName);
-
-        System.out.println("members = " + members);
-
-        return modelMapper.map(members, MemberDTO.class);
-//                members.stream().map(member -> modelMapper.map(member, MemberDTO.class)).collect(Collectors.toList());
     }
 }

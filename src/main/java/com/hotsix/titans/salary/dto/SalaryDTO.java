@@ -30,6 +30,6 @@ public class SalaryDTO {
     private String teamName;
     private BonusDTO bonus;
     private TaxDTO tax;
-    private String member;
+    private String memberCode;
 
 }

@@ -69,6 +69,7 @@ public class SecurityConfig {
 				.antMatchers("/auth/**").permitAll()
 				.antMatchers("/ea/**").permitAll()
 				.antMatchers("/api/v1/annual/**").permitAll()
+				.antMatchers("/api/v1/salary/**").permitAll()
 				.antMatchers("/api/v1/reviews/**").permitAll()
 				.antMatchers("/api/v1/members/**").permitAll()	//@@ 페이지 권한
 				.antMatchers("/auth/signup/**").permitAll()	//@@ 신규 사원 등록
