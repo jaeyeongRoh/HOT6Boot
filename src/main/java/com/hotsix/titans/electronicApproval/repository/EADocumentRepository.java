@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface EADocumentRepository extends JpaRepository <EADocument, Integer>{
+public interface EADocumentRepository extends JpaRepository <EADocument, String>{
 
     List<EADocument> findAll();
 

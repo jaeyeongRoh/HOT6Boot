@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface EALoaRepository extends JpaRepository<EALoa, String> {
     List<EALoa> findAll();
+
+    EALoa findByEaCode(String eaCode);
 }
