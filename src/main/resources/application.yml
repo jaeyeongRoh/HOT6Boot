@@ -14,9 +14,9 @@ spring:
       max-file-size: 10MB
       max-request-size: 10MB
       location: C:\DEV\04_project\HotsixBoot
-  #  web:
-  #    resources:
-  #      static-locations: classpath:/productimgs/
+    web:
+      resources:
+        static-locations: classpath:/profileImages/
 
   ## jpa config
   jpa:
@@ -41,12 +41,12 @@ springdoc:
 image:
 
 
-#  add-resource-locations: classpath:/static/productimgs/
-#  add-resource-handler: /productimgs/**
+  add-resource-locations: classpath:/static/profileImages/
+  add-resource-handler: /profileImages/**
 
 
   image-dir: src/main/resources/static/profileImages
-  image-url: http://localhost:8888/profileImages
+  image-url: http://localhost:8888/profileImages/
 
 # Logging Level
 logging:

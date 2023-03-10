@@ -2,16 +2,18 @@ package com.hotsix.titans.member.entity;
 
 import com.hotsix.titans.commons.StringPrefixSequenceGenerator;
 import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.GenericGenerator;
+
 
 import javax.persistence.*;
 import java.util.Date;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 @Getter
 @Setter
+@DynamicInsert
 @Entity
 @Table(name = "TBL_PROFILE_IMG")
 public class ProfileImage {
@@ -42,4 +44,13 @@ public class ProfileImage {
 
     @Column(name = "PROFILE_IMG_DELETE_YN")
     private String profileImageDeleteYn;
+
+
+    @Column(name = "MEMBER_CODE")
+    private String memberCode;
+
+//    @ManyToOne
+//    @JoinColumn(name = "MEMBER_CODE", insertable = false, updatable = false)
+//    private Member member;
+
 }

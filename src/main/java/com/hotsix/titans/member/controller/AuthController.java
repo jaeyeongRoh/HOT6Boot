@@ -2,6 +2,8 @@ package com.hotsix.titans.member.controller;
 
 import com.hotsix.titans.commons.ResponseDTO;
 import com.hotsix.titans.member.dto.MemberDTO;
+import com.hotsix.titans.member.dto.ProfileImageDTO;
+import com.hotsix.titans.member.entity.ProfileImage;
 import com.hotsix.titans.member.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -50,13 +52,23 @@ public class AuthController {
 
     @Operation(summary = "신규 사원 등록 요청", description = "신규 사원 등록이 진행됩니다.", tags = {"AuthController"})
     @PostMapping(value = "/signup")
-    public ResponseEntity<ResponseDTO> registMember(@ModelAttribute MemberDTO memberDTO) { // 신규 사원 정보를 받아 냄
+    public ResponseEntity<ResponseDTO> registMember(@ModelAttribute MemberDTO memberDTO, @ModelAttribute ProfileImageDTO profileImageDTO, @RequestParam("memberImage") MultipartFile memberImage) { // 신규 사원 정보를 받아 냄
 
         System.out.println("memberDTO = " + memberDTO);
+        System.out.println("profileImageDTO = " + profileImageDTO);
+        System.out.println("memberImage = " + memberImage);
 
         return ResponseEntity
                 .ok()
-                .body(new ResponseDTO(HttpStatus.CREATED, "신규 사원 등록 성공", authService.registMember(memberDTO)));
+                .body(new ResponseDTO(HttpStatus.OK, "신규 사원 등록 성공", authService.registMember(memberDTO, profileImageDTO, memberImage)));
     }
+
+//    @PostMapping(value = "/signup")
+//    public ResponseEntity<ResponseDTO> profileImageUpload(@ModelAttribute ProfileImageDTO profileImageDTO, MultipartFile memberImage) {
+//
+//        return ResponseEntity
+//                .ok()
+//                .body(new ResponseDTO(HttpStatus.OK, "프로필 이미지 업로드 성공", authService.profileImageUpload(profileImageDTO, memberImage)));
+//    }
 
 }

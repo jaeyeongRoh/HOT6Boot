@@ -7,12 +7,12 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 @Getter
 @Setter
 @Entity
@@ -78,4 +78,24 @@ public class Member {
     @OneToMany
     @JoinColumn(name = "MEMBER_CODE")
     private List<ProfileImage> profileImage;
+
+    @Override
+    public String toString() {
+        return "Member{" +
+                "memberCode='" + memberCode + '\'' +
+                ", memberPassword='" + memberPassword + '\'' +
+                ", memberName='" + memberName + '\'' +
+                ", memberEmail='" + memberEmail + '\'' +
+                ", inlinePhone='" + inlinePhone + '\'' +
+                ", memberPhone='" + memberPhone + '\'' +
+                ", memberAddress='" + memberAddress + '\'' +
+                ", memberBirth=" + memberBirth +
+                ", joinDate=" + joinDate +
+                ", workingStatus='" + workingStatus + '\'' +
+                ", memberGender='" + memberGender + '\'' +
+                ", memberMarried='" + memberMarried + '\'' +
+                ", team=" + team +
+                ", rank=" + rank +
+                '}';
+    }
 }

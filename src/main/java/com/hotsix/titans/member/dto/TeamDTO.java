@@ -17,8 +17,4 @@ public class TeamDTO {
     private int teamCode;
     private String teamName;
 
-    @OneToMany
-    @JoinColumn(name = "MEMBER_CODE")
-    private List<TeamRole> teamRole;
-
 }

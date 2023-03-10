@@ -75,7 +75,9 @@ public class TokenProvider {
 		
 		log.info("[TokenProvider] generateTokenDTO Start ===============================");
 		List<String> roles = new ArrayList<>();
-		System.out.println(member.toString());
+		System.out.println("roles = " + roles);
+//		System.out.println(member.toString());
+		System.out.println("member = " + member);
 		for(TeamRole teamRole : member.getTeam().getTemRole()) {
 			roles.add(teamRole.getAuthority().getAuthorityName());
 		}

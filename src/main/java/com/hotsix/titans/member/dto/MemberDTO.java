@@ -26,14 +26,12 @@ public class MemberDTO implements UserDetails {
     private String workingStatus;
     private String memberGender;
     private String memberMarried;
-
     private int teamCode;
-
     private int rankCode;
     private String teamName;
     private String rankName;
     private List<TeamRoleDTO> teamRole;
-    private List<ProfileImageDTO> profileImageDTOList;
+    private List<ProfileImageDTO> profileImageList;
 
     /* 이하 코드들을 UserDetails로부터 물려받는 추상메소드들을 오버라이딩 한 것이다.(필요한 것만 작성하자) */
     /* MemberDTO는 Member와 매핑 될 DTO이자 UserDetails로써 속성을 추가로 가짐 */
