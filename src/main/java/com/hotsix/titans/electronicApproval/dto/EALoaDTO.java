@@ -10,7 +10,7 @@ import java.util.Date;
 @Getter
 @Setter
 @ToString
-public class EALoaDTO {
+public class EALoaDTO extends EADocumentDTO {
 
 
     private Date loaDate;

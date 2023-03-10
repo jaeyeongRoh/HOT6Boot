@@ -23,6 +23,31 @@ public class EAController {
         this.eaService = eaService;
     }
 
+
+    @GetMapping("/v2/ea/ealist/{dtype}/{eaCode}")
+    public ResponseEntity<ResponseDTO> selectDtypeDocument(@PathVariable String dtype,@PathVariable String eaCode){
+        switch (dtype){
+            case "leave" : return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 개별 조회성공", eaService.selectLeave(eaCode)));
+            case "salary" : return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 개별 조회성공", eaService.selectSalary(eaCode)));
+            case "entire" : return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 개별 조회성공", eaService.selectEntire(eaCode)));
+            case "cert" : return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 개별 조회성공", eaService.selectCert(eaCode)));
+            case "duty" : return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 개별 조회성공", eaService.selectDuty(eaCode)));
+            case "loa" : return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 개별 조회성공", eaService.selectLoa(eaCode)));
+            case "rnstt" : return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 개별 조회성공", eaService.selectRnstt(eaCode)));
+        }
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 개별 조회성공", "주소가 올바르지 않습니다."));
+    }
+
+
+
+
+
+
+
+
+
+
+
     /**
      * 전자결재 개별 조회 API
      *

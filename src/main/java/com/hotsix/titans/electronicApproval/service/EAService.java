@@ -1,17 +1,9 @@
 package com.hotsix.titans.electronicApproval.service;
 
-import com.hotsix.titans.electronicApproval.dto.EADocumentDTO;
-import com.hotsix.titans.electronicApproval.dto.EALeaveDTO;
-import com.hotsix.titans.electronicApproval.dto.EASalaryDTO;
-import com.hotsix.titans.electronicApproval.dto.EALoaDTO;
-import com.hotsix.titans.electronicApproval.entity.EADocument;
-import com.hotsix.titans.electronicApproval.entity.EALeave;
-import com.hotsix.titans.electronicApproval.entity.EALoa;
-import com.hotsix.titans.electronicApproval.entity.EASalary;
-import com.hotsix.titans.electronicApproval.repository.EADocumentRepository;
-import com.hotsix.titans.electronicApproval.repository.EALeaveRepository;
-import com.hotsix.titans.electronicApproval.repository.EALoaRepository;
-import com.hotsix.titans.electronicApproval.repository.EASalaryRepository;
+import com.hotsix.titans.electronicApproval.dto.*;
+import com.hotsix.titans.electronicApproval.entity.*;
+import com.hotsix.titans.electronicApproval.entity.EADuty;
+import com.hotsix.titans.electronicApproval.repository.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,18 +15,26 @@ import java.util.stream.Collectors;
 @Service
 public class EAService {
 
+    private final EAEntireRepository eaEntireRepository;
+    private final EADutyRepository eaDutyRepository;
     private final EADocumentRepository eaDocumentRepository;
     private final EASalaryRepository eaSalaryRepository;
     private final EALeaveRepository eaLeaveRepository;
     private final EALoaRepository eaLoaRepository;
+    private final EARnsttRepository eaRnsttRepository;
+    private final EACertRepository eaCertRepository;
     private final ModelMapper modelMapper;
 
     @Autowired
-    public EAService(EADocumentRepository eaDocumentRepository, EASalaryRepository eaSalaryRepository, EALeaveRepository eaLeaveRepository, EALoaRepository eaLoaRepository, ModelMapper modelMapper) {
+    public EAService(EAEntireRepository eaEntireRepository, EADutyRepository eaDutyRepository, EADocumentRepository eaDocumentRepository, EASalaryRepository eaSalaryRepository, EALeaveRepository eaLeaveRepository, EALoaRepository eaLoaRepository, EARnsttRepository eaRnsttRepository, EACertRepository eaCertRepository, ModelMapper modelMapper) {
+        this.eaEntireRepository = eaEntireRepository;
+        this.eaDutyRepository = eaDutyRepository;
         this.eaDocumentRepository = eaDocumentRepository;
         this.eaSalaryRepository = eaSalaryRepository;
         this.eaLeaveRepository = eaLeaveRepository;
         this.eaLoaRepository = eaLoaRepository;
+        this.eaRnsttRepository = eaRnsttRepository;
+        this.eaCertRepository = eaCertRepository;
         this.modelMapper = modelMapper;
     }
 
@@ -72,6 +72,7 @@ public class EAService {
 
     /**
      * 전자결재 급여정정 전체 목록 조회하는 메소드
+     *
      * @return
      */
     public Object selectAllSalary() {
@@ -82,6 +83,7 @@ public class EAService {
 
     /**
      * 전자결재 급여정정 개별 조회하는 메소드
+     *
      * @param eaCode
      * @return
      */
@@ -93,6 +95,7 @@ public class EAService {
 
     /**
      * 전자결재 휴가신청 기안하는 메소드
+     *
      * @param eaLeaveDTO
      * @return
      */
@@ -114,7 +117,7 @@ public class EAService {
         eaLeave.setEaFinalComment(eaLeaveDTO.getEaFinalComment());
         eaLeave.setEaDocuStatus(eaLeaveDTO.getEaDocuStatus());
         eaLeave.setIsDeleted(eaLeaveDTO.getIsDeleted());
-        
+
         eaLeave.setLeaveStartDate(eaLeaveDTO.getLeaveStartDate());
         eaLeave.setLeaveEndDate(eaLeaveDTO.getLeaveEndDate());
 
@@ -127,6 +130,7 @@ public class EAService {
 
     /**
      * 전자결재 급여정정 기안하는 메소드
+     *
      * @param eaSalaryDTO
      * @return
      */
@@ -160,16 +164,77 @@ public class EAService {
 
     /**
      * 전자결재 휴가신청 개별 조회하는 메소드
+     *
      * @param eaCode
      * @return
      */
     public Object selectLeave(String eaCode) {
         EALeave eaLeave = eaLeaveRepository.findByEaCode(eaCode);
-        return modelMapper.map(eaLeave,EALeaveDTO.class);
+        return modelMapper.map(eaLeave, EALeaveDTO.class);
     }
 
+    /**
+     * 전자결재 휴직신청 전체 조회하는 메소드
+     * @return
+     */
     public Object selectAllLoa() {
         List<EALoa> eaLoaList = eaLoaRepository.findAll();
         return eaLoaList.stream().map(eaLoa -> modelMapper.map(eaLoa, EALoaDTO.class)).collect(Collectors.toList());
+    }
+
+
+    /**
+     * 전자결재 퇴직신청 개별조회
+     *
+     * @param eaCode
+     * @return
+     */
+    public Object selectEntire(String eaCode) {
+        EAEntire eaEntire = eaEntireRepository.findByEaCode(eaCode);
+        return modelMapper.map(eaEntire, EAEntireDTO.class);
+    }
+
+    /**
+     * 전자결재 증명서신청 개별조회
+     *
+     * @param eaCode
+     * @return
+     */
+    public Object selectCert(String eaCode) {
+        EACert eaCert = eaCertRepository.findByEaCode(eaCode);
+        return modelMapper.map(eaCert, EACertDTO.class);
+    }
+
+    /**
+     * 전자결재 예비군신청 개별조회
+     *
+     * @param eaCode
+     * @return
+     */
+    public Object selectDuty(String eaCode) {
+        EADuty eaDuty = eaDutyRepository.findByEaCode(eaCode);
+        return modelMapper.map(eaDuty, EADutyDTO.class);
+    }
+
+    /**
+     * 전자결재 휴직신청 개별조회
+     *
+     * @param eaCode
+     * @return
+     */
+    public Object selectLoa(String eaCode) {
+        EALoa eaLoa = eaLoaRepository.findByEaCode(eaCode);
+        return modelMapper.map(eaLoa, EALoaDTO.class);
+    }
+
+    /**
+     * 전자결재 복직신청 개별조회
+     *
+     * @param eaCode
+     * @return
+     */
+    public Object selectRnstt(String eaCode) {
+        EARnstt eaRnstt = eaRnsttRepository.findByEaCode(eaCode);
+        return modelMapper.map(eaRnstt, EARnsttDTO.class);
     }
 }

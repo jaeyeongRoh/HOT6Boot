@@ -1,4 +1,14 @@
 package com.hotsix.titans.electronicApproval.dto;
 
-public class EARnsttDTO {
+import lombok.*;
+
+import java.util.Date;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@ToString
+public class EARnsttDTO extends EADocumentDTO {
+    private Date rnsttDate;
 }
