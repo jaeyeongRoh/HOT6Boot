@@ -27,8 +27,8 @@ public class SecurityConfig {
 
 	@Autowired
 	public SecurityConfig(TokenProvider tokenProvider
-			, JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint
-			, JwtAccessDeniedHandler jwtAccessDeniedHandler) {
+			            , JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint
+			            , JwtAccessDeniedHandler jwtAccessDeniedHandler) {
 		this.tokenProvider = tokenProvider;
 		this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
 		this.jwtAccessDeniedHandler = jwtAccessDeniedHandler;
@@ -44,7 +44,7 @@ public class SecurityConfig {
 	@Bean
 	public WebSecurityCustomizer webSecurityCustomizer() {
 		return (web) -> web.ignoring().antMatchers("/css/**", "/js/**", "/images/**",
-				"/lib/**", "/productimgs/**");
+				                                   "/lib/**", "/productimgs/**");
 	}
 
 	/* 3. HTTP요청에 대한 권한별 설정(세션 인증 -> 토큰 인증으로 인해 바뀐 부분 존재) */
@@ -53,7 +53,7 @@ public class SecurityConfig {
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
 		http.csrf().disable()
-				.exceptionHandling()
+			.exceptionHandling()
 
 				/* 기본 시큐리티 설정에서 JWT 토큰과 관련된 유효성과 권한 체크용 설정 */
 				.authenticationEntryPoint(jwtAuthenticationEntryPoint)	// 유효한 자격 증명 없을 시(401)
@@ -68,12 +68,10 @@ public class SecurityConfig {
 				// 사전에 요청이 안전한지 확인하기 위함(유효한지 서버에 미리 파악할 수 있도록 보내는 수단이다.)
 				.antMatchers("/auth/**").permitAll()
 				.antMatchers("/api/v1/annual/**").permitAll()
+				.antMatchers("/api/v1/salary/**").permitAll()
 				.antMatchers("/api/v1/reviews/**").permitAll()
 				.antMatchers("/api/v1/members/**").permitAll()	//@@ 페이지 권한
 				.antMatchers("/auth/signup/**").permitAll()	//@@ 신규 사원 등록
-				.antMatchers("/api/v1/mypage/**").permitAll()
-				.antMatchers("/api/v1/salary/**").permitAll()
-				.antMatchers("/api/v2/board/**").permitAll() // 추후 수정 필요
 //		    	.antMatchers("/api/**").hasRole("MEMBER")
 //		    	.antMatchers("/api/**").hasRole("ADMIN")
 				.antMatchers("/api/**").hasAnyRole("MEMBER", "ADMIN")
@@ -100,8 +98,8 @@ public class SecurityConfig {
 		configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
 		configuration.setAllowedMethods(Arrays.asList("GET", "PUT", "POST", "DELETE"));
 		configuration.setAllowedHeaders(Arrays.asList("Access-Control-Allow-Origin", "Content-type"
-				, "Access-Control-Allow-Headers", "Authorization"
-				, "X-Requested-With"));
+													, "Access-Control-Allow-Headers", "Authorization"
+													, "X-Requested-With"));
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", configuration);
 		return source;

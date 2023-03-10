@@ -1,21 +1,19 @@
 package com.hotsix.titans.member.entity;
 
 
+import com.hotsix.titans.attendanceHR.entity.AttendanceHR;
 import com.hotsix.titans.commons.StringPrefixSequenceGenerator;
 import com.hotsix.titans.salary.entity.Salary;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.GenericGenerator;
 
-import com.hotsix.titans.message.entity.Attachment;
 import com.hotsix.titans.message.entity.Message;
 
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -100,9 +98,9 @@ public class Member {
 //    }
 
 
-//    @OneToMany
-//    @JoinColumn(name = "MEMBER_CODE")
-//    private List<AttenDance> attenDanceList;
+    @OneToMany
+    @JoinColumn(name = "MEMBER_CODE")
+    private List<AttendanceHR> attendanceHRList;
 
 
     @Override
@@ -125,7 +123,6 @@ public class Member {
                 ", retireeHistory=" + retireeHistory +
                 ", messages=" + messages +
                 ", profileImage=" + profileImage +
-                ", salaryList=" + salaryList +
                 '}';
     }
 }
