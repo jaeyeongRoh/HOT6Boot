@@ -40,9 +40,14 @@ public class MessageController {
     }
 
     /*검색한 결과를 포함한 결과*/
-    @GetMapping("/message/search/{memberName}")
-    public ResponseEntity<ResponseDTO> seletMessageName(@PathVariable String memberName){
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회성공", messageService.selectMemberName(memberName)));
+    @GetMapping("/message/search/{memberName1}")
+    public ResponseEntity<ResponseDTO> seletMessageName(@PathVariable String memberName1){
+
+        System.out.println("이름" + memberName1);
+        System.out.println("테스트");
+//        System.out.println(" 값전달 테스트 = " +  messageService.selectMemberName(memberName1));
+        
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회성공", messageService.selectMemberName(memberName1)));
     }
 
 
@@ -56,8 +61,6 @@ public class MessageController {
         System.out.println("recipients = " + messageDTO.getRecipients());
 
 
-        ArrayList<String> test = new ArrayList<>();
-        test.add("메세지입니다.");
 
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "메세지 전송성공", messageService.insertMessage(messageDTO)));
     }
