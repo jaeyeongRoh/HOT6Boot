@@ -4,6 +4,7 @@ import com.hotsix.titans.member.dto.MemberDTO;
 import com.hotsix.titans.member.dto.ProfileImageDTO;
 import com.hotsix.titans.member.entity.Member;
 import com.hotsix.titans.member.repository.MemberRepository;
+import com.hotsix.titans.salary.dto.SalaryDTO;
 import com.hotsix.titans.util.FileUploadUtils;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -15,7 +16,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
+import java.sql.Date;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class MemberService {
@@ -67,4 +71,6 @@ public class MemberService {
         log.info("[MemberService] updateMyInfo End ===================================");
         return (result > 0) ? "정보 업데이트 성공" : "정보 업데이트 실패";
     }
+
+
 }

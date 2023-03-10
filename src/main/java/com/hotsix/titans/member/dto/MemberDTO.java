@@ -27,8 +27,8 @@ public class MemberDTO implements UserDetails {
     private String workingStatus;
     private String memberGender;
     private String memberMarried;
-    private int teamCode;
-    private int rankCode;
+    private TeamDTO team;
+    private RankDTO rank;
     private List<TeamRoleDTO> teamRole;
     private List<ProfileImageDTO> profileImageDTOList;
     private List<SalaryDTO> salaryList;
@@ -92,12 +92,6 @@ public class MemberDTO implements UserDetails {
                 ", workingStatus='" + workingStatus + '\'' +
                 ", memberGender='" + memberGender + '\'' +
                 ", memberMarried='" + memberMarried + '\'' +
-                ", teamCode=" + teamCode +
-                ", rankCode=" + rankCode +
-                ", teamRole=" + teamRole +
-                ", profileImageDTOList=" + profileImageDTOList +
-                ", salaryList=" + salaryList +
-                ", authorities=" + authorities +
                 '}';
     }
 }

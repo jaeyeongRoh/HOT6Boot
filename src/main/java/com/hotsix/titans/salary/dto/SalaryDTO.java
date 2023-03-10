@@ -1,6 +1,8 @@
 package com.hotsix.titans.salary.dto;
 
 import com.hotsix.titans.member.dto.MemberDTO;
+import com.hotsix.titans.member.dto.RankDTO;
+import com.hotsix.titans.member.dto.TeamDTO;
 import com.hotsix.titans.member.entity.Member;
 import com.hotsix.titans.salary.entity.Salary;
 import lombok.*;
@@ -9,7 +11,6 @@ import java.sql.Date;
 
 @Getter
 @Setter
-@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 public class SalaryDTO {
@@ -26,10 +27,34 @@ public class SalaryDTO {
     private Long nationalTax;
     private Long totalTax;
     private int totalTime;
-    private String rankName;
-    private String teamName;
+    private String memberCode;
+    private String memberName;
+    private TeamDTO team;
+    private RankDTO rank;
     private BonusDTO bonus;
     private TaxDTO tax;
-    private String memberCode;
 
+    @Override
+    public String toString() {
+        return "SalaryDTO{" +
+                "salaryCode='" + salaryCode + '\'' +
+                ", paymentDate=" + paymentDate +
+                ", paymentsYn='" + paymentsYn + '\'' +
+                ", basicSalary=" + basicSalary +
+                ", beforeSalary=" + beforeSalary +
+                ", afterSalary=" + afterSalary +
+                ", mealSalary=" + mealSalary +
+                ", incomTax=" + incomTax +
+                ", healthTax=" + healthTax +
+                ", nationalTax=" + nationalTax +
+                ", totalTax=" + totalTax +
+                ", totalTime=" + totalTime +
+                ", memberCode='" + memberCode + '\'' +
+                ", memberName='" + memberName + '\'' +
+                ", team=" + team +
+                ", rank=" + rank +
+                ", bonus=" + bonus +
+                ", tax=" + tax +
+                '}';
+    }
 }
