@@ -4,6 +4,7 @@ import com.hotsix.titans.commons.ResponseDTO;
 import com.hotsix.titans.electronicApproval.dto.EALeaveDTO;
 import com.hotsix.titans.electronicApproval.dto.EASalaryDTO;
 import com.hotsix.titans.electronicApproval.service.EAService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,29 +25,27 @@ public class EAController {
     }
 
 
-    @GetMapping("/v2/ea/ealist/{dtype}/{eaCode}")
+    /**
+     * 전자결재 기안 종류별 조회
+     * @param dtype 기안 종류
+     * @param eaCode 전자결재 문서번호
+     * @return 객체타입
+     */
+    @Operation(summary = "전자결재 기안 종류별 조회", description = "기안 종류별로 객체타입으로 조회합니다", tags = { "EAController" })
+    @GetMapping("/v2/ealist/{dtype}/{eaCode}")
     public ResponseEntity<ResponseDTO> selectDtypeDocument(@PathVariable String dtype,@PathVariable String eaCode){
         switch (dtype){
-            case "leave" : return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 개별 조회성공", eaService.selectLeave(eaCode)));
-            case "salary" : return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 개별 조회성공", eaService.selectSalary(eaCode)));
-            case "entire" : return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 개별 조회성공", eaService.selectEntire(eaCode)));
-            case "cert" : return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 개별 조회성공", eaService.selectCert(eaCode)));
-            case "duty" : return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 개별 조회성공", eaService.selectDuty(eaCode)));
-            case "loa" : return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 개별 조회성공", eaService.selectLoa(eaCode)));
-            case "rnstt" : return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 개별 조회성공", eaService.selectRnstt(eaCode)));
+            case "leave" : return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 휴가신청 개별 조회성공", eaService.selectLeave(eaCode)));
+            case "salary" : return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 급여정정 개별 조회성공", eaService.selectSalary(eaCode)));
+            case "entire" : return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 퇴직신청 개별 조회성공", eaService.selectEntire(eaCode)));
+            case "cert" : return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 증명서신청 개별 조회성공", eaService.selectCert(eaCode)));
+            case "duty" : return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 예비군신청 개별 조회성공", eaService.selectDuty(eaCode)));
+            case "loa" : return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 휴직신청 개별 조회성공", eaService.selectLoa(eaCode)));
+            case "rnstt" : return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 복직신청 개별 조회성공", eaService.selectRnstt(eaCode)));
+
         }
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 개별 조회성공", "주소가 올바르지 않습니다."));
     }
-
-
-
-
-
-
-
-
-
-
 
     /**
      * 전자결재 개별 조회 API
@@ -58,7 +57,6 @@ public class EAController {
     public ResponseEntity<ResponseDTO> selectDocumentCode(@PathVariable String eaCode) {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 개별 조회성공", eaService.selectDocumentCode(eaCode)));
     }
-
 
     /**
      * 전자결재 전체 리스트 조회 API
@@ -81,11 +79,10 @@ public class EAController {
         ResponseDTO responseDTO = new ResponseDTO();
 
         EALeaveDTO eaLeaveDTO = new EALeaveDTO();
-        eaLeaveDTO.setEaCode("104");
         eaLeaveDTO.setMemberDraft("150003");
         eaLeaveDTO.setMemberMiddleSigner("150006");
         eaLeaveDTO.setMemberFinalSigner("160009");
-        eaLeaveDTO.setEaSubject("휴가");
+        eaLeaveDTO.setEaSubject("시퀀스 휴가신청");
         eaLeaveDTO.setEaDetail("휴가");
         eaLeaveDTO.setEaCategory("연차");
 //        eaLeaveDTO.setEaType("A");
@@ -184,14 +181,6 @@ public class EAController {
     public ResponseEntity<ResponseDTO> selectAllLoa(){
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 급여정정 리스트 조회성공", eaService.selectAllLoa()));
     }
-
-
-
-
-
-
-
-
 
 
     /* 전자결재 결재자 승인/반려 처리
