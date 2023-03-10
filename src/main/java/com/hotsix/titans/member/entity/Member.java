@@ -1,6 +1,7 @@
 package com.hotsix.titans.member.entity;
 
 
+import com.hotsix.titans.attendanceHR.entity.AttendanceHR;
 import com.hotsix.titans.commons.StringPrefixSequenceGenerator;
 import com.hotsix.titans.salary.entity.Salary;
 import lombok.*;
@@ -97,9 +98,9 @@ public class Member {
 //    }
 
 
-//    @OneToMany
-//    @JoinColumn(name = "MEMBER_CODE")
-//    private List<AttenDance> attenDanceList;
+    @OneToMany
+    @JoinColumn(name = "MEMBER_CODE")
+    private List<AttendanceHR> attendanceHRList;
 
 
     @Override
@@ -122,7 +123,6 @@ public class Member {
                 ", retireeHistory=" + retireeHistory +
                 ", messages=" + messages +
                 ", profileImage=" + profileImage +
-                ", salaryList=" + salaryList +
                 '}';
     }
 }
