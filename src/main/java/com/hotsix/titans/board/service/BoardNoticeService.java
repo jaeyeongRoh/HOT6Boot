@@ -3,11 +3,13 @@ package com.hotsix.titans.board.service;
 import com.hotsix.titans.board.dto.BoardNoticeDTO;
 import com.hotsix.titans.board.entity.BoardNotice;
 import com.hotsix.titans.board.repository.BoardNoticeRepository;
+import com.hotsix.titans.member.dto.MemberDTO;
+import com.hotsix.titans.member.entity.Member;
+import com.hotsix.titans.salary.entity.Salary;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -47,8 +49,28 @@ public class BoardNoticeService {
 
     @Transactional
     public Object insertBoardNotice(BoardNoticeDTO boardNoticeDTO) {
+
         BoardNotice boardNotice = new BoardNotice();
+
         boardNotice.setNoticeCode(boardNoticeDTO.getNoticeCode());
+        boardNotice.setMemberCode(boardNoticeDTO.getMemberCode());
+        boardNotice.setNoticeTitle(boardNoticeDTO.getNoticeTitle());
+        boardNotice.setNoticeDate(boardNoticeDTO.getNoticeDate());
+        boardNotice.setNoticeCount(boardNoticeDTO.getNoticeCount());
+        boardNotice.setNoticeContent(boardNoticeDTO.getNoticeContent());
+        boardNotice.setNoticeDeleteYN(boardNoticeDTO.getNoticeDeleteYN());
+
+        boardNoticeRepository.saveAndFlush(boardNotice);
+        int result = 1;
+        return result;
+    }
+
+    @Transactional
+    public Object updateBoardNotice(BoardNoticeDTO boardNoticeDTO) {
+
+        BoardNotice boardNotice = boardNoticeRepository.findByNoticeCode(boardNoticeDTO.getNoticeCode());
+
+        boardNotice.setNoticeCode(boardNoticeDTO.getNoticeCode()); // 복사
         boardNotice.setMemberCode(boardNoticeDTO.getMemberCode());
         boardNotice.setNoticeTitle(boardNoticeDTO.getNoticeTitle());
         boardNotice.setNoticeDate(boardNoticeDTO.getNoticeDate());
