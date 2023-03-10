@@ -32,7 +32,7 @@ public class BoardNoticeController {
 
         List<BoardNoticeDTO> boardNoticeCategoryList = boardNoticeService.listAll();
         System.out.println("boardNoticeCategoryList = " + boardNoticeCategoryList);
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "공지사항 조회 성공", (Object) boardNoticeCategoryList));
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "공지사항 조회 성공", boardNoticeCategoryList));
     }
 
 //    @PostMapping(value = "/board/insert")
