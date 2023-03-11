@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 @Service
 public class EAService {
 
-    private final EAEntireRepository eaEntireRepository;
+    private final EARetireRepository eaRetireRepository;
     private final EADutyRepository eaDutyRepository;
     private final EADocumentRepository eaDocumentRepository;
     private final EASalaryRepository eaSalaryRepository;
@@ -26,8 +26,8 @@ public class EAService {
     private final ModelMapper modelMapper;
 
     @Autowired
-    public EAService(EAEntireRepository eaEntireRepository, EADutyRepository eaDutyRepository, EADocumentRepository eaDocumentRepository, EASalaryRepository eaSalaryRepository, EALeaveRepository eaLeaveRepository, EALoaRepository eaLoaRepository, EARnsttRepository eaRnsttRepository, EACertRepository eaCertRepository, ModelMapper modelMapper) {
-        this.eaEntireRepository = eaEntireRepository;
+    public EAService(EARetireRepository eaRetireRepository, EADutyRepository eaDutyRepository, EADocumentRepository eaDocumentRepository, EASalaryRepository eaSalaryRepository, EALeaveRepository eaLeaveRepository, EALoaRepository eaLoaRepository, EARnsttRepository eaRnsttRepository, EACertRepository eaCertRepository, ModelMapper modelMapper) {
+        this.eaRetireRepository = eaRetireRepository;
         this.eaDutyRepository = eaDutyRepository;
         this.eaDocumentRepository = eaDocumentRepository;
         this.eaSalaryRepository = eaSalaryRepository;
@@ -189,9 +189,9 @@ public class EAService {
      * @param eaCode
      * @return
      */
-    public Object selectEntire(String eaCode) {
-        EAEntire eaEntire = eaEntireRepository.findByEaCode(eaCode);
-        return modelMapper.map(eaEntire, EAEntireDTO.class);
+    public Object selectRetire(String eaCode) {
+        EARetire eaRetire = eaRetireRepository.findByEaCode(eaCode);
+        return modelMapper.map(eaRetire, EARetireDTO.class);
     }
 
     /**
@@ -237,4 +237,6 @@ public class EAService {
         EARnstt eaRnstt = eaRnsttRepository.findByEaCode(eaCode);
         return modelMapper.map(eaRnstt, EARnsttDTO.class);
     }
+
+
 }

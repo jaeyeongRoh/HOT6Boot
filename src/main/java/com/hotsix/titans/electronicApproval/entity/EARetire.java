@@ -19,7 +19,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Getter
 @Setter
-public class EAEntire extends EADocument {
+public class EARetire extends EADocument {
     @Column(name = "ENTIRE_DATE")
     private Date entireDate;
 }

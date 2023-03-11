@@ -9,7 +9,7 @@ import java.util.Date;
 @Getter
 @Setter
 @ToString
-public class EAEntireDTO extends EADocumentDTO {
+public class EARetireDTO extends EADocumentDTO {
 
     private Date entireDate;
 }
