@@ -12,7 +12,6 @@ import java.sql.Date;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
 @Entity
 @DynamicInsert
 @Table(name = "TBL_BONUS_SALARY")
@@ -36,5 +35,14 @@ public class Bonus {
     @Column(name = "BONUS_PAYMENTS_DATE")       // 지급일
     private Date bonusPaymentsDate;
 
+    @Override
+    public String toString() {
+        return "Bonus{" +
+                "bonusCode='" + bonusCode + '\'' +
+                ", bonusType='" + bonusType + '\'' +
+                ", bonusSalary=" + bonusSalary +
+                ", bonusPaymentsDate=" + bonusPaymentsDate +
+                '}';
+    }
 }
 

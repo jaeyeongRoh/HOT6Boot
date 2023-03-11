@@ -91,14 +91,6 @@ public class Member {
     @JoinColumn(name = "MEMBER_CODE")
     private List<Salary> salaryList;
 
-//    @OneToMany(mappedBy = "member")
-//    private List<Salary> salaryList = new ArrayList<>();
-
-//    public List<Salary> getSalaryList() {
-//        return salaryList.stream().collect(Collectors.toList());
-//    }
-
-
     @OneToMany
     @JoinColumn(name = "MEMBER_CODE")
     private List<AttendanceHR> attendanceHRList;
@@ -121,9 +113,6 @@ public class Member {
                 ", memberMarried='" + memberMarried + '\'' +
                 ", team=" + team +
                 ", rank=" + rank +
-                ", retireeHistory=" + retireeHistory +
-                ", messages=" + messages +
-                ", profileImage=" + profileImage +
                 '}';
     }
 }

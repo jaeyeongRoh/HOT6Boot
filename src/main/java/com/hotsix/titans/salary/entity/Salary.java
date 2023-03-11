@@ -10,6 +10,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
 import javax.persistence.*;
+import java.nio.MappedByteBuffer;
 import java.sql.Date;
 
 @AllArgsConstructor
@@ -59,6 +60,10 @@ public class Salary {
     @Column(name = "MEMBER_CODE")
     private String memberCode;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "MEMBER_CODE", insertable = false, updatable = false)
+    private Member member;
+
     @ManyToOne
     @JoinColumn(name = "TAX_CODE")
     private Tax tax;
@@ -80,7 +85,7 @@ public class Salary {
                 ", nationalTax=" + nationalTax +
                 ", paymentDate=" + paymentDate +
                 ", paymentsYn='" + paymentsYn + '\'' +
-                ", memberCode='" + memberCode + '\'' +
+//                ", memberCode='" + memberCode + '\'' +
                 ", tax=" + tax +
                 ", bonus=" + bonus +
                 '}';
