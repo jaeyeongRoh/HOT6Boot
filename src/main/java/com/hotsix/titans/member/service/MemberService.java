@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -30,6 +31,7 @@ public class MemberService {
     private static final Logger log = LoggerFactory.getLogger(MemberService.class);
     private final MemberRepository memberRepository;
     private final ProfileImageRepository profileImageRepository;
+    private final PasswordEncoder passwordEncoder;
     private final ModelMapper modelMapper;
 
     @Value("${image.image-dir}")
@@ -38,9 +40,11 @@ public class MemberService {
     private String IMAGE_URL;
 
     @Autowired
-    public MemberService(MemberRepository memberRepository, ProfileImageRepository profileImageRepository, ModelMapper modelMapper) {
+    public MemberService(MemberRepository memberRepository, ProfileImageRepository profileImageRepository
+                        , PasswordEncoder passwordEncoder, ModelMapper modelMapper) {
         this.memberRepository = memberRepository;
         this.profileImageRepository = profileImageRepository;
+        this.passwordEncoder = passwordEncoder;
         this.modelMapper = modelMapper;
     }
 
@@ -80,5 +84,25 @@ public class MemberService {
         return (result > 0) ? "정보 업데이트 성공" : "정보 업데이트 실패";
     }
 
+    @Transactional
+    public Object updatePassword(MemberDTO memberDTO) {
+        log.info("[MemberService] updatePassword Start ===================================");
+
+        int result = 0;
+
+        /* 엔티티 조회 */
+        Member member = memberRepository.findById(memberDTO.getMemberCode()).get();
+
+        /* update를 위한 엔티티 값 수정 및 비밀번호 암호화 */
+        member.setMemberPassword(passwordEncoder.encode(memberDTO.getMemberPassword()));
+
+        if(member.getMemberPassword() == passwordEncoder.encode(memberDTO.getMemberPassword())) {
+            result = 1;
+            System.out.println("result = " + result);
+        }
+
+        log.info("[MemberService] updatePassword End ===================================");
+        return (result > 0) ? "비밀번호 업데이트 성공" : "비밀번호 업데이트 실패";
+    }
 
 }
