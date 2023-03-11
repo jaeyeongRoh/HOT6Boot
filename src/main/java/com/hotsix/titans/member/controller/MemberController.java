@@ -30,10 +30,19 @@ public class MemberController {
     }
 
     @PutMapping(value = "/mypage/management/update/{memberCode}")
-    public ResponseEntity<ResponseDTO> updateProduct(@ModelAttribute MemberDTO memberDTO) {
+    public ResponseEntity<ResponseDTO> updateMyInfo(@ModelAttribute MemberDTO memberDTO) {
 
         System.out.println("memberDTO = " + memberDTO);
 
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "상품 수정 성공",  memberService.updateMyInfo(memberDTO)));
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "개인정보 수정 성공",  memberService.updateMyInfo(memberDTO)));
     }
+
+    @PutMapping(value = "/password/update/{memberCode}")
+    public ResponseEntity<ResponseDTO> updatePassword(@ModelAttribute MemberDTO memberDTO) {
+
+        System.out.println("memberDTO = " + memberDTO);
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "비밀번호 변경 성공", memberService.updatePassword(memberDTO)));
+    }
+
 }
