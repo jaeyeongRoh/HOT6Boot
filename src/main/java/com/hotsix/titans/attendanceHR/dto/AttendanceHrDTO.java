@@ -11,7 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
+//@ToString
 public class AttendanceHrDTO {
 
     private String commuteCode;
@@ -24,6 +24,39 @@ public class AttendanceHrDTO {
     private int  commuteTotalTime;
     private String commuteStatus;
     private MemberDTO member;
+    private String teamName;
+    private String rankName;
+    private String memberName;
+
+
+
     private List<AttendanceHrReasonDTO> attendanceHrReasonList;
 
+
+    public String getMemberName() {
+        return member.getMemberName();
+    }
+    public String getTeamName() {
+        return member.getTeamName();
+    }
+
+    public String getRankName() {
+        return member.getRankName();
+    }
+
+    @Override
+    public String toString() {
+        return "AttendanceHrDTO{" +
+                "commuteCode='" + commuteCode + '\'' +
+                ", memberCode='" + memberCode + '\'' +
+                ", commuteDate=" + commuteDate +
+                ", commuteStartTime=" + commuteStartTime +
+                ", commuteScountTime=" + commuteScountTime +
+                ", commuteFinishTime=" + commuteFinishTime +
+                ", commuteFcountTime=" + commuteFcountTime +
+                ", commuteTotalTime=" + commuteTotalTime +
+                ", commuteStatus='" + commuteStatus + '\'' +
+                ", attendanceHrReasonList=" + attendanceHrReasonList +
+                '}';
+    }
 }
