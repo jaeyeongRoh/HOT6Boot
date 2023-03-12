@@ -14,7 +14,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "TBL_EA_ENTR")
-@DiscriminatorValue("퇴직신청")
+@DiscriminatorValue("retire")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter

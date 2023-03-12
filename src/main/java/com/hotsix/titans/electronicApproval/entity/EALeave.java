@@ -11,7 +11,7 @@ import java.time.LocalDate;
 
 
 @Entity
-@DiscriminatorValue("휴가신청")
+@DiscriminatorValue("leave")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter

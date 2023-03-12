@@ -13,7 +13,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "TBL_EA_SAL")
-@DiscriminatorValue("급여정정신청")
+@DiscriminatorValue("salary")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter

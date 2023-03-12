@@ -24,12 +24,12 @@ public class EADocument {
 
     @Id
     @Column(name = "EA_CODE")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_ES")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_EA")
     @GenericGenerator(name = "SEQ_ES",
                       strategy = "com.hotsix.titans.commons.StringPrefixedSequenceIdGenerator",
                       parameters = {
                             @Parameter(name = StringPrefixedSequenceIdGenerator.VALUE_PREFIX_PARAMETER, value = "EA"),
-                            @Parameter(name = StringPrefixedSequenceIdGenerator.NUMBER_FORMAT_PARAMETER, value = "%05d")
+                            @Parameter(name = StringPrefixedSequenceIdGenerator.NUMBER_FORMAT_PARAMETER, value = "%06d")
     })
     private String eaCode;
 

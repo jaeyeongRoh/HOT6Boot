@@ -12,7 +12,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "TBL_EA_CERT")
-@DiscriminatorValue("증명서 신청")
+@DiscriminatorValue("cert")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
