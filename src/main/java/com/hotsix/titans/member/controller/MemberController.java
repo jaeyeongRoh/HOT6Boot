@@ -45,4 +45,14 @@ public class MemberController {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "비밀번호 변경 성공", memberService.updatePassword(memberDTO)));
     }
 
+    @PutMapping(value = "/profileImage/update/{memberCode}")
+    public ResponseEntity<ResponseDTO> updateProfileImage(@ModelAttribute MemberDTO memberDTO, @ModelAttribute ProfileImageDTO profileImageDTO, MultipartFile memberImage) {
+
+        System.out.println("memberDTO = " + memberDTO);
+        System.out.println("profileImageDTO = " + profileImageDTO);
+        System.out.println("memberImage = " + memberImage);
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "프로필 이미지 변경 성공", memberService.updateProfileImage(memberDTO, profileImageDTO, memberImage)));
+    }
+
 }
