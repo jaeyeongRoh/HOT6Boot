@@ -25,7 +25,7 @@ public class EADocument {
     @Id
     @Column(name = "EA_CODE")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_EA")
-    @GenericGenerator(name = "SEQ_ES",
+    @GenericGenerator(name = "SEQ_EA",
                       strategy = "com.hotsix.titans.commons.StringPrefixedSequenceIdGenerator",
                       parameters = {
                             @Parameter(name = StringPrefixedSequenceIdGenerator.VALUE_PREFIX_PARAMETER, value = "EA"),

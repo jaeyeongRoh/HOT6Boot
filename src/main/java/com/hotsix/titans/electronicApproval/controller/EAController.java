@@ -1,8 +1,9 @@
 package com.hotsix.titans.electronicApproval.controller;
 
 import com.hotsix.titans.commons.ResponseDTO;
-import com.hotsix.titans.electronicApproval.dto.EALeaveDTO;
-import com.hotsix.titans.electronicApproval.dto.EASalaryDTO;
+import com.hotsix.titans.electronicApproval.dto.*;
+import com.hotsix.titans.electronicApproval.entity.EACert;
+import com.hotsix.titans.electronicApproval.entity.EARetire;
 import com.hotsix.titans.electronicApproval.service.EAService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,7 @@ public class EAController {
      * @return 객체타입
      */
     @Operation(summary = "전자결재 기안 종류별 조회", description = "기안 종류별로 객체타입으로 조회합니다", tags = { "EAController" })
-    @GetMapping("/v2/ealist/{dtype}/{eaCode}")
+    @GetMapping("/eaDocument/{dtype}/{eaCode}")
     public ResponseEntity<ResponseDTO> selectDtypeDocument(@PathVariable String dtype,@PathVariable String eaCode){
         switch (dtype){
             case "leave" : return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 휴가신청 개별 조회성공", eaService.selectLeave(eaCode)));
@@ -42,9 +43,23 @@ public class EAController {
             case "duty" : return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 예비군신청 개별 조회성공", eaService.selectDuty(eaCode)));
             case "loa" : return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 휴직신청 개별 조회성공", eaService.selectLoa(eaCode)));
             case "rnstt" : return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 복직신청 개별 조회성공", eaService.selectRnstt(eaCode)));
-
         }
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 개별 조회성공", "주소가 올바르지 않습니다."));
+    }
+
+    @Operation(summary = "전자결재 기안 종류별 리스트 조회", description = "기안 종류별로 리스트타입으로 조회합니다", tags = { "EAController" })
+    @GetMapping("/eaList/{dtype}")
+    public ResponseEntity<ResponseDTO> selectAllDtypeDocument(@PathVariable String dtype){
+        switch (dtype){
+            case "leave" : return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 휴가신청 리스트 조회성공", eaService.selectAllLeave()));
+            case "salary" : return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 급여정정 리스트 조회성공", eaService.selectAllSalary()));
+            case "retire" : return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 퇴직신청 리스트 조회성공", eaService.selectAllRetire()));
+            case "cert" : return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 증명서신청 리스트 조회성공", eaService.selectAllCert()));
+            case "duty" : return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 예비군신청 리스트 조회성공", eaService.selectAllDuty()));
+            case "loa" : return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 휴직신청 리스트 조회성공", eaService.selectAllLoa()));
+            case "rnstt" : return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 복직신청 리스트 조회성공", eaService.selectAllRnstt()));
+        }
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 타입별 리스트 조회성공", "주소가 올바르지 않습니다."));
     }
 
     /**
@@ -53,6 +68,7 @@ public class EAController {
      * @param eaCode 전자결재 문서번호
      * @return
      */
+    @Operation(summary = "전자결재", description = "기안조회합니다", tags = { "EAController" })
     @GetMapping("/eaDocument/{eaCode}")
     public ResponseEntity<ResponseDTO> selectDocumentCode(@PathVariable String eaCode) {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 개별 조회성공", eaService.selectDocumentCode(eaCode)));
@@ -63,21 +79,20 @@ public class EAController {
      *
      * @return
      */
+    @Operation(summary = "전자결재", description = "기안조회합니다", tags = { "EAController" })
     @GetMapping("/eaList")
     public ResponseEntity<ResponseDTO> selectAllDocument() {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 전체 리스트 조회성공", eaService.selectAllDocument()));
     }
-
 
     /**
      * 전자결재 휴가신청 insert API
      *
      * @return
      */
+    @Operation(summary = "전자결재", description = "기안조회합니다", tags = { "EAController" })
     @PostMapping("/eaLeave/insert")
     public ResponseEntity<ResponseDTO> insertLeave() {
-        ResponseDTO responseDTO = new ResponseDTO();
-
         EALeaveDTO eaLeaveDTO = new EALeaveDTO();
         eaLeaveDTO.setMemberDraft("150003");
         eaLeaveDTO.setMemberMiddleSigner("150006");
@@ -85,7 +100,6 @@ public class EAController {
         eaLeaveDTO.setEaSubject("시퀀스 휴가신청");
         eaLeaveDTO.setEaDetail("휴가");
         eaLeaveDTO.setEaCategory("연차");
-//        eaLeaveDTO.setEaType("A");
         eaLeaveDTO.setEaDate(new java.util.Date());
         eaLeaveDTO.setEaDraftStatus(1);
         eaLeaveDTO.setEaMiddleStatus(1);
@@ -102,65 +116,20 @@ public class EAController {
 
 
     /**
-     * 전자결재 휴가신청 전체 리스트 조회 API
-     *
-     * @return
-     */
-    @GetMapping("/eaLeaveList")
-    public ResponseEntity<ResponseDTO> selectAllLeave() {
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 휴가신청 리스트 조회성공", eaService.selectAllLeave()));
-    }
-
-
-    /**
-     * 전자결재 휴가신청 개별 조회 API
-     * @param eaCode
-     * @return
-     */
-    @GetMapping("/eaLeave/{eaCode}")
-    public ResponseEntity<ResponseDTO> selectLeave(@PathVariable String eaCode){
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 휴가신청 개별 조회 성공", eaService.selectLeave(eaCode)));
-    }
-
-
-    /**
-     * 전자결재 급여정정 전체 리스트 조회 API
-     *
-     * @return
-     */
-    @GetMapping("/eaSalaryList")
-    public ResponseEntity<ResponseDTO> selectAllSalary() {
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 급여정정 리스트 조회성공", eaService.selectAllSalary()));
-    }
-
-
-    /**
-     * 전자결재 급여정정 개별 조회 API
-     * @param eaCode
-     * @return
-     */
-    @GetMapping("/eaSalary/{eaCode}")
-    public ResponseEntity<ResponseDTO> selectSalary(@PathVariable String eaCode) {
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 급여정정 개별 조회성공", eaService.selectSalary(eaCode)));
-    }
-
-
-    /**
      * 전자결재 급여정정 insert API
      *
      * @return
      */
+    @Operation(summary = "전자결재", description = "기안조회합니다", tags = { "EAController" })
     @PostMapping("/eaSalary/insert")
     public ResponseEntity<ResponseDTO> insertSalary() {
         EASalaryDTO eaSalaryDTO = new EASalaryDTO();
-        eaSalaryDTO.setEaCode("201");
         eaSalaryDTO.setMemberDraft("150003");
         eaSalaryDTO.setMemberMiddleSigner("150006");
         eaSalaryDTO.setMemberFinalSigner("160009");
         eaSalaryDTO.setEaSubject("급여정정");
         eaSalaryDTO.setEaDetail("급여정정");
         eaSalaryDTO.setEaCategory("급여정정");
-//        eaLeaveDTO.setEaType("A");
         eaSalaryDTO.setEaDate(new java.util.Date());
         eaSalaryDTO.setEaDraftStatus(1);
         eaSalaryDTO.setEaMiddleStatus(1);
@@ -177,13 +146,66 @@ public class EAController {
     }
 
 
-    @GetMapping("/")
-    public ResponseEntity<ResponseDTO> selectAllLoa(){
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 급여정정 리스트 조회성공", eaService.selectAllLoa()));
+    @PostMapping("/eaCert/insert")
+    public ResponseEntity<ResponseDTO> insertCert(){
+        EACertDTO eaCertDTO = new EACertDTO();
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 급여정정 insert 성공", eaService.insertCert(eaCertDTO)));
+    }
+
+    @PostMapping("/eaDuty/insert")
+    public ResponseEntity<ResponseDTO> insertDuty(){
+        EADutyDTO eaDutyDTO = new EADutyDTO();
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 급여정정 insert 성공", eaService.insertDuty(eaDutyDTO)));
+    }
+
+    @PostMapping("/eaRnstt/insert")
+    public ResponseEntity<ResponseDTO> insertRnstt(){
+        EARnsttDTO eaRnsttDTO = new EARnsttDTO();
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 급여정정 insert 성공", eaService.insertRnstt(eaRnsttDTO)));
+    }
+
+    @PostMapping("/eaRetire/insert")
+    public ResponseEntity<ResponseDTO> insertRetire(){
+        EARetireDTO eaRetireDTO = new EARetireDTO();
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 급여정정 insert 성공", eaService.insertRetire(eaRetireDTO)));
+    }
+
+    @PostMapping("/eaLoa/insert")
+    public ResponseEntity<ResponseDTO> insertLoa(){
+        EALoaDTO eaLoaDTO = new EALoaDTO();
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 급여정정 insert 성공", eaService.insertLoa(eaLoaDTO)));
     }
 
 
-    /* 전자결재 결재자 승인/반려 처리
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /* 전자결재 결재자 승인/반려 처리 의사코드
+
+    1. 결재하려는 문서 정보 가져오기
+    2. 문서정보에서 승인 반려 항목 값 입력
+    3. 문서정보 update
+
+
     * memberCode, eaCode */
 
 
