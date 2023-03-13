@@ -27,8 +27,12 @@ public class MemberDTO implements UserDetails {
     private String workingStatus;
     private String memberGender;
     private String memberMarried;
-    private TeamDTO team;
-    private RankDTO rank;
+//    private TeamDTO team;
+//    private RankDTO rank;
+    private int teamCode;
+    private int rankCode;
+    private String teamName;
+    private String rankName;
     private List<TeamRoleDTO> teamRole;
     private List<ProfileImageDTO> profileImageList;
     private List<SalaryDTO> salaryList;
