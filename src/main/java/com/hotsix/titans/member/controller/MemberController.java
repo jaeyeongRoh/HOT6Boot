@@ -29,6 +29,15 @@ public class MemberController {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 성공", memberService.selectMyInfo(memberCode)));
     }
 
+    @Operation(summary = "회원 간단 조회 요청", description = "회원의 간단한 정보를 조회됩니다.", tags = { "MemberController" })
+    @GetMapping("/simpleMember/{memberCode}")
+    public ResponseEntity<ResponseDTO> selectSimpleMemberInfo(@PathVariable String memberCode) {
+
+        System.out.println("========" + memberCode);
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 성공", memberService.selectSimpleMemberInfo(memberCode)));
+    }
+
     @PutMapping(value = "/mypage/management/update/{memberCode}")
     public ResponseEntity<ResponseDTO> updateMyInfo(@ModelAttribute MemberDTO memberDTO) {
 

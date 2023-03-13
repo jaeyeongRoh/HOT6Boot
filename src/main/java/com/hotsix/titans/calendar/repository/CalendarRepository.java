@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface CalendarRepository extends JpaRepository<Calendar, String> {
 
-    List<Calendar> findAllBy();
+    List<Calendar> findByCalendarYn(char calendarYn);
 }

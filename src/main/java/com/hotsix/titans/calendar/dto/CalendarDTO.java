@@ -5,8 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -17,8 +15,8 @@ public class CalendarDTO {
     private String memberCode;
     private String calendarTitle;
     private String calendarContent;
-    private Date calendarStartDate;
-    private Date calendarEndDate;
+    private String calendarStartDate;
+    private String calendarEndDate;
     private char calendarYn;
     @Override
     public String toString() {
@@ -27,8 +25,8 @@ public class CalendarDTO {
                 ", memberCode='" + memberCode + '\'' +
                 ", calendarTitle='" + calendarTitle + '\'' +
                 ", calendarContent='" + calendarContent + '\'' +
-                ", calendarStartDate=" + calendarStartDate +
-                ", calendarEndDate=" + calendarEndDate +
+                ", calendarStartDate='" + calendarStartDate + '\'' +
+                ", calendarEndDate='" + calendarEndDate + '\'' +
                 ", calendarYn=" + calendarYn +
                 '}';
     }
