@@ -21,7 +21,7 @@ public class LeavePaymentHistoryDTO {
 
     private int leaveLeftoverCount;         // 잔여갯수
 
-    private String leavePaymentProcess;     // 처리자
+    private String leavePaymentProcess;     // 처리자x22
 
     private String leavePaymentMemo;        // 메모
 

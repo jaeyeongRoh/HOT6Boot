@@ -44,7 +44,7 @@ public class SecurityConfig {
 	@Bean
 	public WebSecurityCustomizer webSecurityCustomizer() {
 		return (web) -> web.ignoring().antMatchers("/css/**", "/js/**", "/images/**",
-				                                   "/lib/**", "/profileImages/**");
+				                                   "/lib/**", "/productimgs/**");
 	}
 
 	/* 3. HTTP요청에 대한 권한별 설정(세션 인증 -> 토큰 인증으로 인해 바뀐 부분 존재) */
@@ -80,17 +80,17 @@ public class SecurityConfig {
 //		    	.antMatchers("/api/**").hasRole("ADMIN")
 				.antMatchers("/api/**").hasAnyRole("MEMBER", "ADMIN")
 //		    	.anyRequest().permitAll();	// 어떤 요청이든 허용 가능, 시큐리티를 활용한 로그인이 모두 완성 되지 않았을 때 활용할 것
-		    .and()
+				.and()
 
-		    	/* 세션 인증 방식을 쓰지 않겠다는 설정 */
-		    	.sessionManagement()
-		    	.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-		    .and()
-		    	.cors()
-		    .and()
+				/* 세션 인증 방식을 쓰지 않겠다는 설정 */
+				.sessionManagement()
+				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+				.and()
+				.cors()
+				.and()
 
-		    	/* jwt 토큰 방식을 쓰겠다는 설정 */
-		    	.apply(new JwtSecurityConfig(tokenProvider));
+				/* jwt 토큰 방식을 쓰겠다는 설정 */
+				.apply(new JwtSecurityConfig(tokenProvider));
 		return http.build();
 	}
 
@@ -111,3 +111,7 @@ public class SecurityConfig {
 
 
 }
+
+
+
+

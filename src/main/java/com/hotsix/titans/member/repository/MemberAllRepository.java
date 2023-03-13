@@ -1,6 +1,5 @@
 package com.hotsix.titans.member.repository;
 
-import com.hotsix.titans.member.entity.Member;
 import com.hotsix.titans.member.entity.MemberAll;
 import org.springframework.data.jpa.repository.JpaRepository;
 

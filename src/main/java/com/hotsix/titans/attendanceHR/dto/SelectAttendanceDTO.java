@@ -12,7 +12,7 @@ import java.util.Date;
 public class SelectAttendanceDTO {
 
     private String memberName;
-    private String teamCode;
+    private int teamCode;
     private Date startDate;
     private Date startDate2;
 
