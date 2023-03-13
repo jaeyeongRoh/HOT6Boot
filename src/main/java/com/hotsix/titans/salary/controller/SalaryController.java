@@ -1,6 +1,7 @@
 package com.hotsix.titans.salary.controller;
 
 import com.hotsix.titans.commons.ResponseDTO;
+import com.hotsix.titans.exception.MemberCodeException;
 import com.hotsix.titans.member.dto.MemberDTO;
 import com.hotsix.titans.member.service.MemberService;
 import com.hotsix.titans.salary.dto.SalaryDTO;
@@ -62,6 +63,13 @@ public class SalaryController {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "지급여부와 날짜에 따른 급여 조회 성공", salaryList));
     }
 
+    /* 사원번호 입력받아 급여 정보 조회 */
+    @GetMapping("/salary/check/insert/{memberCode}")
+    public ResponseEntity<ResponseDTO> selectMemberCodeSalary(@PathVariable String memberCode) {
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "사원번호로 급여정보 조회 성공", salaryService.selectMemberCode(memberCode)));
+    }
+
     /* 급여 지급하여 지급여부 상태 변경 */
     @PutMapping(value = "/salary/check/N/{salaryCode}")
     public ResponseEntity<ResponseDTO> updateSalaryPayment(@PathVariable String salaryCode) {
@@ -69,7 +77,7 @@ public class SalaryController {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "급여 지급상태 변경 성공", salaryService.updateSalaryPaymentsYn(salaryCode)));
     }
 
-    /* 급여 등록하기 */
+    /* 급여 지급하기 */
     @PostMapping(value = "/salary/check/insert/")
     public ResponseEntity<ResponseDTO> insertSalary(@ModelAttribute SalaryDTO SalaryDTO) {
 

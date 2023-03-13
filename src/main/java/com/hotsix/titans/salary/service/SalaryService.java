@@ -1,5 +1,6 @@
 package com.hotsix.titans.salary.service;
 
+import com.hotsix.titans.exception.MemberCodeException;
 import com.hotsix.titans.exception.SalaryPaymentsYnException;
 import com.hotsix.titans.member.dto.MemberDTO;
 import com.hotsix.titans.member.dto.RankDTO;
@@ -153,12 +154,16 @@ public class SalaryService {
     }
 
 
-    /* 사원 이름 입력하여 정보 가져오기 */
-    public MemberDTO selectMemberName(String memberName) {
+    /* 사원 번호 입력하여 정보 가져오기 */
+    public MemberDTO selectMemberCode(String memberCode) {
 
-        Member member = memberRepository.findByMemberName(memberName);
+        Member member = memberRepository.findByMemberCode(memberCode);
 
         System.out.println("member = " + member);
+
+        if (member == null) {
+            throw new MemberCodeException("회원 정보를 찾을 수 없습니다.");
+        }
 
         return modelMapper.map(member, MemberDTO.class);
     }
@@ -182,4 +187,6 @@ public class SalaryService {
 
         return (result > 0) ? "등록 성공" : "등록 실패";
     }
+
+
 }
