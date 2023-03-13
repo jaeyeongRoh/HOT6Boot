@@ -33,16 +33,12 @@ public class Calendar {
     private String calendarTitle;
     @Column(name = "CALENDAR_CONTENT")
     private String calendarContent;
-
     @Column(name = "CALENDAR_START_DATE")
-    private Date calendarStartDate;
-
+    private String calendarStartDate;
     @Column(name = "CALENDAR_END_DATE")
-    private Date calendarEndDate;
-
+    private String calendarEndDate;
     @Column(name = "CALENDAR_YN")
     private char calendarYn;
-
     @Override
     public String toString() {
         return "Calendar{" +

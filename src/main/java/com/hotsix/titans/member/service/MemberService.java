@@ -2,6 +2,9 @@ package com.hotsix.titans.member.service;
 
 import com.hotsix.titans.member.dto.MemberDTO;
 import com.hotsix.titans.member.dto.ProfileImageDTO;
+import com.hotsix.titans.member.dto.SimpleMemberDTO;
+import com.hotsix.titans.member.entity.SimpleMember;
+import com.hotsix.titans.member.repository.SimpleMemberRepository;
 import com.hotsix.titans.member.entity.Member;
 import com.hotsix.titans.member.entity.ProfileImage;
 import com.hotsix.titans.member.repository.MemberRepository;
@@ -31,6 +34,7 @@ public class MemberService {
 
     private static final Logger log = LoggerFactory.getLogger(MemberService.class);
     private final MemberRepository memberRepository;
+    private final SimpleMemberRepository simpleMemberRepository;
     private final ProfileImageRepository profileImageRepository;
     private final PasswordEncoder passwordEncoder;
     private final ModelMapper modelMapper;
@@ -41,9 +45,10 @@ public class MemberService {
     private String IMAGE_URL;
 
     @Autowired
-    public MemberService(MemberRepository memberRepository, ProfileImageRepository profileImageRepository
+    public MemberService(MemberRepository memberRepository, SimpleMemberRepository simpleMemberRepository, ProfileImageRepository profileImageRepository
                         , PasswordEncoder passwordEncoder, ModelMapper modelMapper) {
         this.memberRepository = memberRepository;
+        this.simpleMemberRepository = simpleMemberRepository;
         this.profileImageRepository = profileImageRepository;
         this.passwordEncoder = passwordEncoder;
         this.modelMapper = modelMapper;
@@ -61,6 +66,20 @@ public class MemberService {
         log.info("[MemberService] getMyInfo End =========================");
 
         return modelMapper.map(member, MemberDTO.class);
+    }
+
+    public SimpleMemberDTO selectSimpleMemberInfo(String memberCode) {
+        log.info("[MemberService] getSimpleMemberInfo Start =======================");
+
+        SimpleMember simpleMember = simpleMemberRepository.findByMemberCode(memberCode);
+        ProfileImage profileImage = profileImageRepository.findByMemberCode(memberCode);
+        profileImage.setProfileImageLocation(IMAGE_URL + profileImage.getProfileImageChangeName());
+
+        log.info("이미지 주소 {}",profileImage.getProfileImageLocation());
+        log.info("[MemberService] {}", simpleMember);
+        log.info("[MemberService] getSimpleMemberInfo End =========================");
+
+        return modelMapper.map(simpleMember, SimpleMemberDTO.class);
     }
 
     @Transactional
