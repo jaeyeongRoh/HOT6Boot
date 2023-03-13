@@ -1,7 +1,10 @@
 package com.hotsix.titans.salary.service;
 
+import com.hotsix.titans.exception.MemberCodeException;
 import com.hotsix.titans.exception.SalaryPaymentsYnException;
 import com.hotsix.titans.member.dto.MemberDTO;
+import com.hotsix.titans.member.dto.RankDTO;
+import com.hotsix.titans.member.dto.TeamDTO;
 import com.hotsix.titans.member.entity.Member;
 import com.hotsix.titans.member.repository.MemberRepository;
 import com.hotsix.titans.salary.dto.SalaryDTO;
@@ -89,10 +92,12 @@ public class SalaryService {
             Bonus bonus = salary.getBonus();
             Long bonusSalary = bonus != null ? bonus.getBonusSalary() : 0L;
             Tax tax = salary.getTax();
+            Member member = salary.getMember();
 
             System.out.println("bonus = " + bonus);
             System.out.println("bonusSalary = " + bonusSalary);
             System.out.println("tax = " + tax);
+            System.out.println("member = " + member);
 
             Long beforeSalary = salary.getBasicSalary() + salary.getMealSalary() + bonusSalary;
 
@@ -109,6 +114,18 @@ public class SalaryService {
             Long afterSalary = beforeSalary - (incomTax + healthTax + nationalTax);
 
             SalaryDTO salaryDTO = modelMapper.map(salary, SalaryDTO.class);
+            MemberDTO memberDTO = modelMapper.map(member, MemberDTO.class);
+            TeamDTO teamDTO = modelMapper.map(member.getTeam(), TeamDTO.class);
+            RankDTO rankDTO = modelMapper.map(member.getRank(), RankDTO.class);
+
+            System.out.println("memberDTO = " + memberDTO);
+            System.out.println("teamDTO = " + teamDTO);
+            System.out.println("rankDTO = " + rankDTO);
+
+            salaryDTO.setMemberCode(memberDTO.getMemberCode());
+            salaryDTO.setMemberName(memberDTO.getMemberName());
+            salaryDTO.setTeam(teamDTO);
+            salaryDTO.setRank(rankDTO);
             salaryDTO.setBeforeSalary(beforeSalary);
             salaryDTO.setAfterSalary(afterSalary);
             salaryDTO.setIncomTax(incomTax);
@@ -118,9 +135,7 @@ public class SalaryService {
             selectSalary.add(salaryDTO);
         }
 
-
-        return salaryList.stream()
-                .map(salary -> modelMapper.map(salary, SalaryDTO.class))
+        return selectSalary.stream().map(salary -> modelMapper.map(salary, SalaryDTO.class))
                 .collect(Collectors.toList());
     }
 
@@ -139,28 +154,18 @@ public class SalaryService {
     }
 
 
-    /* 사원 이름 입력하여 정보 가져오기 */
-    public MemberDTO selectMemberName(String memberName) {
+    /* 사원 번호 입력하여 정보 가져오기 */
+    public MemberDTO selectMemberCode(String memberCode) {
 
-        Member members = memberRepository.findByMemberName(memberName);
+        Member member = memberRepository.findByMemberCode(memberCode);
 
-        System.out.println("members = " + members);
+        System.out.println("member = " + member);
 
-        /* 저번 달의 1일~말일의 총 근무시간 */
-//        int totalTime = members.getAttendenceList();
+        if (member == null) {
+            throw new MemberCodeException("회원 정보를 찾을 수 없습니다.");
+        }
 
-        /* 사원 시급 */
-//        Long hourlyMoney = members.getRank().getHourlyMoney();
-
-        /* 지급 될 기본 급(총 근무시간 * 사원 시급) */
-//        Long basicSalary = totalTime * hourlyMoney;
-        
-        /* 세전 급액 계산 */
-
-//        Long beforeSalary = basicSalary + mealSalary + bonusSalary;
-
-        return modelMapper.map(members, MemberDTO.class);
-//                members.stream().map(member -> modelMapper.map(member, MemberDTO.class)).collect(Collectors.toList());
+        return modelMapper.map(member, MemberDTO.class);
     }
 
     /* 입력받은 사원 정보에서 급여 등록 */
@@ -182,4 +187,6 @@ public class SalaryService {
 
         return (result > 0) ? "등록 성공" : "등록 실패";
     }
+
+
 }

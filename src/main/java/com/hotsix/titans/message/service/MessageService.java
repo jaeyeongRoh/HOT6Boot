@@ -1,7 +1,10 @@
 package com.hotsix.titans.message.service;
 
+import com.hotsix.titans.member.dto.MemberAllDTO;
 import com.hotsix.titans.member.dto.MemberDTO;
 import com.hotsix.titans.member.entity.Member;
+import com.hotsix.titans.member.entity.MemberAll;
+import com.hotsix.titans.member.repository.MemberAllRepository;
 import com.hotsix.titans.member.repository.MemberRepository;
 import com.hotsix.titans.message.dto.MessageDTO;
 import com.hotsix.titans.message.entity.Message;
@@ -33,18 +36,19 @@ public class MessageService {
     private final ModelMapper modelMapper;
     private final MemberRepository memberRepository;
     private final MessageHistoryRepository messageHistoryRepository;
+    private final MemberAllRepository memberAllRepository;
 
     @Autowired
     private EntityManager entityManager;
 
     @Autowired
     public MessageService(MessageRepository messageRepository, ModelMapper modelMapper,
-                          MemberRepository memberRepository, MessageHistoryRepository messageHistoryRepository) {
+                          MemberRepository memberRepository, MessageHistoryRepository messageHistoryRepository, MemberAllRepository memberAllRepository) {
         this.messageRepository = messageRepository;
         this.modelMapper = modelMapper;
         this.memberRepository = memberRepository;
-
         this.messageHistoryRepository = messageHistoryRepository;
+        this.memberAllRepository = memberAllRepository;
     }
 
 
@@ -73,13 +77,14 @@ public class MessageService {
     }
 
     /*이름으로 검색*/
-    public List<MemberDTO> selectMemberName(String memberName) {
+    public List<MemberAllDTO> selectMemberName(String memberName1) {
 
-        List<Member> members = memberRepository.findByMemberNameContaining(memberName);
+        String memberName2 = "김";
+        List<MemberAll> members = memberAllRepository.findByMemberNameContaining(memberName1);
 
         System.out.println("members = " + members);
 
-        return members.stream().map(member -> modelMapper.map(member, MemberDTO.class)).collect(Collectors.toList());
+        return members.stream().map(memberAll -> modelMapper.map(memberAll, MemberAllDTO.class)).collect(Collectors.toList());
     }
 
 

@@ -63,12 +63,4 @@ public class AuthController {
                 .body(new ResponseDTO(HttpStatus.OK, "신규 사원 등록 성공", authService.registMember(memberDTO, profileImageDTO, memberImage)));
     }
 
-//    @PostMapping(value = "/signup")
-//    public ResponseEntity<ResponseDTO> profileImageUpload(@ModelAttribute ProfileImageDTO profileImageDTO, MultipartFile memberImage) {
-//
-//        return ResponseEntity
-//                .ok()
-//                .body(new ResponseDTO(HttpStatus.OK, "프로필 이미지 업로드 성공", authService.profileImageUpload(profileImageDTO, memberImage)));
-//    }
-
 }

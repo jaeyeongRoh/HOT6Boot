@@ -1,6 +1,9 @@
 package com.hotsix.titans.salary.controller;
 
 import com.hotsix.titans.commons.ResponseDTO;
+import com.hotsix.titans.exception.MemberCodeException;
+import com.hotsix.titans.member.dto.MemberDTO;
+import com.hotsix.titans.member.service.MemberService;
 import com.hotsix.titans.salary.dto.SalaryDTO;
 import com.hotsix.titans.salary.service.SalaryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +51,6 @@ public class SalaryController {
     public ResponseEntity<ResponseDTO> selectPaymentYNSalary(@PathVariable String paymentsYn,
                                                              @PathVariable int year,
                                                              @PathVariable int month) {
-
         String startDate = year + "-" + month + "-" + "01";
         Date start = Date.valueOf(startDate);
         System.out.println("start = " + start); // 2015-03-01
@@ -58,17 +60,14 @@ public class SalaryController {
 
         List<SalaryDTO> salaryList = salaryService.selectPaymentYNSalary(paymentsYn, start, end);
 
-        System.out.println("salaryList = " + salaryList);
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "지급여부와 날짜에 따른 급여 조회 성공", salaryList));
     }
 
-    /* 급여 등록하기 */
-    @PostMapping(value = "/salary/check/insert")
-    public ResponseEntity<ResponseDTO> insertSalary(@ModelAttribute SalaryDTO salaryDTO) {
+    /* 사원번호 입력받아 급여 정보 조회 */
+    @GetMapping("/salary/check/insert/{memberCode}")
+    public ResponseEntity<ResponseDTO> selectMemberCodeSalary(@PathVariable String memberCode) {
 
-        System.out.println("salaryDTO = " + salaryDTO);
-
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK,"조회성공", salaryService.insertSalary(salaryDTO)));
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "사원번호로 급여정보 조회 성공", salaryService.selectMemberCode(memberCode)));
     }
 
     /* 급여 지급하여 지급여부 상태 변경 */
@@ -78,13 +77,16 @@ public class SalaryController {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "급여 지급상태 변경 성공", salaryService.updateSalaryPaymentsYn(salaryCode)));
     }
 
-    /* 사원이름 입력받아 검색 */
-    @GetMapping("/salary/check/insert/{memberName}")
-    public ResponseEntity<ResponseDTO> selectMemberName(@PathVariable String memberName) {
+    /* 급여 지급하기 */
+    @PostMapping(value = "/salary/check/insert/")
+    public ResponseEntity<ResponseDTO> insertSalary(@ModelAttribute SalaryDTO SalaryDTO) {
 
-        System.out.println("memberName =================== " + memberName);
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 성공", salaryService.selectMemberName(memberName)));
+        System.out.println("SalaryDTO = " + SalaryDTO);
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK,"조회성공", salaryService.insertSalary(SalaryDTO)));
     }
+
+
 
 
 }

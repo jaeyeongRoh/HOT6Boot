@@ -49,8 +49,8 @@ public class ProfileImage {
     @Column(name = "MEMBER_CODE")
     private String memberCode;
 
-//    @ManyToOne
-//    @JoinColumn(name = "MEMBER_CODE", insertable = false, updatable = false)
-//    private Member member;
+    @ManyToOne
+    @JoinColumn(name = "MEMBER_CODE", insertable = false, updatable = false)
+    private Member member;
 
 }

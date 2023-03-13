@@ -5,7 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface EALeaveRepository extends JpaRepository<EALeave, Integer> {
+public interface EALeaveRepository extends JpaRepository<EALeave, String> {
 
     List<EALeave> findAll();
+    EALeave findByEaCode(String eaCode);
 }

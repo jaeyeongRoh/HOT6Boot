@@ -1,14 +1,10 @@
 package com.hotsix.titans.member.entity;
 
-import com.hotsix.titans.commons.StringPrefixSequenceGenerator;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
-import java.util.Date;
 import java.util.List;
 
 @AllArgsConstructor

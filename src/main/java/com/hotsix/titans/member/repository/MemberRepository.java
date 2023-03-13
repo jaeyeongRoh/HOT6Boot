@@ -1,9 +1,11 @@
 package com.hotsix.titans.member.repository;
 
+import com.hotsix.titans.member.dto.MemberDTO;
 import com.hotsix.titans.member.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.sql.Date;
 import java.util.List;
 
 public interface MemberRepository extends JpaRepository<Member, String> {
@@ -12,9 +14,10 @@ public interface MemberRepository extends JpaRepository<Member, String> {
 
     List<Member> findByWorkingStatus(String workingStatus);
 
-    List<Member> findByMemberNameContaining(String memberName);
+    List<Member> findByMemberNameContaining(String string);
 
     Member findByMemberName(String memberName);
+
 
 
 //

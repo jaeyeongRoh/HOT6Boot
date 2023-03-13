@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface EASalaryRepository extends JpaRepository<EASalary, Integer> {
+public interface EASalaryRepository extends JpaRepository<EASalary, String> {
 
     List<EASalary> findAll();
     EASalary findByEaCode(String eaCode);
