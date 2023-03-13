@@ -89,12 +89,6 @@ public class AuthService {
         String replaceFileName = null;
         int result1 = 0;
 
-        System.out.println(memberImage);
-        System.out.println(memberImage.getOriginalFilename());
-        System.out.println(memberImage.getContentType());
-
-        System.out.println(profileImageDTO);
-
         try {
             replaceFileName = FileUploadUtils.saveFile(IMAGE_DIR, changeFileName, memberImage);
 
@@ -118,7 +112,6 @@ public class AuthService {
 
             result1 = 1;
 
-            System.out.println("result ====================" + result);
             log.info("[AuthService] Member Insert Result {}",
                     (result != null) ? "신규 사원 등록 성공" : "신규 사원 등록 실패");
         } catch (Exception e) {
@@ -126,7 +119,6 @@ public class AuthService {
             throw new RuntimeException(e);
         }
 
-        System.out.println("result1 ==========================" + result1);
         log.info("[AuthService] ProfileImage Upload Result {}",
                 (result1 > 0) ? "프로필 이미지 업로드 성공" : "프로필 이미지 업로드 실패");
 
