@@ -1,6 +1,7 @@
 package com.hotsix.titans.attendanceHR.entity;
 
 import lombok.*;
+import com.hotsix.titans.member.entity.Member;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -39,12 +40,18 @@ public class AttendanceHR {
     @Column(name = "COMMUTE_STATUS")
     private String commuteStatus;
 
-    @Column(name = "MEMBER_CODE")
-    private String memberCode;
+//    @Column(name = "MEMBER_CODE")
+//    private String memberCode;
 
     @OneToMany
     @JoinColumn(name = "COMMUTE_NO")
     private List<AttendanceHrReason> attendanceHrReasonList;
+
+    @ManyToOne
+    @JoinColumn(name = "MEMBER_CODE", insertable = false, updatable = false)
+    private Member member;
+
+
 
     @Override
     public String toString() {
@@ -57,7 +64,7 @@ public class AttendanceHR {
                 ", commuteFcountTime=" + commuteFcountTime +
                 ", commuteTotalTime=" + commuteTotalTime +
                 ", commuteStatus='" + commuteStatus + '\'' +
-                ", memberCode='" + memberCode + '\'' +
+
                 '}';
     }
 }

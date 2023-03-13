@@ -28,9 +28,10 @@ public class AttendanceHrController {
 
         ArrayList<String> test = new ArrayList<>();
         test.add("메세지입니다.");
-        System.out.println("tesssssssssssssssssssssss" + selectAttendanceDTO);
+        System.out.println("selectAttendanceDTO = " + selectAttendanceDTO);
+        System.out.println("받은 값 출력" + attendanceHrService.selectAttendance(selectAttendanceDTO));
 
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "메세지 전송 성공",test));
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "메세지 전송 성공",attendanceHrService.selectAttendance(selectAttendanceDTO)));
     }
 
 
