@@ -64,7 +64,7 @@ public class Salary {
     @JoinColumn(name = "MEMBER_CODE", insertable = false, updatable = false)
     private Member member;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "TAX_CODE")
     private Tax tax;
 

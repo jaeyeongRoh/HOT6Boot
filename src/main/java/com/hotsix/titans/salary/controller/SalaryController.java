@@ -67,6 +67,7 @@ public class SalaryController {
     @GetMapping("/salary/check/insert/{memberCode}")
     public ResponseEntity<ResponseDTO> selectMemberCodeSalary(@PathVariable String memberCode) {
 
+
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "사원번호로 급여정보 조회 성공", salaryService.selectMemberCode(memberCode)));
     }
 
