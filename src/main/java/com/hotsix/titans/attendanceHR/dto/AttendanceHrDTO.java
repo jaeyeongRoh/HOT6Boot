@@ -23,26 +23,24 @@ public class AttendanceHrDTO {
     private Date commuteFcountTime;
     private int  commuteTotalTime;
     private String commuteStatus;
-    private MemberDTO member;
-    private String teamName;
-    private String rankName;
-    private String memberName;
-
-
-
+//    private MemberDTO member;
+//    private String teamName;
+//    private String rankName;
+//    private String memberName;
     private List<AttendanceHrReasonDTO> attendanceHrReasonList;
 
 
-    public String getMemberName() {
-        return member.getMemberName();
-    }
-    public String getTeamName() {
-        return member.getTeamName();
-    }
+//    public String getMemberName() {
+//        return member.getMemberName();
+//    }
+//    public String getTeamName() {
+//        return member.getTeamName();
+//    }
+//
+//    public String getRankName() {
+//        return member.getRankName();
+//    }
 
-    public String getRankName() {
-        return member.getRankName();
-    }
 
     @Override
     public String toString() {
@@ -56,7 +54,6 @@ public class AttendanceHrDTO {
                 ", commuteFcountTime=" + commuteFcountTime +
                 ", commuteTotalTime=" + commuteTotalTime +
                 ", commuteStatus='" + commuteStatus + '\'' +
-                ", attendanceHrReasonList=" + attendanceHrReasonList +
                 '}';
     }
 }

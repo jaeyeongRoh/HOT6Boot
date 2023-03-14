@@ -1,5 +1,6 @@
 package com.hotsix.titans.attendanceHR.controller;
 
+import com.hotsix.titans.attendanceHR.dto.AttendanceHrDTO;
 import com.hotsix.titans.attendanceHR.dto.SelectAttendanceDTO;
 import com.hotsix.titans.attendanceHR.service.AttendanceHrService;
 import com.hotsix.titans.commons.ResponseDTO;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -34,6 +36,14 @@ public class AttendanceHrController {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "메세지 전송 성공",attendanceHrService.selectAttendance(selectAttendanceDTO)));
     }
 
+    /* 마이페이지 근태이력 조회 */
+    @GetMapping("/mypage/attendance/{memberCode}")
+    public ResponseEntity<ResponseDTO> selectMyAttendance(@PathVariable String memberCode) {
+
+        List<AttendanceHrDTO> attendanceHrDTOList = attendanceHrService.selectMyAttendance(memberCode);
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 성공", attendanceHrDTOList));
+    }
 
 //    @GetMapping("/attendance/attendanceAlldatas")
 //    public ResponseEntity<ResponseDTO> selectMessageAllMember(){

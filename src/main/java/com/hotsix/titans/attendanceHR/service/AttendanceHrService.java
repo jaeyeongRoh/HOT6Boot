@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -53,4 +55,19 @@ public class AttendanceHrService {
     }
 
 
+    public List<AttendanceHrDTO> selectMyAttendance(String memberCode) {
+
+        List<AttendanceHR> attendanceHRList = attendanceHrRepository.findByMemberCode(memberCode);
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM");
+        String searchKeyword = dateFormat.format(new Date()) + "*";
+
+        System.out.println("=============== " + searchKeyword);
+        System.out.println("여기서 확인이야");
+        List<AttendanceHR> attendanceList = attendanceHrRepository.findByMemberCodeAndCommuteDateStartingWith("TT10", searchKeyword);
+
+        System.out.println("attendanceList = " + attendanceList);
+
+        return attendanceHRList.stream().map(attendanceHR -> modelMapper.map(attendanceHR, AttendanceHrDTO.class)).collect(Collectors.toList());
+    }
 }

@@ -2,10 +2,7 @@ package com.hotsix.titans.attendanceHR.entity;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -54,6 +51,9 @@ public class AttendanceHrReason {
     @Column(name = "REASON_D_YN")
     private String	reasonDyn;
 
+    @ManyToOne
+    @JoinColumn(name = "COMMUTE_NO", insertable = false, updatable = false)
+    private AttendanceHR attendanceHR;
 
 
 }

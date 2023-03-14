@@ -81,7 +81,6 @@ public class SecurityConfig {
 				.antMatchers("/api/**").hasAnyRole("MEMBER", "ADMIN")
 //		    	.anyRequest().permitAll();	// 어떤 요청이든 허용 가능, 시큐리티를 활용한 로그인이 모두 완성 되지 않았을 때 활용할 것
 				.and()
-
 				/* 세션 인증 방식을 쓰지 않겠다는 설정 */
 				.sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
