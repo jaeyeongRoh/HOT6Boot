@@ -1,6 +1,7 @@
 package com.hotsix.titans.electronicApproval.entity;
 
 
+import com.hotsix.titans.attendanceManagement.entity.LeaveCategory;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,4 +26,8 @@ public class EALeave extends EADocument {
 
     @Column(name = "LEAVE_END_DATE")
     private LocalDate leaveEndDate;
+
+    @ManyToOne
+    @JoinColumn(name = "LEAVE_CATEGORY_CODE")
+    private LeaveCategory leaveCategory;
 }

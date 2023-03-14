@@ -11,5 +11,5 @@ import java.util.Date;
 @ToString
 public class EARetireDTO extends EADocumentDTO {
 
-    private Date entireDate;
+    private Date retireDate;
 }

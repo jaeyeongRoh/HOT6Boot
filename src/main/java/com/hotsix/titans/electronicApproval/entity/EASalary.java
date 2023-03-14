@@ -12,7 +12,7 @@ import javax.persistence.Table;
 import java.util.Date;
 
 @Entity
-@Table(name = "TBL_EA_SAL")
+@Table(name = "TBL_EA_SALARY")
 @DiscriminatorValue("salary")
 @NoArgsConstructor
 @AllArgsConstructor

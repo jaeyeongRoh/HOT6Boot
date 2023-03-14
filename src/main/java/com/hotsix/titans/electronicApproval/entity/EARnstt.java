@@ -19,7 +19,7 @@ import java.util.Date;
 @Getter
 @Setter
 @Table(name = "TBL_EA_RNSTT")
-public class EARnstt extends EADocument{
+public class EARnstt extends EADocument {
 
     @Column(name = "RNSTT_DATE")
     private Date rnsttDate;

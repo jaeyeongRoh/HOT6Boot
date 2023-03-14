@@ -1,15 +1,12 @@
 package com.hotsix.titans.electronicApproval.entity;
 
+import com.hotsix.titans.attendanceManagement.entity.LeaveCategory;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.naming.Name;
-import javax.persistence.Column;
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
@@ -19,15 +16,12 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @Table(name = "TBL_EA_DUTY")
-public class EADuty extends EADocument{
+public class EADuty extends EADocument {
 
-    @Column(name = "DUTY_CATEGORY")
-    private String dutyCategory;
-
-    @Column(name = "DUTY_DATE_START")
+    @Column(name = "DUTY_START_DATE")
     private LocalDate dutyStartDate;
 
-    @Column(name = "DUTY_DATE_END")
+    @Column(name = "DUTY_END_DATE")
     private LocalDate dutyEndDate;
 
 }

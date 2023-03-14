@@ -13,13 +13,13 @@ import javax.persistence.Table;
 import java.util.Date;
 
 @Entity
-@Table(name = "TBL_EA_ENTR")
+@Table(name = "TBL_EA_RETIREMENT")
 @DiscriminatorValue("retire")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 public class EARetire extends EADocument {
-    @Column(name = "ENTIRE_DATE")
+    @Column(name = "RETIRE_DATE")
     private Date entireDate;
 }

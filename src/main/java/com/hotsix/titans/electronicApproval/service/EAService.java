@@ -200,24 +200,7 @@ public class EAService {
     @Transactional
     public Object insertLeave(EALeaveDTO eaLeaveDTO) {
         EALeave eaLeave = new EALeave();
-        eaLeave.setEaCode(eaLeaveDTO.getEaCode());
-        eaLeave.setMemberDraft(eaLeaveDTO.getMemberDraft());
-        eaLeave.setMemberMiddleSigner(eaLeaveDTO.getMemberMiddleSigner());
-        eaLeave.setMemberFinalSigner(eaLeaveDTO.getMemberFinalSigner());
-        eaLeave.setEaSubject(eaLeaveDTO.getEaSubject());
-        eaLeave.setEaDetail(eaLeaveDTO.getEaDetail());
-        eaLeave.setEaCategory(eaLeaveDTO.getEaCategory());
-        eaLeave.setEaDate(eaLeaveDTO.getEaDate());
-        eaLeave.setEaDraftStatus(eaLeaveDTO.getEaDraftStatus());
-        eaLeave.setEaMiddleStatus(eaLeaveDTO.getEaMiddleStatus());
-        eaLeave.setEaMiddleComment(eaLeaveDTO.getEaMiddleComment());
-        eaLeave.setEaFinalStatus(eaLeaveDTO.getEaFinalStatus());
-        eaLeave.setEaFinalComment(eaLeaveDTO.getEaFinalComment());
-        eaLeave.setEaDocuStatus(eaLeaveDTO.getEaDocuStatus());
-        eaLeave.setIsDeleted(eaLeaveDTO.getIsDeleted());
 
-        eaLeave.setLeaveStartDate(eaLeaveDTO.getLeaveStartDate());
-        eaLeave.setLeaveEndDate(eaLeaveDTO.getLeaveEndDate());
 
         eaLeaveRepository.save(eaLeave);
 
@@ -235,24 +218,7 @@ public class EAService {
     @Transactional
     public Object insertSalary(EASalaryDTO eaSalaryDTO) {
         EASalary eaSalary = new EASalary();
-        eaSalary.setEaCode(eaSalaryDTO.getEaCode());
-        eaSalary.setMemberDraft(eaSalaryDTO.getMemberDraft());
-        eaSalary.setMemberMiddleSigner(eaSalaryDTO.getMemberMiddleSigner());
-        eaSalary.setMemberFinalSigner(eaSalaryDTO.getMemberFinalSigner());
-        eaSalary.setEaSubject(eaSalaryDTO.getEaSubject());
-        eaSalary.setEaDetail(eaSalaryDTO.getEaDetail());
-        eaSalary.setEaCategory(eaSalaryDTO.getEaCategory());
-//        eaSalary.setEaType(eaSalaryDTO.getEaType());
-        eaSalary.setEaDate(eaSalaryDTO.getEaDate());
-        eaSalary.setEaDraftStatus(eaSalaryDTO.getEaDraftStatus());
-        eaSalary.setEaMiddleStatus(eaSalaryDTO.getEaMiddleStatus());
-        eaSalary.setEaMiddleComment(eaSalaryDTO.getEaMiddleComment());
-        eaSalary.setEaFinalStatus(eaSalaryDTO.getEaFinalStatus());
-        eaSalary.setEaFinalComment(eaSalaryDTO.getEaFinalComment());
-        eaSalary.setEaDocuStatus(eaSalaryDTO.getEaDocuStatus());
-        eaSalary.setIsDeleted(eaSalaryDTO.getIsDeleted());
 
-        eaSalary.setSalCorrectionDate(eaSalaryDTO.getSalCorrectionDate());
 
         eaSalaryRepository.save(eaSalary);
         int result = 1;

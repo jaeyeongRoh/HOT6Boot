@@ -1,14 +1,12 @@
 package com.hotsix.titans.electronicApproval.entity;
 
+import com.hotsix.titans.attendanceManagement.entity.LeaveCategory;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -23,7 +21,8 @@ public class EALoa extends EADocument {
     @Column(name = "LOA_DATE")
     private Date loaDate;
 
-    @Column(name = "LOA_CATEGORY")
-    private String loaCategory;
+    @ManyToOne
+    @JoinColumn(name = "LEAVE_CATEGORY_CODE")
+    private LeaveCategory leaveCategory;
 
 }
