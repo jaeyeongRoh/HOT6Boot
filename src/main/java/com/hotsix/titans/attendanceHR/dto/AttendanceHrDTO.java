@@ -3,7 +3,7 @@ package com.hotsix.titans.attendanceHR.dto;
 import com.hotsix.titans.member.dto.MemberDTO;
 import lombok.*;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 
@@ -21,7 +21,8 @@ public class AttendanceHrDTO {
     private Date commuteScountTime;
     private Date commuteFinishTime;
     private Date commuteFcountTime;
-    private int  commuteTotalTime;
+    private int commuteTotalTime;
+    private int commuteTotalMonthTime;
     private String commuteStatus;
     private MemberDTO member;
     private List<AttendanceHrReasonDTO> attendanceHrReasonList;

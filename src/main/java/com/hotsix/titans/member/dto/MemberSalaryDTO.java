@@ -2,6 +2,7 @@ package com.hotsix.titans.member.dto;
 
 import com.hotsix.titans.attendanceHR.dto.AttendanceHrDTO;
 import com.hotsix.titans.salary.dto.SalaryDTO;
+import com.hotsix.titans.salary.entity.Salary;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,30 +14,24 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-public class MemberDTO implements UserDetails {
+public class MemberSalaryDTO implements UserDetails {
 
     private String memberCode;
-    private String memberPassword;
     private String memberName;
-    private String memberEmail;
-    private String inlinePhone;
-    private String memberPhone;
-    private String memberAddress;
-    private Date memberBirth;
-    private Date joinDate;
-    private String workingStatus;
-    private String memberGender;
-    private String memberMarried;
-    private int teamCode;
-    private int rankCode;
-    private String teamName;
-    private String rankName;
-    private int commuteTotalTime;
-    private int commuteTotalMonthTime;
-    private List<TeamRoleDTO> teamRole;
-    private List<ProfileImageDTO> profileImageList;
+    private RankDTO rank;
+    private TeamDTO team;
+    private Long basicSalary;
+    private Long mealSalary;
+    private Long incomTax;
+    private Long healthTax;
+    private Long nationalTax;
+    private Long totalTax;
+    private Long afterSalary;
+    private Salary salary;
+    private Long beforeSalary;
+    private int totalTime;
     private List<SalaryDTO> salaryList;
-    private List<AttendanceHrDTO> attendanceHrList;
+    private List<AttendanceHrDTO> attendanceHRList;
 
     /* 이하 코드들을 UserDetails로부터 물려받는 추상메소드들을 오버라이딩 한 것이다.(필요한 것만 작성하자) */
     /* MemberDTO는 Member와 매핑 될 DTO이자 UserDetails로써 속성을 추가로 가짐 */
@@ -51,50 +46,46 @@ public class MemberDTO implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return this.authorities;
     }
+
     @Override
     public String getPassword() {
-        return this.memberPassword;
+        return null;
     }
+
     @Override
     public String getUsername() {
-        return this.memberCode;
+        return null;
     }
+
     @Override
     public boolean isAccountNonExpired() {
-        // TODO Auto-generated method stub
         return false;
     }
+
     @Override
     public boolean isAccountNonLocked() {
-        // TODO Auto-generated method stub
         return false;
     }
+
     @Override
     public boolean isCredentialsNonExpired() {
-        // TODO Auto-generated method stub
         return false;
     }
+
     @Override
     public boolean isEnabled() {
-        // TODO Auto-generated method stub
         return false;
     }
 
     @Override
     public String toString() {
-        return "MemberDTO{" +
+        return "MemberSalaryDTO{" +
                 "memberCode='" + memberCode + '\'' +
-                ", memberPassword='" + memberPassword + '\'' +
                 ", memberName='" + memberName + '\'' +
-                ", memberEmail='" + memberEmail + '\'' +
-                ", inlinePhone='" + inlinePhone + '\'' +
-                ", memberPhone='" + memberPhone + '\'' +
-                ", memberAddress='" + memberAddress + '\'' +
-                ", memberBirth=" + memberBirth +
-                ", joinDate=" + joinDate +
-                ", workingStatus='" + workingStatus + '\'' +
-                ", memberGender='" + memberGender + '\'' +
-                ", memberMarried='" + memberMarried + '\'' +
+                ", rank=" + rank +
+                ", team=" + team +
+                ", attendanceHRList=" + attendanceHRList +
+                ", authorities=" + authorities +
                 '}';
     }
 }

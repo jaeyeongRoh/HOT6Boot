@@ -3,7 +3,7 @@ package com.hotsix.titans.attendanceHR.entity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 @Entity
@@ -34,7 +34,7 @@ public class AttendanceHR {
     private Date commuteFcountTime;
 
     @Column(name = "COMMUTE_TOTAL_TIME")
-    private int  commuteTotalTime;
+    private int commuteTotalTime;
 
     @Column(name = "COMMUTE_STATUS")
     private String commuteStatus;
