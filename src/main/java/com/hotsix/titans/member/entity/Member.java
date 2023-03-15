@@ -12,7 +12,6 @@ import com.hotsix.titans.message.entity.Message;
 
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -95,7 +94,6 @@ public class Member {
     @JoinColumn(name = "MEMBER_CODE")
     private List<AttendanceHR> attendanceHRList;
 
-
     @Override
     public String toString() {
         return "Member{" +
@@ -113,6 +111,9 @@ public class Member {
                 ", memberMarried='" + memberMarried + '\'' +
                 ", team=" + team +
                 ", rank=" + rank +
+                ", retireeHistory=" + retireeHistory +
+                ", messages=" + messages +
+                ", attendanceHRList=" + attendanceHRList +
                 '}';
     }
 }

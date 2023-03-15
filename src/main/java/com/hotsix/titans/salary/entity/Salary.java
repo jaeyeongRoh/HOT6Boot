@@ -6,11 +6,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
 import javax.persistence.*;
-import java.nio.MappedByteBuffer;
 import java.sql.Date;
 
 @AllArgsConstructor
@@ -18,6 +18,7 @@ import java.sql.Date;
 @Getter
 @Setter
 @Entity
+@DynamicInsert
 @Table(name = "TBL_SALARY")
 public class Salary {
 
@@ -64,7 +65,7 @@ public class Salary {
     @JoinColumn(name = "MEMBER_CODE", insertable = false, updatable = false)
     private Member member;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "TAX_CODE")
     private Tax tax;
 
@@ -85,7 +86,7 @@ public class Salary {
                 ", nationalTax=" + nationalTax +
                 ", paymentDate=" + paymentDate +
                 ", paymentsYn='" + paymentsYn + '\'' +
-//                ", memberCode='" + memberCode + '\'' +
+                ", memberCode='" + memberCode + '\'' +
                 ", tax=" + tax +
                 ", bonus=" + bonus +
                 '}';

@@ -1,6 +1,7 @@
 package com.hotsix.titans.salary.entity;
 
 import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 
@@ -10,6 +11,7 @@ import javax.persistence.*;
 @Setter
 @ToString
 @Entity
+@DynamicInsert
 @Table(name = "TBL_TAX")
 public class Tax {
 
