@@ -10,6 +10,5 @@ import lombok.*;
 public class EACertDTO extends EADocumentDTO{
 
     private String certCategory;
-
     private Integer certRequireCount;
 }

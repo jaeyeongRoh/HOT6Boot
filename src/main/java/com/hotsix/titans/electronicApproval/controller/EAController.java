@@ -3,6 +3,7 @@ package com.hotsix.titans.electronicApproval.controller;
 import com.hotsix.titans.commons.ResponseDTO;
 import com.hotsix.titans.electronicApproval.dto.*;
 import com.hotsix.titans.electronicApproval.entity.EACert;
+import com.hotsix.titans.electronicApproval.entity.EAMember;
 import com.hotsix.titans.electronicApproval.entity.EARetire;
 import com.hotsix.titans.electronicApproval.service.EAService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 import java.time.LocalDate;
+import java.util.Date;
 
 
 @RestController
@@ -94,23 +96,20 @@ public class EAController {
     @PostMapping("/eaLeave/insert")
     public ResponseEntity<ResponseDTO> insertLeave() {
         EALeaveDTO eaLeaveDTO = new EALeaveDTO();
-//        eaLeaveDTO.setMemberDraft("150003");
-//        eaLeaveDTO.setMemberMiddleSigner("150006");
-//        eaLeaveDTO.setMemberFinalSigner("160009");
-//        eaLeaveDTO.setEaSubject("시퀀스 휴가신청");
-//        eaLeaveDTO.setEaDetail("휴가");
-//        eaLeaveDTO.setEaCategory("연차");
-//        eaLeaveDTO.setEaDate(new java.util.Date());
-//        eaLeaveDTO.setEaDraftStatus(1);
-//        eaLeaveDTO.setEaMiddleStatus(1);
-//        eaLeaveDTO.setEaMiddleComment("없음");
-//        eaLeaveDTO.setEaFinalStatus(1);
-//        eaLeaveDTO.setEaFinalComment("없음");
-//        eaLeaveDTO.setEaDocuStatus(1);
-//        eaLeaveDTO.setIsDeleted("N");
-//
-//        eaLeaveDTO.setLeaveStartDate(LocalDate.now());
-//        eaLeaveDTO.setLeaveEndDate(LocalDate.now());
+
+
+        eaLeaveDTO.setMemberCode("150003");
+        eaLeaveDTO.setEaSubject("시퀀스 휴가신청");
+        eaLeaveDTO.setEaDetail("휴가");
+        eaLeaveDTO.setEaDate(LocalDate.now());
+        eaLeaveDTO.setEaStatusCode("1");
+        eaLeaveDTO.setLeaveCategoryCode("LC1");
+
+
+
+        eaLeaveDTO.setLeaveStartDate(LocalDate.now());
+        eaLeaveDTO.setLeaveEndDate(LocalDate.now());
+
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 휴가신청 insert 성공", eaService.insertLeave(eaLeaveDTO)));
     }
 

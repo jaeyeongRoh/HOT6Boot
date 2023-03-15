@@ -5,12 +5,14 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import java.util.Date;
+import java.time.LocalDate;
+
 
 @Entity
 @Table(name = "TBL_EA_RETIREMENT")
@@ -19,7 +21,8 @@ import java.util.Date;
 @AllArgsConstructor
 @Getter
 @Setter
+@DynamicInsert
 public class EARetire extends EADocument {
     @Column(name = "RETIRE_DATE")
-    private Date entireDate;
+    private LocalDate entireDate;
 }

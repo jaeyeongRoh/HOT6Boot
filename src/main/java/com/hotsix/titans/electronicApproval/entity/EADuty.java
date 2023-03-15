@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -16,6 +17,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @Table(name = "TBL_EA_DUTY")
+@DynamicInsert
 public class EADuty extends EADocument {
 
     @Column(name = "DUTY_START_DATE")

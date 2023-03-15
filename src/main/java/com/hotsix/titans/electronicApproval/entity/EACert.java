@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
@@ -17,6 +18,7 @@ import javax.persistence.Table;
 @AllArgsConstructor
 @Getter
 @Setter
+@DynamicInsert
 public class EACert extends EADocument {
 
     @Column(name = "CERT_CATEGORY")

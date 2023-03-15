@@ -9,7 +9,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.util.Date;
+import java.time.LocalDate;
+
 
 @Entity
 @AllArgsConstructor
@@ -33,12 +34,12 @@ public class EAFile {
     private String eaFileRename;
 
     @Column(name = "EA_FILE_UPLOAD_DATE")
-    private Date eaFileUploadDate;
+    private LocalDate eaFileUploadDate;
 
     @Column(name = "EA_FILE_SIZE")
     private String eaFileSize;
 
-    @Column(name = "EA_FILE_EXTENSION")
+    @Column(name = "EA_FILE_EXTENTION")
     private String eaFileExtension;
 
     @Column(name = "EA_FILE_ROUTE")

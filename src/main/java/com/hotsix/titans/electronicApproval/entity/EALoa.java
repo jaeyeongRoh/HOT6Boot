@@ -5,9 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
+
 
 @Entity
 @Table(name = "TBL_EA_LOA")
@@ -16,10 +18,11 @@ import java.util.Date;
 @AllArgsConstructor
 @Getter
 @Setter
+@DynamicInsert
 public class EALoa extends EADocument {
 
     @Column(name = "LOA_DATE")
-    private Date loaDate;
+    private LocalDate loaDate;
 
     @ManyToOne
     @JoinColumn(name = "LEAVE_CATEGORY_CODE")

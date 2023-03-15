@@ -6,11 +6,14 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
+import java.util.List;
+
 
 @Entity
 @Table(name = "TBL_EA")
@@ -20,6 +23,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Getter
 @Setter
+@DynamicInsert
 public class EADocument {
 
     @Id
@@ -37,7 +41,7 @@ public class EADocument {
     private String memberCode;
 
     @ManyToOne
-    @JoinColumn(name = "MEMBER_CODE")
+    @JoinColumn(name = "MEMBER_CODE", insertable = false, updatable = false)
     private EAMember eaMember;
 
     @Column(name = "EA_SUBJECT")
@@ -51,10 +55,19 @@ public class EADocument {
     private String eaDetail;
 
     @Column(name = "EA_DATE")
-    private Date eaDate;
+    private LocalDate eaDate;
 
     @Column(name = "EA_DELETE_YN")
-    private String isDeleted;
+    private Character isDeleted;
 
+    @Column(name = "EA_STATUS_CODE")
+    private String eaStatusCode;
 
+    @ManyToOne
+    @JoinColumn(name = "EA_STATUS_CODE", insertable = false, updatable = false)
+    private EAStatusCategory eaStatusCategory;
+
+    @OneToMany
+    @JoinColumn(name = "EA_CODE")
+    private List<EAApproverInfo> eaApproverInfoList;
 }

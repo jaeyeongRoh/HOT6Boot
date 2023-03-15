@@ -43,7 +43,7 @@ public class EAService {
      * 전자결재 전체 목록 조회하는 메소드
      */
     public Object selectAllDocument() {
-        List<EADocument> eaList = eaDocumentRepository.findAll();
+        List<EADocument> eaList = eaDocumentRepository.findAllByOrderByEaCodeDesc();
         return eaList.stream().map(eaDocument -> modelMapper.map(eaDocument, EADocumentDTO.class)).collect(Collectors.toList());
     }
 
@@ -57,8 +57,6 @@ public class EAService {
         EADocument eaDocument = eaDocumentRepository.findByEaCode(eaCode);
         return modelMapper.map(eaDocument, EADocumentDTO.class);
     }
-
-
 
 
     /**
@@ -81,12 +79,14 @@ public class EAService {
 
     /**
      * 전자결재 휴직신청 전체 조회하는 메소드
+     *
      * @return
      */
     public Object selectAllLoa() {
         List<EALoa> eaLoaList = eaLoaRepository.findAll();
         return eaLoaList.stream().map(eaLoa -> modelMapper.map(eaLoa, EALoaDTO.class)).collect(Collectors.toList());
     }
+
     public Object selectAllRetire() {
         List<EARetire> eaRetireList = eaRetireRepository.findAll();
         return eaRetireList.stream().map(eaRetire -> modelMapper.map(eaRetire, EARetireDTO.class)).collect(Collectors.toList());
@@ -94,19 +94,18 @@ public class EAService {
 
     public Object selectAllCert() {
         List<EACert> eaCertList = eaCertRepository.findAll();
-        return eaCertList.stream().map(eaCert -> modelMapper.map(eaCert,EACertDTO.class)).collect(Collectors.toList());
+        return eaCertList.stream().map(eaCert -> modelMapper.map(eaCert, EACertDTO.class)).collect(Collectors.toList());
     }
 
     public Object selectAllDuty() {
         List<EADuty> eaDutyList = eaDutyRepository.findAll();
-        return eaDutyList.stream().map(eaDuty -> modelMapper.map(eaDuty,EADutyDTO.class)).collect(Collectors.toList());
+        return eaDutyList.stream().map(eaDuty -> modelMapper.map(eaDuty, EADutyDTO.class)).collect(Collectors.toList());
     }
 
     public Object selectAllRnstt() {
         List<EARnstt> eaRnsttList = eaRnsttRepository.findAll();
-        return eaRnsttList.stream().map(eaRnstt -> modelMapper.map(eaRnstt,EARnsttDTO.class)).collect(Collectors.toList());
+        return eaRnsttList.stream().map(eaRnstt -> modelMapper.map(eaRnstt, EARnsttDTO.class)).collect(Collectors.toList());
     }
-
 
 
     /**
@@ -189,8 +188,6 @@ public class EAService {
     }
 
 
-
-
     /**
      * 전자결재 휴가신청 기안하는 메소드
      *
@@ -201,7 +198,7 @@ public class EAService {
     public Object insertLeave(EALeaveDTO eaLeaveDTO) {
         EALeave eaLeave = new EALeave();
 
-
+        eaLeave = modelMapper.map(eaLeaveDTO, EALeave.class);
         eaLeaveRepository.save(eaLeave);
 
         int result = 1;

@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface EADocumentRepository extends JpaRepository <EADocument, String>{
 
-    List<EADocument> findAll();
+    List<EADocument> findAllByOrderByEaCodeDesc();
 
     EADocument findByEaCode(String eaCode);
 
