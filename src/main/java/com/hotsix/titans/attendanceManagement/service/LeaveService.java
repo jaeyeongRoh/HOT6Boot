@@ -2,8 +2,11 @@ package com.hotsix.titans.attendanceManagement.service;
 
 import com.hotsix.titans.attendanceManagement.dto.LeaveCategoryDTO;
 import com.hotsix.titans.attendanceManagement.dto.LeaveCategoryAndLeavePaymentHistoryDTO;
+import com.hotsix.titans.attendanceManagement.dto.LeavePaymentHistoryDTO;
 import com.hotsix.titans.attendanceManagement.entity.LeaveCategory;
 import com.hotsix.titans.attendanceManagement.entity.LeaveCategoryAndLeavePaymentHistory;
+import com.hotsix.titans.attendanceManagement.entity.LeavePaymentHistory;
+import com.hotsix.titans.attendanceManagement.repository.LeavePaymentHistoryRepository;
 import com.hotsix.titans.attendanceManagement.repository.LeaveRepository;
 import com.hotsix.titans.attendanceManagement.repository.LeaveRepositoryAndLeavePaymentHistory;
 import org.modelmapper.ModelMapper;
@@ -20,12 +23,14 @@ public class LeaveService {
     private final LeaveRepositoryAndLeavePaymentHistory leaveRepositoryAndLeavePaymentHistory;
     private final LeaveRepository leaveRepository;
     private final ModelMapper modelMapper;
+    private final LeavePaymentHistoryRepository leavePaymentHistoryRepository;
 
     @Autowired
-    public LeaveService(LeaveRepositoryAndLeavePaymentHistory leaveRepositoryAndLeavePaymentHistory, LeaveRepository leaveRepository, ModelMapper modelMapper) {
+    public LeaveService(LeaveRepositoryAndLeavePaymentHistory leaveRepositoryAndLeavePaymentHistory, LeaveRepository leaveRepository, ModelMapper modelMapper, LeavePaymentHistoryRepository leavePaymentHistoryRepository) {
         this.leaveRepositoryAndLeavePaymentHistory = leaveRepositoryAndLeavePaymentHistory;
         this.leaveRepository = leaveRepository;
         this.modelMapper = modelMapper;
+        this.leavePaymentHistoryRepository = leavePaymentHistoryRepository;
     }
 
 
@@ -33,7 +38,6 @@ public class LeaveService {
 
         List<LeaveCategoryAndLeavePaymentHistory> leavePaymentHistoryList = leaveRepositoryAndLeavePaymentHistory.findAll();
 
-        System.out.println("leavePaymentHistoryList : " + leavePaymentHistoryList);
         return leavePaymentHistoryList.stream().map(leavePaymentHistory -> modelMapper.map(leavePaymentHistory, LeaveCategoryAndLeavePaymentHistoryDTO.class)).collect(Collectors.toList());
     }
 
@@ -55,5 +59,19 @@ public class LeaveService {
         }
 
         return (result > 0) ? "입력 성공" : "입력 실패";
+    }
+
+    @Transactional
+    public Object deleteLeaveCategory(String leaveCategoryCode) {
+
+        int result = leaveRepository.deleteByLeaveCategoryCode(leaveCategoryCode);
+        return (result > 0) ? "휴가 기준 삭제 성공" : "휴가 기준 삭제 실패";
+    }
+
+    public List<LeavePaymentHistoryDTO> selectMyLeaveInfo(String memberCode) {
+
+        List<LeavePaymentHistory> leavePaymentHistoryList = leavePaymentHistoryRepository.findByMemberCode(memberCode);
+
+        return leavePaymentHistoryList.stream().map(leavePaymentHistory -> modelMapper.map(leavePaymentHistory, LeavePaymentHistoryDTO.class)).collect(Collectors.toList());
     }
 }

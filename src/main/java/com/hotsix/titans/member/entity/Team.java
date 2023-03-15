@@ -8,9 +8,9 @@ import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 @Getter
 @Setter
+@ToString
 @Entity
 @Table(name = "TBL_TEAM")
 public class Team {
@@ -22,5 +22,16 @@ public class Team {
     @Column(name = "TEAM_NAME")
     private String teamName;
 
+    @OneToMany
+    @JoinColumn(name = "TEAM_CODE")
+    private List<TeamRole> teamRole;
 
+    @Override
+    public String toString() {
+        return "Team{" +
+                "teamCode=" + teamCode +
+                ", teamName='" + teamName + '\'' +
+                ", teamRole=" + teamRole +
+                '}';
+    }
 }

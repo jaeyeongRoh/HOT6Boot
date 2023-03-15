@@ -1,12 +1,12 @@
 package com.hotsix.titans.salary.controller;
 
 import com.hotsix.titans.commons.ResponseDTO;
+import com.hotsix.titans.exception.MemberCodeException;
+import com.hotsix.titans.member.dto.MemberDTO;
+import com.hotsix.titans.member.dto.MemberSalaryDTO;
+import com.hotsix.titans.member.service.MemberService;
 import com.hotsix.titans.salary.dto.SalaryDTO;
-import com.hotsix.titans.salary.entity.Bonus;
-import com.hotsix.titans.salary.entity.Salary;
-import com.hotsix.titans.salary.entity.Tax;
 import com.hotsix.titans.salary.service.SalaryService;
-import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,46 +28,63 @@ public class SalaryController {
     }
 
 
-    /* 세금 계산까지 마친 급여 조회*/
-//    @Operation(summary = "내 급여 조회 요청", description = "선택한 년월의 급여가 조회됩니다.", tags = { "SalaryController" })
-//    @GetMapping("/salary/check/{year}/{month}")
-//    public ResponseEntity<ResponseDTO> getPaymentDateSalary(@PathVariable int year,
-//                                                            @PathVariable int month){
-////                                                            @RequestParam int memberCode) {
-//
-////        System.out.println("memberCode = " + memberCode);
-//
-//        String startDate = year + "-" + month + "-" + "01";
-//        Date start = Date.valueOf(startDate);
-//        System.out.println("start = " + start); // 2015-03-01
-//        String endDate = year + "-" + month + "-" + start.toLocalDate().lengthOfMonth();
-//        Date end = Date.valueOf(endDate);
-//        System.out.println("end =-============ " + end); // 2015-03-31
-//
-//        List<SalaryDTO> salaryList = salaryService.selectPaymentDateSalary(start, end);
-////        List<SalaryDTO> salaryList = salaryService.selectPaymentDateSalary(start, end, memberCode);
-//
-//
-////        return null;
-//        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "날짜에 따른 급여 조회 성공", salaryList));
-//
-//    }
+    /* 날짜에 따른 내 급여 조회 */
+    @GetMapping("/salary/check/{memberCode}/{year}/{month}")
+    public ResponseEntity<ResponseDTO> selectMySalary(@PathVariable String memberCode,
+                                                             @PathVariable int year,
+                                                             @PathVariable int month) {
 
-    /* 지급 여부에 따른 급여 조회 */
-    @GetMapping("/salary/check/{paymentsYn}")
-    public ResponseEntity<ResponseDTO> selectPaymentYNSalary(@PathVariable String paymentsYn) {
-        List<SalaryDTO> salaryList = salaryService.selectPaymentYNSalary(paymentsYn);
+        String startDate = year + "-" + month + "-" + "01";
+        Date start = Date.valueOf(startDate);
+        System.out.println("start = " + start); // 2015-03-01
+        String endDate = year + "-" + month + "-" + start.toLocalDate().lengthOfMonth();
+        Date end = Date.valueOf(endDate);
+        System.out.println("end =-============ " + end); // 2015-03-31
+
+        List<SalaryDTO> salaryList = salaryService.selectMySalary(memberCode, start, end);
 
         System.out.println("salaryList = " + salaryList);
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "지급여부에 따른 급여 조회 성공", salaryList));
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "지급여부와 날짜에 따른 급여 조회 성공", salaryList));
     }
 
-//    /* 급여 지급 */
-//    @PostMapping(value = "/salary/check/N")
-//    public ResponseEntity<ResponseDTO> insertSalary(@ModelAttribute SalaryDTO) {
-//
-//        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "급여 지급 성공", salaryService.insertSalary(SalaryDTO)));
-//    }
+    /* (관리자) 지급 여부와 날짜에 따른 급여 조회 */
+    @GetMapping("/salary/check/all/{year}/{month}/{paymentsYn}")
+    public ResponseEntity<ResponseDTO> selectPaymentYNSalary(@PathVariable String paymentsYn,
+                                                             @PathVariable int year,
+                                                             @PathVariable int month) {
+        String startDate = year + "-" + month + "-" + "01";
+        Date start = Date.valueOf(startDate);
+        System.out.println("start = " + start); // 2015-03-01
+        String endDate = year + "-" + month + "-" + start.toLocalDate().lengthOfMonth();
+        Date end = Date.valueOf(endDate);
+        System.out.println("end =-============ " + end); // 2015-03-31
 
+        List<SalaryDTO> salaryList = salaryService.selectPaymentYNSalary(paymentsYn, start, end);
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "지급여부와 날짜에 따른 급여 조회 성공", salaryList));
+    }
+
+    /* 사원번호 입력받아 급여 정보 조회 */
+    @GetMapping("/salary/check/insert/{memberCode}")
+    public ResponseEntity<ResponseDTO> selectMemberCodeSalary(@PathVariable String memberCode) {
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "사원번호로 급여정보 조회 성공", salaryService.selectMemberCode(memberCode)));
+    }
+
+    /* 급여 지급하여 지급여부 상태 변경 */
+    @PutMapping("/salary/check/N/{salaryCode}")
+    public ResponseEntity<ResponseDTO> updateSalaryPayment(@PathVariable String salaryCode) {
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "급여 지급상태 변경 성공", salaryService.updateSalaryPaymentsYn(salaryCode)));
+    }
+
+    /* 급여 지급하기 */
+    @PostMapping("/salary/month/insert")
+    public ResponseEntity<ResponseDTO> insertSalary(@RequestBody SalaryDTO salaryDTO) {
+
+        System.out.println("salaryDTO ============================= " + salaryDTO);
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK,"급여 지급 성공", salaryService.insertSalary(salaryDTO)));
+    }
 
 }

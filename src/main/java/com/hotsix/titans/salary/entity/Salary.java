@@ -1,10 +1,12 @@
 package com.hotsix.titans.salary.entity;
 
+import com.hotsix.titans.commons.StringPrefixSequenceGenerator;
 import com.hotsix.titans.member.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
@@ -16,13 +18,17 @@ import java.sql.Date;
 @Getter
 @Setter
 @Entity
+@DynamicInsert
 @Table(name = "TBL_SALARY")
 public class Salary {
 
     @Id
-//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "salary_generator")
-//    @GenericGenerator(name = "salary_generator", strategy = "com.hotsix.titan.generator.SalaryGenerator")
     @Column(name = "SALARY_CODE")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_SALARY_CODE")
+    @GenericGenerator(name = "SEQ_SALARY_CODE", strategy = "com.hotsix.titans.commons.StringPrefixSequenceGenerator",
+            parameters = {
+                    @Parameter(name = StringPrefixSequenceGenerator.VALUE_PREFIX_PARAMETER, value = "SAL")
+            })
     private String salaryCode;              // 급여 코드
 
     @Column(name = "BASIC_SALARY")
@@ -52,17 +58,20 @@ public class Salary {
     @Column(name = "SALARY_PAYMENTS_YN")
     private String paymentsYn;
 
-    @ManyToOne
+    @Column(name = "MEMBER_CODE")
+    private String memberCode;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "MEMBER_CODE", insertable = false, updatable = false)
+    private Member member;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "TAX_CODE")
     private Tax tax;
 
     @OneToOne
     @JoinColumn(name = "BONUS_CODE")
     private Bonus bonus;
-
-    @ManyToOne
-    @JoinColumn(name = "MEMBER_CODE")
-    private Member member;
 
     @Override
     public String toString() {
@@ -77,9 +86,9 @@ public class Salary {
                 ", nationalTax=" + nationalTax +
                 ", paymentDate=" + paymentDate +
                 ", paymentsYn='" + paymentsYn + '\'' +
+                ", memberCode='" + memberCode + '\'' +
                 ", tax=" + tax +
                 ", bonus=" + bonus +
-                ", member=" + member +
                 '}';
     }
 }

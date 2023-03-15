@@ -39,13 +39,13 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String memberCode) throws UsernameNotFoundException {
         Member member = memberRepository.findByMemberCode(memberCode);
-
+        System.out.println("member ---------------------------> " + member);
         /* MemberDTO는 엔티티를 옮겨 담는 DTO이자 UserDetails이다. */
         MemberDTO memberDTO = modelMapper.map(member, MemberDTO.class);
 
         /* 엔티티로는 MemberDTO에 추가한 Collection<GrantedAuthority> authorities 속성이 옮겨담아지지 않는다. */
         List<GrantedAuthority> authorities = new ArrayList<>();
-        for(TeamRole teamRole : member.getTeamRole()) {
+        for(TeamRole teamRole : member.getTeam().getTeamRole()) {
             String authorityName = teamRole.getAuthority().getAuthorityName();
             authorities.add(new SimpleGrantedAuthority(authorityName));
         }

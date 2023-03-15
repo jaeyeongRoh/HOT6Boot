@@ -1,23 +1,37 @@
 package com.hotsix.titans.member.entity;
 
 
+import com.hotsix.titans.attendanceHR.entity.AttendanceHR;
+import com.hotsix.titans.commons.StringPrefixSequenceGenerator;
+import com.hotsix.titans.salary.entity.Salary;
 import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.GenericGenerator;
+
+import com.hotsix.titans.message.entity.Message;
+
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
-@ToString
 @Entity
 @Table(name = "TBL_MEMBER")
+@DynamicInsert
 public class Member {
 
     @Id
     @Column(name = "MEMBER_CODE")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_MEMBER_CODE")
+    @GenericGenerator(name = "SEQ_MEMBER_CODE", strategy = "com.hotsix.titans.commons.StringPrefixSequenceGenerator",
+            parameters = {
+                    @org.hibernate.annotations.Parameter(name = StringPrefixSequenceGenerator.VALUE_PREFIX_PARAMETER,
+                                                        value = "TT")
+                    })
     private String memberCode;          // 사원 번호
 
     @Column(name = "MEMBER_PASSWORD")
@@ -39,7 +53,7 @@ public class Member {
     private String memberAddress;       // 사원 주소
 
     @Column(name = "MEMBER_BIRTH")
-    private String memberBirth;         // 사원 생일
+    private Date memberBirth;         // 사원 생일
 
     @Column(name = "JOIN_DATE")
     private Date joinDate;              // 입사일
@@ -53,20 +67,53 @@ public class Member {
     @Column(name = "MEMBER_MARRIED")
     private String memberMarried;       // 사원 결혼 여부
 
-//    @ManyToOne
-//    @JoinColumn(name = "TEAM_CODE")
-//    private Team team;                  // 조직 테이블 다대일 매핑
+    @ManyToOne
+    @JoinColumn(name = "TEAM_CODE")
+    private Team team;                  // 조직 테이블 다대일 매핑
 
     @ManyToOne
     @JoinColumn(name = "RANK_CODE")
     private Rank rank;
 
     @OneToMany
-    @JoinColumn(name = "TEAM_CODE")
-    private List<TeamRole> teamRole;
-
-    @OneToMany
     @JoinColumn(name = "MEMBER_CODE")
     private List<RetireeHistory> retireeHistory; // 퇴직내역 일대다 매핑
 
+    @OneToMany(mappedBy = "member")
+    private List<Message> messages;
+
+    @OneToMany
+    @JoinColumn(name = "MEMBER_CODE")
+    private List<ProfileImage> profileImage;
+
+    @OneToMany
+    @JoinColumn(name = "MEMBER_CODE")
+    private List<Salary> salaryList;
+
+    @OneToMany
+    @JoinColumn(name = "MEMBER_CODE")
+    private List<AttendanceHR> attendanceHRList;
+
+    @Override
+    public String toString() {
+        return "Member{" +
+                "memberCode='" + memberCode + '\'' +
+                ", memberPassword='" + memberPassword + '\'' +
+                ", memberName='" + memberName + '\'' +
+                ", memberEmail='" + memberEmail + '\'' +
+                ", inlinePhone='" + inlinePhone + '\'' +
+                ", memberPhone='" + memberPhone + '\'' +
+                ", memberAddress='" + memberAddress + '\'' +
+                ", memberBirth=" + memberBirth +
+                ", joinDate=" + joinDate +
+                ", workingStatus='" + workingStatus + '\'' +
+                ", memberGender='" + memberGender + '\'' +
+                ", memberMarried='" + memberMarried + '\'' +
+                ", team=" + team +
+                ", rank=" + rank +
+                ", retireeHistory=" + retireeHistory +
+                ", messages=" + messages +
+                ", attendanceHRList=" + attendanceHRList +
+                '}';
+    }
 }

@@ -1,16 +1,16 @@
 package com.hotsix.titans.member.dto;
 
+import com.hotsix.titans.attendanceHR.dto.AttendanceHrDTO;
+import com.hotsix.titans.salary.dto.SalaryDTO;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 @Getter
 @Setter
 public class MemberDTO implements UserDetails {
@@ -29,13 +29,14 @@ public class MemberDTO implements UserDetails {
     private String memberMarried;
     private int teamCode;
     private int rankCode;
+    private String teamName;
+    private String rankName;
+    private int commuteTotalTime;
+    private int commuteTotalMonthTime;
     private List<TeamRoleDTO> teamRole;
-
-
-
-
-
-
+    private List<ProfileImageDTO> profileImageList;
+    private List<SalaryDTO> salaryList;
+    private List<AttendanceHrDTO> attendanceHrList;
 
     /* 이하 코드들을 UserDetails로부터 물려받는 추상메소드들을 오버라이딩 한 것이다.(필요한 것만 작성하자) */
     /* MemberDTO는 Member와 매핑 될 DTO이자 UserDetails로써 속성을 추가로 가짐 */
@@ -77,5 +78,23 @@ public class MemberDTO implements UserDetails {
     public boolean isEnabled() {
         // TODO Auto-generated method stub
         return false;
+    }
+
+    @Override
+    public String toString() {
+        return "MemberDTO{" +
+                "memberCode='" + memberCode + '\'' +
+                ", memberPassword='" + memberPassword + '\'' +
+                ", memberName='" + memberName + '\'' +
+                ", memberEmail='" + memberEmail + '\'' +
+                ", inlinePhone='" + inlinePhone + '\'' +
+                ", memberPhone='" + memberPhone + '\'' +
+                ", memberAddress='" + memberAddress + '\'' +
+                ", memberBirth=" + memberBirth +
+                ", joinDate=" + joinDate +
+                ", workingStatus='" + workingStatus + '\'' +
+                ", memberGender='" + memberGender + '\'' +
+                ", memberMarried='" + memberMarried + '\'' +
+                '}';
     }
 }
