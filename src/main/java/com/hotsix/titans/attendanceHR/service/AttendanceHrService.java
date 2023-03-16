@@ -74,6 +74,7 @@ public class AttendanceHrService {
                 .collect(Collectors.toList());
     }
 
+    /*1*/
     /*근태 등록*/    
     @Transactional
     public Date attendanceMypageRegistCommute(String commuteStartTime, MemberDTO memberDTO) throws ParseException {
@@ -139,7 +140,7 @@ public class AttendanceHrService {
         try {
         CRUDattendanceHR attendanceHR = new CRUDattendanceHR();
 
-        attendanceHR.setCommuteCode("CM166");
+//        attendanceHR.setCommuteCode("CM166");
         attendanceHR.setMemberCode(member.getMemberCode()); //사원번호
         attendanceHR.setCommuteStatus(status);              //상태
                                                             //부서
@@ -161,9 +162,13 @@ public class AttendanceHrService {
 
     }
 
+    /*2*/
     @Transactional
     /*출근하기 값의 코드에 퇴근하기 등록*/
     public List<SelectAttendanceHrDTO> attendanceMypageRegistFinishCommute(String commuteFinishTime, MemberDTO memberDTO) throws ParseException {
+
+        String status = null;
+
 
         System.out.println("Finish memberDTO service = " + memberDTO);
 
@@ -190,6 +195,14 @@ public class AttendanceHrService {
         /*들어오는 Finish Date 변환*/
         SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
         Date date2 = dateFormat.parse(commuteFinishTime);
+
+
+        /*18시 퇴근전 조퇴 표시*/
+        LocalTime workStartTime = LocalTime.of(18, 0);
+
+        if(dateTime.toLocalTime().isBefore(workStartTime)){
+            status = "조퇴";
+        }
 
 
 
@@ -222,6 +235,8 @@ public class AttendanceHrService {
 
             attendanceHREntity.setCommuteFinishTime(date2);
             attendanceHREntity.setCommuteFcountTime(dateTime);
+            attendanceHREntity.setCommuteTotalTime(dateTime.getHour()-(attendanceHREntity.getCommuteScountTime().getHour()));
+            attendanceHREntity.setCommuteStatus(status);
 
 
             entityManager.merge(attendanceHREntity);
@@ -234,11 +249,7 @@ public class AttendanceHrService {
 
 
 
-
-
-
-
-
+    /*3*/
     /*근태 등록 후 조회*/
     public List<SelectAttendanceHrDTO> attendanceMypageSelectRegistCommute(String commuteStartTime, MemberDTO memberDTO) throws ParseException {
 
@@ -274,4 +285,6 @@ public class AttendanceHrService {
                 .map(attendanceList -> modelMapper.map(attendanceList, SelectAttendanceHrDTO.class))
                 .collect(Collectors.toList());
     }
+
+
 }

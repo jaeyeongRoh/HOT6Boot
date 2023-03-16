@@ -23,12 +23,12 @@ public class CRUDattendanceHR {
 
     @Id
     @Column(name = "COMMUTE_CODE")
-//    @GeneratedValue(generator = "SEQ_ATTENDANCE_CODE")
-//    @GenericGenerator(name = "SEQ_ATTENDANCE_CODE", strategy = "com.hotsix.titans.commons.StringPrefixSequenceGenerator",
-//            parameters = {
-//                    @org.hibernate.annotations.Parameter(name = StringPrefixSequenceGenerator.VALUE_PREFIX_PARAMETER, value = "CM"),
-//
-//            })
+    @GeneratedValue(generator = "SEQ_ATTENDANCE_CODE")
+    @GenericGenerator(name = "SEQ_ATTENDANCE_CODE", strategy = "com.hotsix.titans.commons.StringPrefixSequenceGenerator",
+            parameters = {
+                    @org.hibernate.annotations.Parameter(name = StringPrefixSequenceGenerator.VALUE_PREFIX_PARAMETER, value = "CM"),
+
+            })
     private String commuteCode;
 
     @Column(name = "COMMUTE_DATE")
