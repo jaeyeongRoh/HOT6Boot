@@ -28,6 +28,9 @@ public class MemberAll {
     @Column(name = "INLINE_PHONE")
     private String inlinePhone;         // 내선 번호
 
+    @Column(name = "WORKING_STATUS")
+    private String workingStatus;
+
     @ManyToOne
     @JoinColumn(name = "TEAM_CODE")
     private Team team;                  // 조직 테이블 다대일 매핑
