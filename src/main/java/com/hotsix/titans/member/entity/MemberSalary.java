@@ -1,7 +1,7 @@
 package com.hotsix.titans.member.entity;
 
 
-import com.hotsix.titans.attendanceHR.entity.AttendanceHR;
+import com.hotsix.titans.attendanceHR.entity.AttendanceSalary;
 import com.hotsix.titans.commons.StringPrefixSequenceGenerator;
 import com.hotsix.titans.salary.entity.Salary;
 import lombok.*;
@@ -22,7 +22,7 @@ import java.util.List;
 @Entity
 @Table(name = "TBL_MEMBER")
 @DynamicInsert
-public class Member {
+public class MemberSalary {
 
     @Id
     @Column(name = "MEMBER_CODE")
@@ -30,8 +30,8 @@ public class Member {
     @GenericGenerator(name = "SEQ_MEMBER_CODE", strategy = "com.hotsix.titans.commons.StringPrefixSequenceGenerator",
             parameters = {
                     @org.hibernate.annotations.Parameter(name = StringPrefixSequenceGenerator.VALUE_PREFIX_PARAMETER,
-                                                        value = "TT")
-                    })
+                            value = "TT")
+            })
     private String memberCode;          // 사원 번호
 
     @Column(name = "MEMBER_PASSWORD")
@@ -92,7 +92,7 @@ public class Member {
 
     @OneToMany
     @JoinColumn(name = "MEMBER_CODE")
-    private List<AttendanceHR> attendanceHRList;
+    private List<AttendanceSalary> attendanceHRList;
 
     @Override
     public String toString() {
@@ -111,8 +111,6 @@ public class Member {
                 ", memberMarried='" + memberMarried + '\'' +
                 ", team=" + team +
                 ", rank=" + rank +
-                ", retireeHistory=" + retireeHistory +
-                ", messages=" + messages +
                 '}';
     }
 }

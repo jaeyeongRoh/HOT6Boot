@@ -29,6 +29,8 @@ public class SalaryDTO {
     private int totalTime;
     private String memberCode;
     private String memberName;
+    private String teamName;
+    private String rankName;
     private TeamDTO team;
     private RankDTO rank;
     private BonusDTO bonus;

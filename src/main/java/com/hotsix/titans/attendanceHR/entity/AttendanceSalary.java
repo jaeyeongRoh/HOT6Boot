@@ -1,11 +1,9 @@
 package com.hotsix.titans.attendanceHR.entity;
 
 import lombok.*;
-import com.hotsix.titans.member.entity.Member;
 
 import javax.persistence.*;
 import java.sql.Date;
-import java.util.List;
 
 @Entity
 @Table(name = "TBL_ATTENDANCE")
@@ -13,7 +11,7 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AttendanceHR {
+public class AttendanceSalary {
 
     @Id
     @Column(name = "COMMUTE_CODE")
@@ -39,18 +37,6 @@ public class AttendanceHR {
 
     @Column(name = "COMMUTE_STATUS")
     private String commuteStatus;
-
-//    @Column(name = "MEMBER_CODE")
-//    private String memberCode;
-
-    @OneToMany
-    @JoinColumn(name = "COMMUTE_NO")
-    private List<AttendanceHrReason> attendanceHrReasonList;
-
-//    @ManyToOne
-//    @JoinColumn(name = "MEMBER_CODE", insertable = false, updatable = false)
-//    private Member member;
-
 
 
     @Override
