@@ -1,16 +1,31 @@
 package com.hotsix.titans.attendanceHR.service;
 
+
+import com.hotsix.titans.attendanceHR.dto.SelectAttendanceHrDTO;
+import com.hotsix.titans.attendanceHR.entity.CRUDattendanceHR;
+import com.hotsix.titans.attendanceHR.entity.SelectAttendanceHR;
+import com.hotsix.titans.attendanceHR.repository.CRUDattendanceHrRepository;
+import com.hotsix.titans.member.dto.MemberDTO;
 import com.hotsix.titans.member.entity.Member;
 import com.hotsix.titans.attendanceHR.dto.AttendanceHrDTO;
 import com.hotsix.titans.attendanceHR.dto.SelectAttendanceDTO;
 import com.hotsix.titans.attendanceHR.entity.AttendanceHR;
 import com.hotsix.titans.attendanceHR.repository.AttendanceHrRepository;
+import com.hotsix.titans.member.repository.MemberRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
+import javax.transaction.Transactional;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.*;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,13 +34,17 @@ public class AttendanceHrService {
 
     private final ModelMapper modelMapper;
     private final AttendanceHrRepository attendanceHrRepository;
+    private final CRUDattendanceHrRepository crudAttendanceHrRepository;
     private final EntityManager entityManager;
+    private final MemberRepository memberRepository;
 
     @Autowired
-    public AttendanceHrService(ModelMapper modelMapper, AttendanceHrRepository attendanceHrRepository, EntityManager entityManager) {
+    public AttendanceHrService(ModelMapper modelMapper, AttendanceHrRepository attendanceHrRepository, CRUDattendanceHrRepository crudAttendanceHrRepository, EntityManager entityManager, MemberRepository memberRepository) {
         this.modelMapper = modelMapper;
         this.attendanceHrRepository = attendanceHrRepository;
+        this.crudAttendanceHrRepository = crudAttendanceHrRepository;
         this.entityManager = entityManager;
+        this.memberRepository = memberRepository;
     }
 
     public List<AttendanceHrDTO> selectAttendance(SelectAttendanceDTO selectAttendanceDTO) {
@@ -47,10 +66,212 @@ public class AttendanceHrService {
         System.out.println("데이트 테스트"+new java.sql.Date(selectAttendanceDTO.getStartDate2().getTime()));
 
         List<AttendanceHR> attendanceHR = query.getResultList();
+        System.out.println("attendanceHR = " + attendanceHR);
+
+
         return attendanceHR.stream()
                 .map(attendanceList -> modelMapper.map(attendanceList, AttendanceHrDTO.class))
                 .collect(Collectors.toList());
     }
 
+    /*근태 등록*/    
+    @Transactional
+    public Date attendanceMypageRegistCommute(String commuteStartTime, MemberDTO memberDTO) throws ParseException {
 
+
+        int result;
+        String status;
+
+        /*날짜처리*/
+        Date today = new Date(); //현재 시각을 저장
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+        Date date = dateFormat.parse(commuteStartTime);
+
+        OffsetDateTime offsetDateTime = OffsetDateTime.parse(commuteStartTime, DateTimeFormatter.ISO_DATE_TIME);
+
+        LocalDateTime dateTime = offsetDateTime.atZoneSameInstant(ZoneId.of("Asia/Seoul")).toLocalDateTime();
+
+
+        /*9시기준  DateTime*/
+        OffsetDateTime offsetDateTime2 = OffsetDateTime.parse(commuteStartTime, DateTimeFormatter.ISO_DATE_TIME);
+
+        LocalDateTime dateTime2 = offsetDateTime2.atZoneSameInstant(ZoneId.of("Asia/Seoul")).toLocalDateTime();
+
+        System.out.println("dateTime2 = " + dateTime2);
+
+        /*1분~59분사이에 있을시 올람*/
+        System.out.println("dateTime = " + dateTime);
+
+        dateTime = dateTime.plusMinutes((dateTime.getMinute() > 0 && dateTime.getMinute() < 60) ? 60 - dateTime.getMinute() : 0).minusSeconds(dateTime.getSecond());;
+
+        System.out.println("After dateTime = " + dateTime);
+
+        /*시간 테스트용*/
+        String commuteStartTime3 = "2023-03-15T23:57:42.580";
+        LocalDateTime dateTime3 = LocalDateTime.parse(commuteStartTime3, DateTimeFormatter.ISO_DATE_TIME);
+
+
+
+
+        /*9시 출근전후로 정상출근, 지각 표시*/
+        LocalTime workStartTime = LocalTime.of(9, 0);
+
+        if(dateTime.toLocalTime().isBefore(workStartTime)){
+            status = "정상 출근";
+        } else {
+            status =  "지각";
+        }
+
+
+
+
+
+        /*맴버코드 조회*/
+        Member member = memberRepository.findByMemberCode(memberDTO.getMemberCode());
+
+        /*로그 처리*/
+        System.out.println("memberDTO service = " + memberDTO);
+        System.out.println("member = " + member);
+        System.out.println("date = " + date);
+
+
+        /*출근 기록 등록*/
+        try {
+        CRUDattendanceHR attendanceHR = new CRUDattendanceHR();
+
+        attendanceHR.setCommuteCode("CM166");
+        attendanceHR.setMemberCode(member.getMemberCode()); //사원번호
+        attendanceHR.setCommuteStatus(status);              //상태
+                                                            //부서
+                                                            //직급
+                                                            //성명
+        attendanceHR.setCommuteDate(today);                 //날짜c
+        attendanceHR.setCommuteStartTime(date);             //근무시작시간
+        attendanceHR.setCommuteScountTime(dateTime);        //출근시간
+                                                            //근무종료시간
+                                                            //퇴근시간
+
+              crudAttendanceHrRepository.save(attendanceHR);
+
+              return date;
+        } catch (Exception e) {
+
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    @Transactional
+    /*출근하기 값의 코드에 퇴근하기 등록*/
+    public List<SelectAttendanceHrDTO> attendanceMypageRegistFinishCommute(String commuteFinishTime, MemberDTO memberDTO) throws ParseException {
+
+        System.out.println("Finish memberDTO service = " + memberDTO);
+
+
+        Member member = memberRepository.findByMemberCode(memberDTO.getMemberCode());
+        System.out.println("Finish memeber 리스트 = " + member);
+
+
+        /*날짜처리*/
+        Date today = new Date(); //현재 시각을 저장
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+        Date date = dateFormat.parse(commuteFinishTime);
+
+        OffsetDateTime offsetDateTime = OffsetDateTime.parse(commuteFinishTime, DateTimeFormatter.ISO_DATE_TIME);
+
+        LocalDateTime dateTime = offsetDateTime.atZoneSameInstant(ZoneId.of("Asia/Seoul")).toLocalDateTime();
+
+        /*1분~59분 사이면 내림 처리*/
+        dateTime = dateTime.minusMinutes((dateTime.getMinute() > 0 && dateTime.getMinute() < 60) ? dateTime.getMinute() : 0).minusSeconds(dateTime.getSecond());
+
+
+
+
+        /*들어오는 Finish Date 변환*/
+        SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+        Date date2 = dateFormat.parse(commuteFinishTime);
+
+
+
+        LocalDateTime startDateTime = LocalDate.now().atStartOfDay();
+        LocalDateTime endDateTime = LocalDateTime.now().withHour(23).withMinute(59).withSecond(59);
+
+        TypedQuery<SelectAttendanceHR> query = entityManager.createQuery(
+                "SELECT a FROM SelectAttendanceHR a " +
+                        "WHERE a.member.memberCode = :memberCode " +
+                        "AND a.commuteDate BETWEEN :startDate AND :endDate",
+                SelectAttendanceHR.class
+        );
+
+        query.setParameter("memberCode", member.getMemberCode());
+        query.setParameter("startDate", startDateTime);
+        query.setParameter("endDate", endDateTime);
+
+
+        List<SelectAttendanceHR> attendanceHR = query.getResultList();
+
+        System.out.println("Finish attendanceHR = " + attendanceHR);
+
+        System.out.println("코드값 출력" + attendanceHR.get(0).getCommuteCode());
+
+
+        for (SelectAttendanceHR selectAttendanceHR : attendanceHR) {
+
+            CRUDattendanceHR attendanceHREntity = entityManager.find(CRUDattendanceHR.class, attendanceHR.get(0).getCommuteCode());
+
+
+            attendanceHREntity.setCommuteFinishTime(date2);
+            attendanceHREntity.setCommuteFcountTime(dateTime);
+
+
+            entityManager.merge(attendanceHREntity);
+        }
+
+        return attendanceHR.stream()
+                .map(attendanceList -> modelMapper.map(attendanceList, SelectAttendanceHrDTO.class))
+                .collect(Collectors.toList());
+    }
+
+
+
+
+
+
+
+
+    /*근태 등록 후 조회*/
+    public List<SelectAttendanceHrDTO> attendanceMypageSelectRegistCommute(String commuteStartTime, MemberDTO memberDTO) throws ParseException {
+
+        System.out.println("memberDTO service = " + memberDTO);
+
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//        Date date = dateFormat.parse(commuteStartTime);
+//        System.out.println("date = " + date);
+        Member member = memberRepository.findByMemberCode(memberDTO.getMemberCode());
+        System.out.println("memeber = " + member);
+//        AttendanceHR attendanceHR = attendanceHrRepository.findByCommuteDateAndMemberMemberCode(date,member.getMemberCode());
+
+
+        LocalDateTime startDateTime = LocalDate.now().atStartOfDay();
+        LocalDateTime endDateTime = LocalDateTime.now().withHour(23).withMinute(59).withSecond(59);
+
+        TypedQuery<SelectAttendanceHR> query = entityManager.createQuery(
+                "SELECT a FROM SelectAttendanceHR a " +
+                        "WHERE a.member.memberCode = :memberCode " +
+                        "AND a.commuteDate BETWEEN :startDate AND :endDate",
+                SelectAttendanceHR.class
+        );
+
+        query.setParameter("memberCode", member.getMemberCode());
+        query.setParameter("startDate", startDateTime);
+        query.setParameter("endDate", endDateTime);
+
+
+        List<SelectAttendanceHR> attendanceHR = query.getResultList();
+
+
+        return attendanceHR.stream()
+                .map(attendanceList -> modelMapper.map(attendanceList, SelectAttendanceHrDTO.class))
+                .collect(Collectors.toList());
+    }
 }

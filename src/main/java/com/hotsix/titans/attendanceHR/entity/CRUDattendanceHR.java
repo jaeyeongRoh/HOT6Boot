@@ -1,12 +1,14 @@
 package com.hotsix.titans.attendanceHR.entity;
 
 import com.hotsix.titans.commons.StringPrefixSequenceGenerator;
-import lombok.*;
 import com.hotsix.titans.member.entity.Member;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
@@ -17,10 +19,16 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AttendanceHR {
+public class CRUDattendanceHR {
 
     @Id
     @Column(name = "COMMUTE_CODE")
+//    @GeneratedValue(generator = "SEQ_ATTENDANCE_CODE")
+//    @GenericGenerator(name = "SEQ_ATTENDANCE_CODE", strategy = "com.hotsix.titans.commons.StringPrefixSequenceGenerator",
+//            parameters = {
+//                    @org.hibernate.annotations.Parameter(name = StringPrefixSequenceGenerator.VALUE_PREFIX_PARAMETER, value = "CM"),
+//
+//            })
     private String commuteCode;
 
     @Column(name = "COMMUTE_DATE")
@@ -30,13 +38,13 @@ public class AttendanceHR {
     private Date commuteStartTime;
 
     @Column(name = "COMMUTE_S_COUNT_TIME")
-    private Date commuteScountTime;
+    private LocalDateTime commuteScountTime;
 
     @Column(name = "COMMUTE_FINISH_TIME")
     private Date commuteFinishTime;
 
     @Column(name = "COMMUTE_F_COUNT_TIME")
-    private Date commuteFcountTime;
+    private LocalDateTime commuteFcountTime;
 
     @Column(name = "COMMUTE_TOTAL_TIME")
     private int  commuteTotalTime;
@@ -44,16 +52,16 @@ public class AttendanceHR {
     @Column(name = "COMMUTE_STATUS")
     private String commuteStatus;
 
-//    @Column(name = "MEMBER_CODE")
-//    private String memberCode;
+    @Column(name = "MEMBER_CODE")
+    private String memberCode;
 
     @OneToMany
     @JoinColumn(name = "COMMUTE_NO")
     private List<AttendanceHrReason> attendanceHrReasonList;
 
-    @ManyToOne
-    @JoinColumn(name = "MEMBER_CODE", insertable = false, updatable = false)
-    private Member member;
+//    @ManyToOne
+//    @JoinColumn(name = "MEMBER_CODE", insertable = false, updatable = false)
+//    private Member member;
 
 
 

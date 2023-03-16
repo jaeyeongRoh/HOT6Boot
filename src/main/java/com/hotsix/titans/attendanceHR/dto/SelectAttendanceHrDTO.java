@@ -1,12 +1,13 @@
 package com.hotsix.titans.attendanceHR.dto;
 
 import com.hotsix.titans.member.dto.MemberDTO;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 
@@ -15,11 +16,11 @@ import java.util.List;
 @Getter
 @Setter
 //@ToString  주석 아래 정리
-public class AttendanceHrDTO {
+public class SelectAttendanceHrDTO {
 
     private String commuteCode;
     private String memberCode;
-    private Date commuteDate;
+    private LocalDateTime commuteDate;
     private Timestamp commuteStartTime;
     private Timestamp commuteScountTime;
     private Timestamp commuteFinishTime;

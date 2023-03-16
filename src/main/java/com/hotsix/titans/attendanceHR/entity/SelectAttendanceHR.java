@@ -1,12 +1,12 @@
 package com.hotsix.titans.attendanceHR.entity;
 
-import com.hotsix.titans.commons.StringPrefixSequenceGenerator;
-import lombok.*;
 import com.hotsix.titans.member.entity.Member;
-import org.hibernate.annotations.GenericGenerator;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
@@ -17,14 +17,14 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AttendanceHR {
+public class SelectAttendanceHR {
 
     @Id
     @Column(name = "COMMUTE_CODE")
     private String commuteCode;
 
     @Column(name = "COMMUTE_DATE")
-    private Date commuteDate;
+    private LocalDateTime commuteDate;
 
     @Column(name = "COMMUTE_START_TIME")
     private Date commuteStartTime;
