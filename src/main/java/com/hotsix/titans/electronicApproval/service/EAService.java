@@ -212,10 +212,10 @@ public class EAService {
 
         eaLeaveDTO.setLeaveStartDate(LocalDate.now());
         eaLeaveDTO.setLeaveEndDate(LocalDate.now());
-        log.info("getEaApproverInfoListDTO{}", eaLeaveDTO.getEaApproverInfoListDTO());
+        log.info("getEaApproverInfoListDTO{}", eaLeaveDTO.getEaApproverInfoList());
         eaLeave = modelMapper.map(eaLeaveDTO, EALeave.class);
 
-        eaLeave.setEaApproverInfoList(eaLeaveDTO.getEaApproverInfoListDTO().stream().map(eaApproverInfoDTO -> modelMapper.map(eaApproverInfoDTO, EAApproverInfo.class)).collect(Collectors.toList()));
+        eaLeave.setEaApproverInfoList(eaLeaveDTO.getEaApproverInfoList().stream().map(eaApproverInfoDTO -> modelMapper.map(eaApproverInfoDTO, EAApproverInfo.class)).collect(Collectors.toList()));
         log.info("getEaApproverInfoList{}", eaLeave.getEaApproverInfoList());
 
         eaLeaveRepository.save(eaLeave);

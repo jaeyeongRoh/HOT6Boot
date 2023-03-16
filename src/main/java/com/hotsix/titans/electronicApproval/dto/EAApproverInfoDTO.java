@@ -1,6 +1,7 @@
 package com.hotsix.titans.electronicApproval.dto;
 
 
+import com.hotsix.titans.electronicApproval.entity.EAStatusCategory;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -24,5 +25,7 @@ public class EAApproverInfoDTO {
     private LocalDate eaApproverDate;
 
     private String eaStatusCode;
+
+    private EAStatusCategory eaStatusCategory;
 
 }

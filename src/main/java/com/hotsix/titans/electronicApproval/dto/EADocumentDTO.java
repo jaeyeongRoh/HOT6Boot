@@ -1,5 +1,8 @@
 package com.hotsix.titans.electronicApproval.dto;
 
+import com.hotsix.titans.electronicApproval.entity.EAApproverInfo;
+import com.hotsix.titans.electronicApproval.entity.EAMember;
+import com.hotsix.titans.electronicApproval.entity.EAStatusCategory;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -15,13 +18,13 @@ public class EADocumentDTO {
 
     private String eaCode;
     private String memberCode;
-    private EAMemberDTO eaMemberDTO;
+    private EAMember eaMember;
     private String eaSubject;
     private String eaDetail;
     private LocalDate eaDate;
     private Character isDeleted;
     private String eaStatusCode;
-    private EAStatusCategoryDTO eaStatusCategoryDTO;
-    private List<EAApproverInfoDTO> eaApproverInfoListDTO;
+    private EAStatusCategory eaStatusCategory;
+    private List<EAApproverInfoDTO> eaApproverInfoList;
     private String dtype;
 }

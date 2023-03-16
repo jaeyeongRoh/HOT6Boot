@@ -47,5 +47,9 @@ public class EAApproverInfo {
     @Column(name = "EA_STATUS_CODE")
     private String eaStatusCode;
 
+    @ManyToOne
+    @JoinColumn(name = "EA_STATUS_CODE", insertable = false, updatable = false)
+    private EAStatusCategory eaStatusCategory;
+
 
 }

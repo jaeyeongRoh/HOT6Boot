@@ -24,7 +24,7 @@ public class EAMember {
     private String memberName;
 
     @ManyToOne
-    @JoinColumn(name = "RANK_CODE", insertable = false, updatable = false)
+    @JoinColumn(name = "TEAM_CODE", insertable = false, updatable = false)
     private Team team;
 
     @ManyToOne
