@@ -44,7 +44,7 @@ public class SecurityConfig {
 	@Bean
 	public WebSecurityCustomizer webSecurityCustomizer() {
 		return (web) -> web.ignoring().antMatchers("/css/**", "/js/**", "/images/**",
-				                                   "/lib/**", "/productimgs/**");
+				                                   "/lib/**", "/profileImages/**");
 	}
 
 	/* 3. HTTP요청에 대한 권한별 설정(세션 인증 -> 토큰 인증으로 인해 바뀐 부분 존재) */
@@ -62,32 +62,42 @@ public class SecurityConfig {
 		    .authorizeRequests()
 		    	.antMatchers("/").authenticated()
 		    	.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()		// cors를 위해 preflight 요청 처리용 options 요청 허용
-		    																			// preflight request란?
-		    																			// 요청 할 url이 외부 도메인일 경우 웹 브라우저에서 자체 실행되며
-		    																			// options 메소드로 사전 요청을 보내게 된다.
+		    				// preflight request란? 요청 할 url이 외부 도메인일 경우 웹 브라우저에서 자체 실행되며 options 메소드로 사전 요청을 보내게 된다.
+
 				.antMatchers("/ea/**").permitAll()
-				.antMatchers("/ea/eaLeave/**").permitAll()// 사전에 요청이 안전한지 확인하기 위함(유효한지 서버에 미리 파악할 수 있도록 보내는 수단이다.)
-		    	.antMatchers("/auth/**").permitAll()
+				.antMatchers("/ea/eaLeave/**").permitAll() // 사전에 요청이 안전한지 확인하기 위함(유효한지 서버에 미리 파악할 수 있도록 보내는 수단이다.)
+
+
+
+
+				.antMatchers("/api/vi/attendance/**").permitAll()
 				.antMatchers("/api/v1/annual/**").permitAll()
-				.antMatchers("/api/v1/members/**").permitAll()	//@@ 페이지 권한
-				.antMatchers("/auth/signup/**").permitAll()	//@@ 신규 사원 등록
-				.antMatchers("/api/v2/board/**").permitAll() // 추후 수정 필요
+				.antMatchers("/api/v1/members/**").permitAll()
+				.antMatchers("/api/vi/simpleMember/**").permitAll()
 				.antMatchers("/api/v1/mypage/**").permitAll()
-				.antMatchers("/api/v1/salary/**").permitAll()
+				.antMatchers("/api/v1/calendar/**").hasRole("ADMIN")
+				.antMatchers("/api/v1/salary/**").hasRole("ADMIN")
+				.antMatchers("/api/v1/salary/check/{memberCode}/**").hasRole("MEMBER")
 				.antMatchers("/api/v1/organization/chart/**").permitAll()
-				.antMatchers("/api/v1/calendar/**").permitAll()
+
+				.antMatchers("/auth/**").permitAll()
+				.antMatchers("/auth/signup/**").hasRole("ADMIN")	//@@ 신규 사원 등록
+
+				.antMatchers("/api/v2/board/**").hasRole("MEMBER") // 추후 수정 필요
+				.antMatchers("/api/v2/board/notice/insert/**").hasRole("ADMIN")
+
 //		    	.antMatchers("/api/**").hasRole("MEMBER")
 //		    	.antMatchers("/api/**").hasRole("ADMIN")
-				.antMatchers("/api/**").hasAnyRole("MEMBER", "ADMIN")
+//				.antMatchers("/api/**").hasAnyRole("MEMBER", "ADMIN")
 //		    	.anyRequest().permitAll();	// 어떤 요청이든 허용 가능, 시큐리티를 활용한 로그인이 모두 완성 되지 않았을 때 활용할 것
-				.and()
+			.and()
 
 				/* 세션 인증 방식을 쓰지 않겠다는 설정 */
 				.sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-				.and()
+			.and()
 				.cors()
-				.and()
+			.and()
 
 				/* jwt 토큰 방식을 쓰겠다는 설정 */
 				.apply(new JwtSecurityConfig(tokenProvider));
