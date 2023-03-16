@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -35,21 +36,24 @@ public class BoardNoticeController {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "공지사항 조회 성공", boardNoticeList));
     }
 
-    @PostMapping(value = "/board/notice/insert")
-    public ResponseEntity<ResponseDTO> insertBoardNotice() {
+    @PostMapping(value = "/board/notice/write")
+    public ResponseEntity<ResponseDTO> insertBoardNotice(@RequestBody BoardNoticeDTO boardNoticeDTO) {
 
-        ResponseDTO responseDTO = new ResponseDTO();
-        BoardNoticeDTO boardNoticeDTO = new BoardNoticeDTO();
+        System.out.println("boardNoticeDTO =================================== " + boardNoticeDTO);
 
-        boardNoticeDTO.setNoticeCode(String.valueOf(5));
-        boardNoticeDTO.setMemberCode(String.valueOf(140001));
-        boardNoticeDTO.setNoticeTitle("공지사항 테스트5 포스트맨용 제목");
-        boardNoticeDTO.setNoticeDate(Date.valueOf(LocalDate.now()));
-        boardNoticeDTO.setNoticeCount(0);
-        boardNoticeDTO.setNoticeContent("공지사항 테스트5 포스트맨용 본문");
-        boardNoticeDTO.setNoticeDeleteYN('N');
+//        ResponseDTO responseDTO = new ResponseDTO();
+//        BoardNoticeDTO boardNoticeDTO = new BoardNoticeDTO();
+//
+//        boardNoticeDTO.setNoticeCode(String.valueOf(5));
+//        boardNotidhceDTO.setMemberCode(String.valueOf(140001));
+//        boardNoticeDTO.setNoticeTitle("공지사항 테스트5 포스트맨용 제목");
+//        boardNoticeDTO.setNoticeDate(Date.valueOf(LocalDate.now()));
+//        boardNoticeDTO.setNoticeCount(0);
+//        boardNoticeDTO.setNoticeContent("공지사항 테스트5 포스트맨용 본문");
+//        boardNoticeDTO.setNoticeDeleteYN('N');
+//
+//        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "공지사항 등록 성공", boardNoticeService.insertBoardNotice(boardNoticeDTO)));
 
-        System.out.println("boardNoticeDTO = " + boardNoticeDTO);
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "공지사항 등록 성공", boardNoticeService.insertBoardNotice(boardNoticeDTO)));
     }
 
@@ -62,7 +66,7 @@ public class BoardNoticeController {
             boardNoticeDTO.setNoticeCode(noticeCode);
             boardNoticeDTO.setMemberCode(String.valueOf(140001));
             boardNoticeDTO.setNoticeTitle("PUT테스트");
-            boardNoticeDTO.setNoticeDate(Date.valueOf(LocalDate.now()));
+            boardNoticeDTO.setNoticeDate(LocalDateTime.now());
             boardNoticeDTO.setNoticeCount(0);
             boardNoticeDTO.setNoticeContent("PUT테스트");
             boardNoticeDTO.setNoticeDeleteYN('Y');
