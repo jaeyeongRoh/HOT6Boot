@@ -14,7 +14,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "TBL_EA_SALARY")
-@DiscriminatorValue("salary")
+@DiscriminatorValue("급여정정 신청")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter

@@ -4,10 +4,7 @@ import com.hotsix.titans.member.entity.Rank;
 import com.hotsix.titans.member.entity.Team;
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,4 +17,7 @@ public class EAMemberDTO {
 
     private String memberName;
 
+    private Team team;
+
+    private Rank rank;
 }

@@ -16,7 +16,7 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "TBL_EA_RETIREMENT")
-@DiscriminatorValue("retire")
+@DiscriminatorValue("퇴직신청")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter

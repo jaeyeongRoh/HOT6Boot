@@ -4,17 +4,21 @@ import com.hotsix.titans.electronicApproval.dto.*;
 import com.hotsix.titans.electronicApproval.entity.*;
 import com.hotsix.titans.electronicApproval.entity.EADuty;
 import com.hotsix.titans.electronicApproval.repository.*;
+import com.hotsix.titans.member.service.AuthService;
 import org.modelmapper.ModelMapper;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.slf4j.Logger;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class EAService {
-
+    private static final Logger log = LoggerFactory.getLogger(EAService.class);
     private final EARetireRepository eaRetireRepository;
     private final EADutyRepository eaDutyRepository;
     private final EADocumentRepository eaDocumentRepository;
@@ -196,9 +200,24 @@ public class EAService {
      */
     @Transactional
     public Object insertLeave(EALeaveDTO eaLeaveDTO) {
-        EALeave eaLeave = new EALeave();
+        EALeave eaLeave;
 
+//        eaLeaveDTO.setMemberCode("150003");
+//        eaLeaveDTO.setEaSubject("시퀀스 휴가신청");
+//        eaLeaveDTO.setEaDetail("휴가");
+        eaLeaveDTO.setEaDate(LocalDate.now());
+//        eaLeaveDTO.setEaStatusCode("1");
+
+        eaLeaveDTO.setLeaveCategoryCode("LC1");
+
+        eaLeaveDTO.setLeaveStartDate(LocalDate.now());
+        eaLeaveDTO.setLeaveEndDate(LocalDate.now());
+        log.info("getEaApproverInfoListDTO{}", eaLeaveDTO.getEaApproverInfoListDTO());
         eaLeave = modelMapper.map(eaLeaveDTO, EALeave.class);
+
+        eaLeave.setEaApproverInfoList(eaLeaveDTO.getEaApproverInfoListDTO().stream().map(eaApproverInfoDTO -> modelMapper.map(eaApproverInfoDTO, EAApproverInfo.class)).collect(Collectors.toList()));
+        log.info("getEaApproverInfoList{}", eaLeave.getEaApproverInfoList());
+
         eaLeaveRepository.save(eaLeave);
 
         int result = 1;

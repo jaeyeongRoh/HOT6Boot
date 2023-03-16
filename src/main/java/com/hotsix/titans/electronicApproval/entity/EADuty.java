@@ -11,7 +11,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@DiscriminatorValue("duty")
+@DiscriminatorValue("예비군 신청")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter

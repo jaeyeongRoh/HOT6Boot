@@ -13,7 +13,7 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "TBL_EA_LOA")
-@DiscriminatorValue("loa")
+@DiscriminatorValue("휴직신청")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter

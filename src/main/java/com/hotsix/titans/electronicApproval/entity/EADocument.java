@@ -67,7 +67,7 @@ public class EADocument {
     @JoinColumn(name = "EA_STATUS_CODE", insertable = false, updatable = false)
     private EAStatusCategory eaStatusCategory;
 
-    @OneToMany
+    @OneToMany(targetEntity = EAApproverInfo.class, cascade = CascadeType.ALL)
     @JoinColumn(name = "EA_CODE")
     private List<EAApproverInfo> eaApproverInfoList;
 }

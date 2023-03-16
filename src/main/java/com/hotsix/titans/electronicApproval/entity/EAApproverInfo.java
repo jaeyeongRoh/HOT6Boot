@@ -1,9 +1,12 @@
 package com.hotsix.titans.electronicApproval.entity;
 
+import com.hotsix.titans.commons.StringPrefixedSequenceIdGenerator;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -15,10 +18,18 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @Table(name = "TBL_EA_APPROVER_INFO")
+@DynamicInsert
 public class EAApproverInfo {
 
     @Id
     @Column(name = "EA_APPROVER_CODE")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_EA_APPROVER")
+    @GenericGenerator(name = "SEQ_EA_APPROVER",
+            strategy = "com.hotsix.titans.commons.StringPrefixedSequenceIdGenerator",
+            parameters = {
+                    @org.hibernate.annotations.Parameter(name = StringPrefixedSequenceIdGenerator.VALUE_PREFIX_PARAMETER, value = "EA"),
+                    @org.hibernate.annotations.Parameter(name = StringPrefixedSequenceIdGenerator.NUMBER_FORMAT_PARAMETER, value = "%08d")
+            })
     private String eaApproverCode;
 
     @Column(name = "EA_CODE")

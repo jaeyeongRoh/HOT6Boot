@@ -15,8 +15,8 @@ import java.time.LocalDate;
 
 
 @Entity
-@DiscriminatorValue("rnstt")/*복직신청*/
 @NoArgsConstructor
+@DiscriminatorValue("복직신청")
 @AllArgsConstructor
 @Getter
 @Setter

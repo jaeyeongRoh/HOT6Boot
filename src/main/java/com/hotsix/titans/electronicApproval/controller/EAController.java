@@ -94,22 +94,8 @@ public class EAController {
      */
     @Operation(summary = "전자결재", description = "기안조회합니다", tags = { "EAController" })
     @PostMapping("/eaLeave/insert")
-    public ResponseEntity<ResponseDTO> insertLeave() {
-        EALeaveDTO eaLeaveDTO = new EALeaveDTO();
-
-
-        eaLeaveDTO.setMemberCode("150003");
-        eaLeaveDTO.setEaSubject("시퀀스 휴가신청");
-        eaLeaveDTO.setEaDetail("휴가");
-        eaLeaveDTO.setEaDate(LocalDate.now());
-        eaLeaveDTO.setEaStatusCode("1");
-        eaLeaveDTO.setLeaveCategoryCode("LC1");
-
-
-
-        eaLeaveDTO.setLeaveStartDate(LocalDate.now());
-        eaLeaveDTO.setLeaveEndDate(LocalDate.now());
-
+    public ResponseEntity<ResponseDTO> insertLeave(@RequestBody EALeaveDTO eaLeaveDTO) {
+//        EALeaveDTO eaLeaveDTO = new EALeaveDTO();
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 휴가신청 insert 성공", eaService.insertLeave(eaLeaveDTO)));
     }
 
@@ -121,25 +107,11 @@ public class EAController {
      */
     @Operation(summary = "전자결재", description = "기안조회합니다", tags = { "EAController" })
     @PostMapping("/eaSalary/insert")
-    public ResponseEntity<ResponseDTO> insertSalary() {
-        EASalaryDTO eaSalaryDTO = new EASalaryDTO();
-//        eaSalaryDTO.setMemberDraft("150003");
-//        eaSalaryDTO.setMemberMiddleSigner("150006");
-//        eaSalaryDTO.setMemberFinalSigner("160009");
-//        eaSalaryDTO.setEaSubject("급여정정");
-//        eaSalaryDTO.setEaDetail("급여정정");
-//        eaSalaryDTO.setEaCategory("급여정정");
-//        eaSalaryDTO.setEaDate(new java.util.Date());
-//        eaSalaryDTO.setEaDraftStatus(1);
-//        eaSalaryDTO.setEaMiddleStatus(1);
-//        eaSalaryDTO.setEaMiddleComment("없음");
-//        eaSalaryDTO.setEaFinalStatus(1);
-//        eaSalaryDTO.setEaFinalComment("없음");
-//        eaSalaryDTO.setEaDocuStatus(1);
-//        eaSalaryDTO.setIsDeleted("N");
-//
+    public ResponseEntity<ResponseDTO> insertSalary(@RequestBody EASalaryDTO eaSalaryDTO) {
+//        EASalaryDTO eaSalaryDTO = new EASalaryDTO();
+
 //        eaSalaryDTO.setSalCorrectionDate(new java.util.Date());
-//
+
 //        System.out.println(eaSalaryDTO);
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 급여정정 insert 성공", eaService.insertSalary(eaSalaryDTO)));
     }
