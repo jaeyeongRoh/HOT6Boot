@@ -1,5 +1,6 @@
 package com.hotsix.titans.electronicApproval.dto;
 
+import com.hotsix.titans.electronicApproval.entity.EAMember;
 import com.hotsix.titans.member.entity.Rank;
 import com.hotsix.titans.member.entity.Team;
 import lombok.*;

@@ -9,4 +9,6 @@ public interface EALoaRepository extends JpaRepository<EALoa, String> {
     List<EALoa> findAll();
 
     EALoa findByEaCode(String eaCode);
+
+    List<EALoa> findAllByEaStatusCode(String status);
 }

@@ -1,6 +1,7 @@
 package com.hotsix.titans.electronicApproval.dto;
 
 
+import com.hotsix.titans.electronicApproval.entity.EAMember;
 import com.hotsix.titans.electronicApproval.entity.EAStatusCategory;
 import lombok.*;
 
@@ -19,6 +20,8 @@ public class EAApproverInfoDTO {
     private String eaCode;
 
     private String memberCode;
+
+    private EAMember eaMember;
 
     private String eaAuthCode;
 

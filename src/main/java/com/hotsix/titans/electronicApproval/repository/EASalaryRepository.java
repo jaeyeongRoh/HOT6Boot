@@ -10,4 +10,5 @@ public interface EASalaryRepository extends JpaRepository<EASalary, String> {
     List<EASalary> findAll();
     EASalary findByEaCode(String eaCode);
 
+    List<EASalary> findAllByEaStatusCode(String status);
 }

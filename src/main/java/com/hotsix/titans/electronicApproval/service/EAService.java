@@ -241,7 +241,7 @@ public class EAService {
         return result;
     }
 
-
+    @Transactional
     public Object insertCert(EACertDTO eaCertDTO) {
 
         EACert eaCert;
@@ -250,7 +250,7 @@ public class EAService {
         int result = 1;
         return result;
     }
-
+    @Transactional
     public Object insertDuty(EADutyDTO eaDutyDTO) {
 
         EADuty eaDuty;
@@ -259,7 +259,7 @@ public class EAService {
         int result = 1;
         return result;
     }
-
+    @Transactional
     public Object insertRnstt(EARnsttDTO eaRnsttDTO) {
 
         EARnstt eaRnstt;
@@ -268,7 +268,7 @@ public class EAService {
         int result = 1;
         return result;
     }
-
+    @Transactional
     public Object insertRetire(EARetireDTO eaRetireDTO) {
 
         EARetire eaRetire;
@@ -277,7 +277,7 @@ public class EAService {
         int result = 1;
         return result;
     }
-
+    @Transactional
     public Object insertLoa(EALoaDTO eaLoaDTO) {
 
         EALoa eaLoa;
@@ -285,5 +285,42 @@ public class EAService {
         eaLoaRepository.save(eaLoa);
         int result = 1;
         return result;
+    }
+
+
+
+    public Object selectAllLeave(String status) {
+        List<EALeave> eaLeaveList = eaLeaveRepository.findAllByEaStatusCode(status);
+        return eaLeaveList.stream().map(eaLeave -> modelMapper.map(eaLeave, EALeaveDTO.class)).collect(Collectors.toList());
+    }
+
+    public Object selectAllSalary(String status) {
+        List<EASalary> eaSalaryList = eaSalaryRepository.findAllByEaStatusCode(status);
+        return eaSalaryList.stream().map(eaSalary -> modelMapper.map(eaSalary, EASalaryDTO.class)).collect(Collectors.toList());
+    }
+
+    public Object selectAllRetire(String status) {
+        List<EARetire> eaRetireList = eaRetireRepository.findAllByEaStatusCode(status);
+        return eaRetireList.stream().map(eaRetire -> modelMapper.map(eaRetire, EARetireDTO.class)).collect(Collectors.toList());
+    }
+
+    public Object selectAllCert(String status) {
+        List<EACert> eaCertList = eaCertRepository.findAllByEaStatusCode(status);
+        return eaCertList.stream().map(eaCert -> modelMapper.map(eaCert, EACertDTO.class)).collect(Collectors.toList());
+    }
+
+    public Object selectAllDuty(String status) {
+        List<EADuty> eaDutyList = eaDutyRepository.findAllByEaStatusCode(status);
+        return eaDutyList.stream().map(eaDuty -> modelMapper.map(eaDuty, EADutyDTO.class)).collect(Collectors.toList());
+    }
+
+    public Object selectAllRnstt(String status) {
+        List<EARnstt> eaRnsttList = eaRnsttRepository.findAllByEaStatusCode(status);
+        return eaRnsttList.stream().map(eaRnstt -> modelMapper.map(eaRnstt, EARnsttDTO.class)).collect(Collectors.toList());
+    }
+
+    public Object selectAllLoa(String status) {
+        List<EALoa> eaLoaList = eaLoaRepository.findAllByEaStatusCode(status);
+        return eaLoaList.stream().map(eaLoa -> modelMapper.map(eaLoa, EALoaDTO.class)).collect(Collectors.toList());
     }
 }

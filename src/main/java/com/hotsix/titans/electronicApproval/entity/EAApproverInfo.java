@@ -27,7 +27,7 @@ public class EAApproverInfo {
     @GenericGenerator(name = "SEQ_EA_APPROVER",
             strategy = "com.hotsix.titans.commons.StringPrefixedSequenceIdGenerator",
             parameters = {
-                    @org.hibernate.annotations.Parameter(name = StringPrefixedSequenceIdGenerator.VALUE_PREFIX_PARAMETER, value = "EA"),
+                    @org.hibernate.annotations.Parameter(name = StringPrefixedSequenceIdGenerator.VALUE_PREFIX_PARAMETER, value = "EAP"),
                     @org.hibernate.annotations.Parameter(name = StringPrefixedSequenceIdGenerator.NUMBER_FORMAT_PARAMETER, value = "%08d")
             })
     private String eaApproverCode;
@@ -37,6 +37,10 @@ public class EAApproverInfo {
 
     @Column(name = "MEMBER_CODE")
     private String memberCode;
+
+    @ManyToOne
+    @JoinColumn(name = "MEMBER_CODE", insertable = false, updatable = false)
+    private EAMember eaMember;
 
     @Column(name = "EA_AUTH_CODE")
     private String eaAuthCode;

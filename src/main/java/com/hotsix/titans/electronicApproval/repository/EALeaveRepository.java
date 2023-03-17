@@ -9,4 +9,6 @@ public interface EALeaveRepository extends JpaRepository<EALeave, String> {
 
     List<EALeave> findAll();
     EALeave findByEaCode(String eaCode);
+
+    List<EALeave> findAllByEaStatusCode(String status);
 }
