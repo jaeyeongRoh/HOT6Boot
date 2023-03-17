@@ -1,13 +1,8 @@
 package com.hotsix.titans.attendanceHR.entity;
 
-import com.hotsix.titans.commons.StringPrefixSequenceGenerator;
 import lombok.*;
-import com.hotsix.titans.member.entity.Member;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -53,7 +48,7 @@ public class AttendanceHR {
 
     @ManyToOne
     @JoinColumn(name = "MEMBER_CODE", insertable = false, updatable = false)
-    private Member member;
+    private MemberAttendance memberAttendance;
 
 
 

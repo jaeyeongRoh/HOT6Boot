@@ -1,6 +1,5 @@
 package com.hotsix.titans.attendanceHR.dto;
 
-import com.hotsix.titans.member.dto.MemberDTO;
 import lombok.*;
 
 import java.sql.Timestamp;

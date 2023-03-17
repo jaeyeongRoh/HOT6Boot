@@ -1,10 +1,11 @@
 package com.hotsix.titans.attendanceHR.controller;
 
 import com.hotsix.titans.attendanceHR.dto.AttendanceHrDTO;
+import com.hotsix.titans.attendanceHR.dto.MemberDTO;
 import com.hotsix.titans.attendanceHR.dto.SelectAttendanceDTO;
 import com.hotsix.titans.attendanceHR.service.AttendanceHrService;
 import com.hotsix.titans.commons.ResponseDTO;
-import com.hotsix.titans.member.dto.MemberDTO;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

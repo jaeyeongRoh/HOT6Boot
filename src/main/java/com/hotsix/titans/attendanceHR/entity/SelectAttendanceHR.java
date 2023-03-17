@@ -1,6 +1,6 @@
 package com.hotsix.titans.attendanceHR.entity;
 
-import com.hotsix.titans.member.entity.Member;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -53,7 +53,7 @@ public class SelectAttendanceHR {
 
     @ManyToOne
     @JoinColumn(name = "MEMBER_CODE", insertable = false, updatable = false)
-    private Member member;
+    private MemberAttendance memberAttendance;
 
 
 

@@ -1,6 +1,6 @@
 package com.hotsix.titans.attendanceHR.dto;
 
-import com.hotsix.titans.member.dto.MemberDTO;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

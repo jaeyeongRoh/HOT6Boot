@@ -1,16 +1,16 @@
 package com.hotsix.titans.attendanceHR.service;
 
 
+import com.hotsix.titans.attendanceHR.dto.MemberDTO;
 import com.hotsix.titans.attendanceHR.dto.SelectAttendanceHrDTO;
 import com.hotsix.titans.attendanceHR.entity.CRUDattendanceHR;
 import com.hotsix.titans.attendanceHR.entity.SelectAttendanceHR;
 import com.hotsix.titans.attendanceHR.repository.CRUDattendanceHrRepository;
-import com.hotsix.titans.member.dto.MemberDTO;
+
 import com.hotsix.titans.member.entity.Member;
 import com.hotsix.titans.attendanceHR.dto.AttendanceHrDTO;
 import com.hotsix.titans.attendanceHR.dto.SelectAttendanceDTO;
 import com.hotsix.titans.attendanceHR.entity.AttendanceHR;
-import com.hotsix.titans.attendanceHR.repository.AttendanceHrRepository;
 import com.hotsix.titans.member.repository.MemberRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,15 +32,15 @@ import java.util.stream.Collectors;
 public class AttendanceHrService {
 
     private final ModelMapper modelMapper;
-    private final AttendanceHrRepository attendanceHrRepository;
+
     private final CRUDattendanceHrRepository crudAttendanceHrRepository;
     private final EntityManager entityManager;
     private final MemberRepository memberRepository;
 
     @Autowired
-    public AttendanceHrService(ModelMapper modelMapper, AttendanceHrRepository attendanceHrRepository, CRUDattendanceHrRepository crudAttendanceHrRepository, EntityManager entityManager, MemberRepository memberRepository) {
+    public AttendanceHrService(ModelMapper modelMapper, CRUDattendanceHrRepository crudAttendanceHrRepository, EntityManager entityManager, MemberRepository memberRepository) {
         this.modelMapper = modelMapper;
-        this.attendanceHrRepository = attendanceHrRepository;
+
         this.crudAttendanceHrRepository = crudAttendanceHrRepository;
         this.entityManager = entityManager;
         this.memberRepository = memberRepository;
@@ -52,11 +51,12 @@ public class AttendanceHrService {
         TypedQuery<AttendanceHR> query = entityManager.createQuery(
                 "SELECT a " +
                         "FROM AttendanceHR a " +
-                        "JOIN a.member m " +
+                        "JOIN a.memberAttendance m " +
                         "JOIN m.team t " +
                         "WHERE t.teamCode = :teamCode " +
                         "AND  (:memberName is null OR m.memberName = :memberName) " +
                         "AND a.commuteDate BETWEEN :startDate AND :startDate2", AttendanceHR.class);
+
 
         query.setParameter("teamCode", selectAttendanceDTO.getTeamCode());
         query.setParameter("memberName", selectAttendanceDTO.getMemberName());
@@ -213,7 +213,7 @@ public class AttendanceHrService {
 
         TypedQuery<SelectAttendanceHR> query = entityManager.createQuery(
                 "SELECT a FROM SelectAttendanceHR a " +
-                        "WHERE a.member.memberCode = :memberCode " +
+                        "WHERE a.memberAttendance.memberCode = :memberCode " +
                         "AND a.commuteDate BETWEEN :startDate AND :endDate",
                 SelectAttendanceHR.class
         );
@@ -273,7 +273,7 @@ public class AttendanceHrService {
 
         TypedQuery<SelectAttendanceHR> query = entityManager.createQuery(
                 "SELECT a FROM SelectAttendanceHR a " +
-                        "WHERE a.member.memberCode = :memberCode " +
+                        "WHERE a.memberAttendance.memberCode = :memberCode " +
                         "AND a.commuteDate BETWEEN :startDate AND :endDate",
                 SelectAttendanceHR.class
         );
