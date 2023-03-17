@@ -11,10 +11,10 @@ import java.util.List;
 @ToString
 public class LeavePaymentHistoryAndUseHistoryDTO {
 
-    private String leavePaymentHistoryCode;     // 휴가발생내역번호
-    private String leavePaymentDate;            // 발생날짜
-    private int leavePaymentCount;              // 발생갯수
-    private int leaveLeftoverCount;             // 잔여갯수
+    private String leavePaymentHistoryCode;
+    private String leavePaymentDate;
+    private int leavePaymentCount;
+    private int leaveLeftoverCount;
     private List<SimpleLeaveUseHistoryDTO> leaveUseHistoryList;
 
     @Override
