@@ -1,7 +1,9 @@
 package com.hotsix.titans.board.cotroller;
 
 import com.hotsix.titans.board.dto.BoardNoticeDTO;
+import com.hotsix.titans.board.dto.BoardNoticeMemberDTO;
 import com.hotsix.titans.board.entity.BoardNotice;
+import com.hotsix.titans.board.entity.BoardNoticeMember;
 import com.hotsix.titans.board.repository.BoardNoticeRepository;
 import com.hotsix.titans.board.service.BoardNoticeService;
 import com.hotsix.titans.commons.ResponseDTO;
@@ -17,7 +19,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v2") // 추후 수정 필요
+@RequestMapping("api/v1")
 public class BoardNoticeController {
 
     private final BoardNoticeService boardNoticeService;
@@ -34,6 +36,12 @@ public class BoardNoticeController {
         List<BoardNoticeDTO> boardNoticeList = boardNoticeService.listAll();
         System.out.println("boardNoticeList = " + boardNoticeList);
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "공지사항 조회 성공", boardNoticeList));
+    }
+
+    @GetMapping("/board/notice/{noticeCode}")
+    public ResponseEntity<ResponseDTO> selectBoardNoticeDetail(@PathVariable String noticeCode) {
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 성공", boardNoticeService.selectBoardNoticeDetail(noticeCode)));
     }
 
     @PostMapping(value = "/board/notice/write")
@@ -57,21 +65,11 @@ public class BoardNoticeController {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "공지사항 등록 성공", boardNoticeService.insertBoardNotice(boardNoticeDTO)));
     }
 
-    @PutMapping("/board/notice/{noticeCode}") // 끝에 / 적으면 안됨
-    public ResponseEntity<ResponseDTO> updateBoardNotice(@PathVariable String noticeCode) {
+    @PutMapping("/board/notice/{noticeCode}") /* 끝에 / 적으면 안됨 */
+    public ResponseEntity<ResponseDTO> updateBoardNotice(@ModelAttribute BoardNoticeDTO boardNoticeDTO) {
 
-            ResponseDTO responseDTO = new ResponseDTO();
-            BoardNoticeDTO boardNoticeDTO = new BoardNoticeDTO();
+        System.out.println("boardNoticeDTO = " + boardNoticeDTO);
 
-            boardNoticeDTO.setNoticeCode(noticeCode);
-            boardNoticeDTO.setMemberCode(String.valueOf(140001));
-            boardNoticeDTO.setNoticeTitle("PUT테스트");
-            boardNoticeDTO.setNoticeDate(LocalDateTime.now());
-            boardNoticeDTO.setNoticeCount(0);
-            boardNoticeDTO.setNoticeContent("PUT테스트");
-            boardNoticeDTO.setNoticeDeleteYN('Y');
-
-            System.out.println("boardNoticeDTO = " + boardNoticeDTO);
-            return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "공지사항 수정(삭제) 성공", boardNoticeService.updateBoardNotice(boardNoticeDTO)));
-        }
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "공지사항 수정(삭제) 성공", boardNoticeService.updateBoardNotice(boardNoticeDTO)));
+    }
 }

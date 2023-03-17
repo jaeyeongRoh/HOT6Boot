@@ -43,24 +43,40 @@ public class BoardNoticeService {
         // 엔티티 객체로 받아온 것을 DTO로 변환
     }
 
+    public Object selectBoardNoticeDetail(String noticeCode) {
+        log.info("[BoardNoticeService] getBoardNoticeDetail Start ==============================");
+
+        BoardNotice boardNotice = boardNoticeRepository.findById(noticeCode).get();
+
+        log.info("[BoardNoticeService] getBoardNoticeDetail End ==============================");
+
+        return modelMapper.map(boardNotice, BoardNoticeDTO.class);
+    }
+
     @Transactional
     public BoardNoticeDTO insertBoardNotice(BoardNoticeDTO boardNoticeDTO) {
-        log.info("[BoardNoticeService] boardNoticeMember Start ==================================");
+        log.info("[BoardNoticeService] boardNoticeMember Start");
         log.info("[BoardNoticeService] boardNoticeDTO {}", boardNoticeDTO);
 
         BoardNotice boardNotice = modelMapper.map(boardNoticeDTO, BoardNotice.class);
         boardNotice.setNoticeDate(LocalDateTime.now());
 
-
         BoardNotice result = boardNoticeRepository.save(boardNotice);
-        System.out.println("result ====================" + result);
+
+        System.out.println("result : " + result);
         log.info("[BoardNoticeService] BoardNotice Insert Result {}",
                 (result != null) ? "공지사항 등록 성공" : "공지사항 등록 실패");
 
-//        String noticeCode = String.valueOf(boardNoticeRepository.findByNoticeCode(boardNoticeDTO.getNoticeCode()));
+        return boardNoticeDTO;
+    }
+
+
+    @Transactional
+    public Object updateBoardNotice(BoardNoticeDTO boardNoticeDTO) {
+
+//        BoardNotice boardNotice = boardNoticeRepository.findByNoticeCode(boardNoticeDTO.getNoticeCode());
 //
-//        BoardNotice boardNotice = new BoardNotice();
-//        boardNotice.setNoticeCode(boardNoticeDTO.getNoticeCode());
+//        boardNotice.setNoticeCode(boardNoticeDTO.getNoticeCode()); // 복사
 //        boardNotice.setMemberCode(boardNoticeDTO.getMemberCode());
 //        boardNotice.setNoticeTitle(boardNoticeDTO.getNoticeTitle());
 //        boardNotice.setNoticeDate(boardNoticeDTO.getNoticeDate());
@@ -69,25 +85,6 @@ public class BoardNoticeService {
 //        boardNotice.setNoticeDeleteYN(boardNoticeDTO.getNoticeDeleteYN());
 //
 //        boardNoticeRepository.saveAndFlush(boardNotice);
-//
-        return boardNoticeDTO;
-    }
-
-
-    @Transactional
-    public Object updateBoardNotice(BoardNoticeDTO boardNoticeDTO) {
-
-        BoardNotice boardNotice = boardNoticeRepository.findByNoticeCode(boardNoticeDTO.getNoticeCode());
-
-        boardNotice.setNoticeCode(boardNoticeDTO.getNoticeCode()); // 복사
-        boardNotice.setMemberCode(boardNoticeDTO.getMemberCode());
-        boardNotice.setNoticeTitle(boardNoticeDTO.getNoticeTitle());
-        boardNotice.setNoticeDate(boardNoticeDTO.getNoticeDate());
-        boardNotice.setNoticeCount(boardNoticeDTO.getNoticeCount());
-        boardNotice.setNoticeContent(boardNoticeDTO.getNoticeContent());
-        boardNotice.setNoticeDeleteYN(boardNoticeDTO.getNoticeDeleteYN());
-
-        boardNoticeRepository.saveAndFlush(boardNotice);
 
         return null;
     }
