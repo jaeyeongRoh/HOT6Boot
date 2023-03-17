@@ -78,7 +78,7 @@ public class AttendanceHrService {
     /*1*/
     /*근태 등록*/    
     @Transactional
-    public Date attendanceMypageRegistCommute(String commuteStartTime, MemberDTO memberDTO) throws ParseException {
+    public String attendanceMypageRegistCommute(String commuteStartTime, MemberDTO memberDTO) throws ParseException {
 
 
         int result;
@@ -155,12 +155,13 @@ public class AttendanceHrService {
 
               crudAttendanceHrRepository.save(attendanceHR);
 
-              return date;
+              result =1;
         } catch (Exception e) {
 
             throw new RuntimeException(e);
         }
 
+        return result == 1 ? "출근 등록이 완료 됐습니다." : "실패했습니다.";
     }
 
     /*2*/
