@@ -1,12 +1,14 @@
 package com.hotsix.titans.salary.service;
 
+import com.hotsix.titans.attendanceHR.entity.AttendanceSalary;
+import com.hotsix.titans.attendanceHR.repository.AttendanceHrSalaryRepository;
 import com.hotsix.titans.exception.MemberCodeException;
 import com.hotsix.titans.exception.SalaryPaymentsYnException;
-import com.hotsix.titans.member.dto.MemberDTO;
+import com.hotsix.titans.member.dto.MemberSalaryDTO;
 import com.hotsix.titans.member.dto.RankDTO;
 import com.hotsix.titans.member.dto.TeamDTO;
-import com.hotsix.titans.member.entity.Member;
-import com.hotsix.titans.member.repository.MemberRepository;
+import com.hotsix.titans.member.entity.MemberSalary;
+import com.hotsix.titans.member.repository.MemberSalaryRepository;
 import com.hotsix.titans.salary.dto.SalaryDTO;
 import com.hotsix.titans.salary.entity.Bonus;
 import com.hotsix.titans.salary.entity.Salary;
@@ -16,6 +18,7 @@ import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.sql.Date;
@@ -29,12 +32,14 @@ public class SalaryService {
 
     private final SalaryRepository salaryRepository;
     private final ModelMapper modelMapper;
-    private final MemberRepository memberRepository;
+    private final MemberSalaryRepository memberSalaryRepository;
+    private final AttendanceHrSalaryRepository attendanceHrSalaryRepository;
 
-    public SalaryService(SalaryRepository salaryRepository, ModelMapper modelMapper, MemberRepository memberRepository) {
+    public SalaryService(SalaryRepository salaryRepository, ModelMapper modelMapper, MemberSalaryRepository memberSalaryRepository, AttendanceHrSalaryRepository attendanceHrSalaryRepository) {
         this.salaryRepository = salaryRepository;
         this.modelMapper = modelMapper;
-        this.memberRepository = memberRepository;
+        this.memberSalaryRepository = memberSalaryRepository;
+        this.attendanceHrSalaryRepository = attendanceHrSalaryRepository;
     }
 
     /* 날짜에 따른 내 급여 조회 */
@@ -92,7 +97,7 @@ public class SalaryService {
             Bonus bonus = salary.getBonus();
             Long bonusSalary = bonus != null ? bonus.getBonusSalary() : 0L;
             Tax tax = salary.getTax();
-            Member member = salary.getMember();
+            MemberSalary member = salary.getMember();
 
             System.out.println("bonus = " + bonus);
             System.out.println("bonusSalary = " + bonusSalary);
@@ -114,7 +119,7 @@ public class SalaryService {
             Long afterSalary = beforeSalary - (incomTax + healthTax + nationalTax);
 
             SalaryDTO salaryDTO = modelMapper.map(salary, SalaryDTO.class);
-            MemberDTO memberDTO = modelMapper.map(member, MemberDTO.class);
+            MemberSalaryDTO memberDTO = modelMapper.map(member, MemberSalaryDTO.class);
             TeamDTO teamDTO = modelMapper.map(member.getTeam(), TeamDTO.class);
             RankDTO rankDTO = modelMapper.map(member.getRank(), RankDTO.class);
 
@@ -133,6 +138,7 @@ public class SalaryService {
             salaryDTO.setNationalTax(nationalTax);
 
             selectSalary.add(salaryDTO);
+
         }
 
         return selectSalary.stream().map(salary -> modelMapper.map(salary, SalaryDTO.class))
@@ -153,21 +159,96 @@ public class SalaryService {
         return salary;
     }
 
+//    /* 저번 달 총 근무시간 구하기 */
+//    public List<AttendanceHrDTO> selectCommuteMonth() {
+//
+//        int intMonth = new java.util.Date().getMonth();
+//
+//        String month = String.valueOf(intMonth);
+//        System.out.println("month = " + month);
+//
+//        month = month + "-";
+//
+//        List<AttendanceHR> attendanceList = attendanceHrRepository.selectCommuteMonth(month);
+//
+//        int totlaTime = 0;
+//
+//        for(int i = 0; i < attendanceList.size(); i++){
+//            totlaTime += attendanceList.get(i).getCommuteTotalTime();
+//        }
+//        System.out.println("totlaTime = " + totlaTime);
+//
+//        System.out.println("attendanceList = " + attendanceList);
+//
+//        return attendanceList.stream().map(attendance -> modelMapper.map(attendance, AttendanceHrDTO.class)).collect(Collectors.toList());
+//    }
 
-    /* 사원 번호 입력하여 정보 가져오기 */
-    public MemberDTO selectMemberCode(String memberCode) {
 
-        Member member = memberRepository.findByMemberCode(memberCode);
+    /* 사원 번호 입력하여 정보 불러오기 */
+    public SalaryDTO selectMemberCode(String memberCode) {
 
-        System.out.println("member = " + member);
+        MemberSalary member = memberSalaryRepository.findByMemberCode(memberCode);
+
+        int intMonth = new java.util.Date().getMonth();
+
+        String month = String.valueOf(intMonth);
+        System.out.println("month = " + month);
+
+        month = month + "-";
+
+        List<AttendanceSalary> attendanceList = attendanceHrSalaryRepository.selectCommuteMonth(month);
+
+        System.out.println("attendanceList =========== " + attendanceList);
+
+        int totalTime = 0;
+
+        for(int i = 0; i < attendanceList.size(); i++){
+            totalTime += attendanceList.get(i).getCommuteTotalTime();
+        }
+
+        /* 기본급 계산 */
+        Long basicSalary = member.getRank().getHourlyMoney() * totalTime;
+
+        /* 식대 */
+        Long mealSalary = 0L;
+
+        /* 세전 급액 계산 */
+        Long beforeSalary = basicSalary + mealSalary; // 기본급 + 식대
+
+        /* 세금 계산 */
+        Long incomTax = Math.round(beforeSalary * 0.066); // 소득세
+        Long healthTax = Math.round(beforeSalary * 0.0306); // 건강보험세
+        Long nationalTax = Math.round(beforeSalary * 0.081); // 국민연금세
+
+        Long totalTax = incomTax + healthTax + nationalTax; // 총 공제액
+
+        Long afterSalary = beforeSalary - totalTax; // 세후 급액
+
+        SalaryDTO memberSalary = modelMapper.map(member, SalaryDTO.class);
+        
+        memberSalary.setBasicSalary(basicSalary);
+        memberSalary.setMealSalary(mealSalary);
+        memberSalary.setBeforeSalary(beforeSalary);
+        memberSalary.setIncomTax(incomTax);
+        memberSalary.setHealthTax(healthTax);
+        memberSalary.setNationalTax(nationalTax);
+        memberSalary.setTotalTax(totalTax);
+        memberSalary.setAfterSalary(afterSalary);
+        memberSalary.setTotalTime(totalTime);
+
+        System.out.println("memberSalary.getTotalTime() = " + memberSalary.getTotalTime());
 
         if (member == null) {
             throw new MemberCodeException("회원 정보를 찾을 수 없습니다.");
         }
 
-        return modelMapper.map(member, MemberDTO.class);
+        System.out.println("basicSalary = " + basicSalary);
+        System.out.println("memberSalary = " + memberSalary);
+
+        return memberSalary;
     }
 
+    @Transactional
     /* 입력받은 사원 정보에서 급여 등록 */
     public Object insertSalary(SalaryDTO salaryDTO) {
 
@@ -175,6 +256,7 @@ public class SalaryService {
 
         try {
 
+            System.out.println("Service 들어오는지 test ====");
             Salary insertSalary = modelMapper.map(salaryDTO, Salary.class);
 
             salaryRepository.save(insertSalary);

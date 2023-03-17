@@ -38,6 +38,16 @@ public class MemberController {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 성공", memberService.selectSimpleMemberInfo(memberCode)));
     }
 
+    @GetMapping("/members/allMember/count")
+    public ResponseEntity<ResponseDTO> countMember() {
+
+        long total = memberService.selectLeaveTotal();
+
+        System.out.println("전사원 수 = " + total);
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전사원 count 성공", total));
+    }
+
     @PutMapping(value = "/mypage/management/update/{memberCode}")
     public ResponseEntity<ResponseDTO> updateMyInfo(@ModelAttribute MemberDTO memberDTO) {
 

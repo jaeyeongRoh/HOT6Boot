@@ -18,6 +18,7 @@ public class MemberAllDTO  {
     private String memberName;
     private String memberEmail;
     private String inlinePhone;
+    private String workingStatus;
     private int teamCode;
     private int rankCode;
     private String teamName;

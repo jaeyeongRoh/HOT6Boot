@@ -181,4 +181,12 @@ public class MemberService {
         return memberDTO;
     }
 
+    /* 재직중인 사원 수 count */
+    public long selectLeaveTotal() {
+
+        long totalCount = memberRepository.countByWorkingStatus("재직");
+
+        return totalCount;
+    }
+
 }

@@ -50,23 +50,3 @@ public class AttendanceHrDTO {
                 '}';
     }
 }
-
-
-
-
-
-
-//    private String teamName;
-//    private String rankName;
-//    private String memberName;
-
-
-//    public String getMemberName() {
-//        return member.getMemberName();
-//    }
-//    public String getTeamName() {
-//        return member.getTeamName();
-//    }
-//    public String getRankName() {
-//        return member.getRankName();
-//    }

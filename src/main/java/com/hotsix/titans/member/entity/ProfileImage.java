@@ -45,7 +45,6 @@ public class ProfileImage {
     @Column(name = "PROFILE_IMG_DELETE_YN")
     private String profileImageDeleteYn;
 
-
     @Column(name = "MEMBER_CODE")
     private String memberCode;
 

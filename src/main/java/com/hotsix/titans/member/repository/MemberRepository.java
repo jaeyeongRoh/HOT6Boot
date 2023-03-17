@@ -18,8 +18,7 @@ public interface MemberRepository extends JpaRepository<Member, String> {
 
     Member findByMemberName(String memberName);
 
-
-
+    long countByWorkingStatus(String string);
 //
 //    Member findByMemberEmail(String memberEmail);
 //

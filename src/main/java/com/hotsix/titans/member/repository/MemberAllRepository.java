@@ -8,4 +8,6 @@ import java.util.List;
 public interface MemberAllRepository extends JpaRepository<MemberAll, String> {
 
     List<MemberAll> findByMemberNameContaining(String string);
+    List<MemberAll> findAllByWorkingStatus(String workingStatus);
+
 }
