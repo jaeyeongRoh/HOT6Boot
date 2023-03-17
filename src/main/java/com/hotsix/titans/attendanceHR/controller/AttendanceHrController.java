@@ -68,7 +68,9 @@ public class AttendanceHrController {
     }
 
 
+
     /*출근 시간이 출력*/
+
     @GetMapping("/attendance/mypageAregistSelect")
     public ResponseEntity<ResponseDTO> attendanceMypageSelectRegistCommute(@RequestParam String commuteStartTime , @ModelAttribute MemberDTO memberDTO) throws ParseException {
 
@@ -82,6 +84,18 @@ public class AttendanceHrController {
     }
 
 
+
+
+    /*모달창 저장 누를시*/
+    @PostMapping("/attendance/modalSave")
+    public ResponseEntity<ResponseDTO> attendanceMypageAttendanceModalSave(@RequestBody SelectAttendanceDTO selectAttendanceDTO) {
+
+        List<String> test = new ArrayList<>();
+        test.add("마이페이지 출근하기 등록 후 조회값 반환");
+        System.out.println("selectAttendanceDTO = " + selectAttendanceDTO);
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회성공",attendanceHrService.attendanceMypageAttendanceModalSave(selectAttendanceDTO)));
+    }
 
 
 }

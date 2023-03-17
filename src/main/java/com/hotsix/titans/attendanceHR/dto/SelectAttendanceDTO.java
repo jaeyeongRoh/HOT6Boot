@@ -16,5 +16,8 @@ public class SelectAttendanceDTO {
     private Date startDate;
     private Date startDate2;
 
+    private String commuteCode;
+    private String commuteStatus;
+
 
 }

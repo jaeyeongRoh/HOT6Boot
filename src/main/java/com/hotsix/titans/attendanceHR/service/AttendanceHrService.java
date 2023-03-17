@@ -55,7 +55,8 @@ public class AttendanceHrService {
                         "JOIN a.member m " +
                         "JOIN m.team t " +
                         "WHERE t.teamCode = :teamCode " +
-                        "AND (m.memberName = :memberName OR a.commuteDate BETWEEN :startDate AND :startDate2)", AttendanceHR.class);
+                        "AND  (:memberName is null OR m.memberName = :memberName) " +
+                        "AND a.commuteDate BETWEEN :startDate AND :startDate2", AttendanceHR.class);
 
         query.setParameter("teamCode", selectAttendanceDTO.getTeamCode());
         query.setParameter("memberName", selectAttendanceDTO.getMemberName());
@@ -253,6 +254,9 @@ public class AttendanceHrService {
     /*근태 등록 후 조회*/
     public List<SelectAttendanceHrDTO> attendanceMypageSelectRegistCommute(String commuteStartTime, MemberDTO memberDTO) throws ParseException {
 
+
+
+
         System.out.println("memberDTO service = " + memberDTO);
 
 //        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -287,4 +291,25 @@ public class AttendanceHrService {
     }
 
 
+
+    @Transactional
+    /*모달 수정*/
+    public Object attendanceMypageAttendanceModalSave(SelectAttendanceDTO selectAttendanceDTO) {
+
+        int result;
+
+        CRUDattendanceHR attendanceHREntity = entityManager.find(CRUDattendanceHR.class, selectAttendanceDTO.getCommuteCode());
+
+        try {
+            attendanceHREntity.setCommuteStatus(selectAttendanceDTO.getCommuteStatus());
+            entityManager.merge(attendanceHREntity);
+            result = 1;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error occurred while updating attendance: " + e.getMessage());
+        }
+
+        return (result == 1) ? "등록성공" : "등록실패" ;
+    }
 }
