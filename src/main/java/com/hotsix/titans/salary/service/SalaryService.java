@@ -8,11 +8,13 @@ import com.hotsix.titans.member.dto.MemberSalaryDTO;
 import com.hotsix.titans.member.dto.RankDTO;
 import com.hotsix.titans.member.dto.TeamDTO;
 import com.hotsix.titans.member.entity.MemberSalary;
+import com.hotsix.titans.member.repository.MemberAllRepository;
 import com.hotsix.titans.member.repository.MemberSalaryRepository;
 import com.hotsix.titans.salary.dto.BonusDTO;
 import com.hotsix.titans.salary.dto.SalaryDTO;
 import com.hotsix.titans.salary.entity.Bonus;
 import com.hotsix.titans.salary.entity.Salary;
+import com.hotsix.titans.salary.entity.SalaryPayment;
 import com.hotsix.titans.salary.entity.Tax;
 import com.hotsix.titans.salary.repository.SalaryRepository;
 import org.modelmapper.ModelMapper;
@@ -35,18 +37,26 @@ public class SalaryService {
     private final ModelMapper modelMapper;
     private final MemberSalaryRepository memberSalaryRepository;
     private final AttendanceHrSalaryRepository attendanceHrSalaryRepository;
+    private final MemberAllRepository memberAllRepository;
 
-    public SalaryService(SalaryRepository salaryRepository, ModelMapper modelMapper, MemberSalaryRepository memberSalaryRepository, AttendanceHrSalaryRepository attendanceHrSalaryRepository) {
+    public SalaryService(SalaryRepository salaryRepository, ModelMapper modelMapper, MemberSalaryRepository memberSalaryRepository, AttendanceHrSalaryRepository attendanceHrSalaryRepository, MemberAllRepository memberAllRepository) {
         this.salaryRepository = salaryRepository;
         this.modelMapper = modelMapper;
         this.memberSalaryRepository = memberSalaryRepository;
         this.attendanceHrSalaryRepository = attendanceHrSalaryRepository;
+        this.memberAllRepository = memberAllRepository;
     }
+
 
     /* 날짜에 따른 내 급여 조회 */
     public List<SalaryDTO> selectMySalary(String memberCode, Date start, Date end) {
 
         List<Salary> salaryList = salaryRepository.findByMemberCodeAndPaymentDateBetween(memberCode, start, end);
+//        Rank rank = rankRepository.findByMemberCode(memberCode);
+//        Team team = teamRepository.findByMemberCode(memberCode);
+//
+//        RankDTO rankDTO = modelMapper.map(rank, RankDTO.class);
+//        TeamDTO teamDTO = modelMapper.map(team, TeamDTO.class);
 
         List<SalaryDTO> selectSalary = new ArrayList<>();
         for(Salary salary : salaryList) {
@@ -72,13 +82,16 @@ public class SalaryService {
 
             Long afterSalary = beforeSalary - (incomTax + healthTax + nationalTax);
 
+
             SalaryDTO salaryDTO = modelMapper.map(salary, SalaryDTO.class);
+
             salaryDTO.setBeforeSalary(beforeSalary);
             salaryDTO.setAfterSalary(afterSalary);
             salaryDTO.setIncomTax(incomTax);
             salaryDTO.setHealthTax(healthTax);
             salaryDTO.setNationalTax(nationalTax);
-
+//            salaryDTO.setRank(rankDTO);
+//            salaryDTO.setTeam(teamDTO);
             selectSalary.add(salaryDTO);
         }
 
@@ -148,18 +161,22 @@ public class SalaryService {
     }
 
     /* 급여 지급하여 급여상태 변경 */
-    public Object updateSalaryPaymentsYn(String salaryCode) {
-
-        Salary salary = salaryRepository.findById(salaryCode).orElseThrow(() -> new RuntimeException(salaryCode));
-        if (salary.getPaymentsYn().equals("N")) {
-            salary.setPaymentsYn("Y");
-        } else {
-            throw new SalaryPaymentsYnException("이미 급여가 지급되었습니다.");
-        }
-        salaryRepository.save(salary);
-
-        return salary;
-    }
+//    public Object updateSalaryPaymentsYn(String selectedSalaryCode) {
+//
+//        System.out.println("selectedSalaryCode = " + selectedSalaryCode);
+//        Salary salary = salaryRepository.findBySalaryCode(selectedSalaryCode);
+//
+//        System.out.println("test2==========================");
+//
+//        if (salary.getPaymentsYn().equals("N")) {
+//            salary.setPaymentsYn("Y");
+//        } else {
+//            throw new SalaryPaymentsYnException("이미 급여가 지급되었습니다.");
+//        }
+//        salaryRepository.save(salary);
+//
+//        return salary;
+//    }
 
 //    /* 저번 달 총 근무시간 구하기 */
 //    public List<AttendanceHrDTO> selectCommuteMonth() {
@@ -273,4 +290,10 @@ public class SalaryService {
     }
 
 
+    public SalaryDTO selectSalaryDetail(String selectedSalaryCode) {
+
+        Salary salary = salaryRepository.findBySalaryCode(selectedSalaryCode);
+
+        return modelMapper.map(salary, SalaryDTO.class);
+    }
 }

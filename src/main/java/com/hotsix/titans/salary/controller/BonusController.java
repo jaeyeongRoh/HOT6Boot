@@ -23,18 +23,6 @@ public class BonusController {
         this.bonusService = bonusService;
     }
 
-//    public static ConvertDate changeDate(int year, int month){
-//
-//        String startDate = year + "-" + month + "-" + "01";
-//        Date start = Date.valueOf(startDate);
-//
-//        String endDate = year + "-" + month + "-" + start.toLocalDate().lengthOfMonth();
-//        Date end = Date.valueOf(endDate);
-//
-//        ConvertDate date = new ConvertDate(startDate, endDate);
-//        return date;
-//    }
-
     /* 상여금 명단 조회 */
     @GetMapping("/salary/bonus/{year}/{month}")
     public ResponseEntity<ResponseDTO> selectPaymentYNSalary(@PathVariable int year,
@@ -57,6 +45,13 @@ public class BonusController {
 
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "사원번호로 사원정보 조회 성공", bonusService.selectMemberCodeBonus(memberCode)));
     }
+
+    /* 상여 명단 상세 조회 */
+//    @GetMapping("/salary/bonus/detail/{bonusCode}")
+//    public ResponseEntity<ResponseDTO> selectBonusModal(@PathVariable String bonusCode) {
+//
+//        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "상여번호로 상세정보 조회 성공", bonusService.selectBonusModal(bonusCode)));
+//    }
 
     /* 상여 명단 추가 */
     @PutMapping("/salary/bonus/insert/{salaryCode}")

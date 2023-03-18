@@ -22,9 +22,9 @@ public class RetireeService {
         this.modelMapper = modelMapper;
     }
 
-    public List<RetireeDTO> selectRetireeSalary(String severancePaymentsYN) {
+    public List<RetireeDTO> selectRetireeSalary(String severancePaymentsYn) {
 
-        List<Retiree> retireeList = retireeRepository.findBySeverancePaymentsYN(severancePaymentsYN);
+        List<Retiree> retireeList = retireeRepository.findBySeverancePaymentsYn(severancePaymentsYn);
         System.out.println("retireeList ============================== " + retireeList);
         return retireeList.stream()
                 .map(retiree -> modelMapper.map(retiree, RetireeDTO.class))
@@ -35,8 +35,8 @@ public class RetireeService {
     public Object updateSeverancePaymentsYn(String retireeCode) {
 
         Retiree retiree = retireeRepository.findById(retireeCode).orElseThrow(() -> new RuntimeException(retireeCode));
-        if (retiree.getSeverancePaymentsYN().equals("N")) {
-            retiree.setSeverancePaymentsYN("Y");
+        if (retiree.getSeverancePaymentsYn().equals("N")) {
+            retiree.setSeverancePaymentsYn("Y");
         } else {
             throw new SalaryPaymentsYnException("이미 급여가 지급되었습니다.");
         }

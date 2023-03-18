@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface BonusRepository extends JpaRepository<Bonus, String> {
 
+    Bonus findByBonusCode(String bonusCode);
 }

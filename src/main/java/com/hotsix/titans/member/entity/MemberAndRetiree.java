@@ -1,14 +1,11 @@
 package com.hotsix.titans.member.entity;
 
 
-import com.hotsix.titans.attendanceHR.entity.AttendanceSalary;
 import com.hotsix.titans.commons.StringPrefixSequenceGenerator;
 import com.hotsix.titans.salary.entity.Salary;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.GenericGenerator;
-
-import com.hotsix.titans.message.entity.Message;
 
 
 import javax.persistence.*;
@@ -22,7 +19,7 @@ import java.util.List;
 @Entity
 @Table(name = "TBL_MEMBER")
 @DynamicInsert
-public class MemberSalary {
+public class MemberAndRetiree {
 
     @Id
     @Column(name = "MEMBER_CODE")
@@ -75,17 +72,17 @@ public class MemberSalary {
     @JoinColumn(name = "RANK_CODE")
     private Rank rank;
 
-//    @OneToMany
-//    @JoinColumn(name = "MEMBER_CODE")
-//    private List<RetireeHistory> retireeHistory; // 퇴직내역 일대다 매핑
+    @OneToMany
+    @JoinColumn(name = "MEMBER_CODE")
+    private List<RetireeHistory> retireeHistory; // 퇴직내역 일대다 매핑
+
+    @OneToMany
+    @JoinColumn(name = "MEMBER_CODE")
+    private List<ProfileImage> profileImage;
 
     @OneToMany
     @JoinColumn(name = "MEMBER_CODE")
     private List<Salary> salaryList;
-
-    @OneToMany
-    @JoinColumn(name = "MEMBER_CODE")
-    private List<AttendanceSalary> attendanceHRList;
 
     @Override
     public String toString() {
@@ -104,6 +101,7 @@ public class MemberSalary {
                 ", memberMarried='" + memberMarried + '\'' +
                 ", team=" + team +
                 ", rank=" + rank +
+                ", retireeHistory=" + retireeHistory +
                 '}';
     }
 }
