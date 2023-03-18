@@ -34,8 +34,17 @@ public class OrganizationService {
         log.info("[organizationService] {}", memberList);
         log.info("[organizationService] getAllMemberList End =========================");
 
+        return memberList.stream().map(MemberAll -> modelMapper.map(MemberAll, MemberAllDTO.class)).collect(Collectors.toList());
+    }
+
+    public List<MemberAllDTO> selectRetireeMemberList() {
+
+        log.info("[organizationService] getRetireeMemberList Start =======================");
+
+        List<MemberAll> memberList = memberAllRepository.findAllByWorkingStatus("퇴사");
+        log.info("[organizationService] {}", memberList);
+        log.info("[organizationService] getRetireeMemberList End =========================");
 
         return memberList.stream().map(MemberAll -> modelMapper.map(MemberAll, MemberAllDTO.class)).collect(Collectors.toList());
-
     }
 }

@@ -5,9 +5,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Date;
-
 
 @Setter
 @Getter
@@ -15,7 +17,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Entity
 @Table(name = "TBL_LEAVE_USE_HISTORY")
-public class LeaveUseHistory {
+public class SimpleLeaveUseHistory {
 
     @Id
     @Column(name = "LEAVE_USE_HISTORY_CODE")
@@ -24,28 +26,16 @@ public class LeaveUseHistory {
     private String leavePaymentHistoryCode;
     @Column(name = "START_DATE")
     private Date startDate;
-    @Column(name = "END_DATE")
-    private Date endDate;
     @Column(name = "GENERATION_COUNT")
     private int generationCount;
-    @Column(name = "LEAVE_USE_PROCESS")
-    private String leaveUseProcess;
-    @Column(name = "LEAVE_USE_MEMO")
-    private String leaveUseMemo;
-    @Column(name = "LEAVE_USE_CANCELL_YN")
-    private char leaveUseCancellYn;
 
     @Override
     public String toString() {
-        return "LeaveUseHistory{" +
+        return "SimpleLeaveUseHistory{" +
                 "leaveUseHistoryCode='" + leaveUseHistoryCode + '\'' +
                 ", leavePaymentHistoryCode='" + leavePaymentHistoryCode + '\'' +
                 ", startDate=" + startDate +
-                ", endDate=" + endDate +
                 ", generationCount=" + generationCount +
-                ", leaveUseProcess='" + leaveUseProcess + '\'' +
-                ", leaveUseMemo='" + leaveUseMemo + '\'' +
-                ", leaveUseCancellYn=" + leaveUseCancellYn +
                 '}';
     }
 }
