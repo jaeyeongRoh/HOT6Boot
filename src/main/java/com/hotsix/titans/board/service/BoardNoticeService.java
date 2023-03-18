@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,7 +31,7 @@ public class BoardNoticeService {
 
         char deleteYn = 'N';
 
-        List<BoardNotice> boardNoticeList = boardNoticeRepository.findByNoticeDeleteYNOrderByNoticeCodeDesc(deleteYn);
+        List<BoardNotice> boardNoticeList = boardNoticeRepository.findByNoticeDeleteYNOrderByNoticeDateDesc(deleteYn);
 
         System.out.println("boardNoticeList : " + boardNoticeList);
         return boardNoticeList.stream().map(boardNotice -> modelMapper.map(boardNotice, BoardNoticeDTO.class)).collect(Collectors.toList());
@@ -54,7 +54,7 @@ public class BoardNoticeService {
         log.info("[BoardNoticeService] boardNoticeDTO {}", boardNoticeDTO);
 
         BoardNotice boardNotice = modelMapper.map(boardNoticeDTO, BoardNotice.class);
-        boardNotice.setNoticeDate(LocalDate.now());
+        boardNotice.setNoticeDate(LocalDateTime.now());
 
         BoardNotice result = boardNoticeRepository.save(boardNotice);
         System.out.println("result : " + result);

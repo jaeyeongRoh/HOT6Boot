@@ -39,7 +39,7 @@ public class BoardNoticeController {
     @PostMapping(value = "/board/notice/write")
     public ResponseEntity<ResponseDTO> insertBoardNotice(@RequestBody BoardNoticeDTO boardNoticeDTO) {
 
-        System.out.println("boardNoticeDTO =================================== " + boardNoticeDTO);
+        System.out.println("boardNoticeDTO : " + boardNoticeDTO);
 
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "공지사항 등록 성공", boardNoticeService.insertBoardNotice(boardNoticeDTO)));
     }
