@@ -1,7 +1,16 @@
 package com.hotsix.titans.member.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "TBL_RETIREE_HISTORY")
 @IdClass(RetireeHistoryPk.class)
@@ -19,20 +28,10 @@ public class RetireeHistory {
     @JoinColumn(name = "RETIREE_CODE", insertable = false, updatable = false)
     private Retiree retiree;
 
-    public RetireeHistory(String memberCode, String retireeCode) {
-        this.memberCode = memberCode;
-        this.retireeCode = retireeCode;
-    }
+    @ManyToOne
+    @JoinColumn(name = "MEMBER_CODE", insertable = false, updatable = false)
+    private MemberAndRetiree member;
 
-    public RetireeHistory(String memberCode, String retireeCode, Retiree retiree) {
-        this.memberCode = memberCode;
-        this.retireeCode = retireeCode;
-        this.retiree = retiree;
-    }
-
-    public RetireeHistory() {
-
-    }
 
     public String getMemberCode() {
         return memberCode;

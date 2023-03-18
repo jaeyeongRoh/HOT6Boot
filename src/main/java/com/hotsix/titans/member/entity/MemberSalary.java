@@ -75,16 +75,9 @@ public class MemberSalary {
     @JoinColumn(name = "RANK_CODE")
     private Rank rank;
 
-    @OneToMany
-    @JoinColumn(name = "MEMBER_CODE")
-    private List<RetireeHistory> retireeHistory; // 퇴직내역 일대다 매핑
-
-    @OneToMany(mappedBy = "member")
-    private List<Message> messages;
-
-    @OneToMany
-    @JoinColumn(name = "MEMBER_CODE")
-    private List<ProfileImage> profileImage;
+//    @OneToMany
+//    @JoinColumn(name = "MEMBER_CODE")
+//    private List<RetireeHistory> retireeHistory; // 퇴직내역 일대다 매핑
 
     @OneToMany
     @JoinColumn(name = "MEMBER_CODE")

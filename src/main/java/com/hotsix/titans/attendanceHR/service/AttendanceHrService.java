@@ -1,15 +1,14 @@
 package com.hotsix.titans.attendanceHR.service;
 
 
-import com.hotsix.titans.attendanceHR.dto.MemberDTO;
-import com.hotsix.titans.attendanceHR.dto.SelectAttendanceHrDTO;
+import com.hotsix.titans.attendanceHR.dto.*;
 import com.hotsix.titans.attendanceHR.entity.CRUDattendanceHR;
+import com.hotsix.titans.attendanceHR.entity.MypageSelectAttendance;
 import com.hotsix.titans.attendanceHR.entity.SelectAttendanceHR;
 import com.hotsix.titans.attendanceHR.repository.CRUDattendanceHrRepository;
 
+import com.hotsix.titans.attendanceHR.repository.MypageSelectAttendanceRepository;
 import com.hotsix.titans.member.entity.Member;
-import com.hotsix.titans.attendanceHR.dto.AttendanceHrDTO;
-import com.hotsix.titans.attendanceHR.dto.SelectAttendanceDTO;
 import com.hotsix.titans.attendanceHR.entity.AttendanceHR;
 import com.hotsix.titans.member.repository.MemberRepository;
 import org.modelmapper.ModelMapper;
@@ -36,14 +35,16 @@ public class AttendanceHrService {
     private final CRUDattendanceHrRepository crudAttendanceHrRepository;
     private final EntityManager entityManager;
     private final MemberRepository memberRepository;
+    private final MypageSelectAttendanceRepository mypageSelectAttendanceRepository;
 
     @Autowired
-    public AttendanceHrService(ModelMapper modelMapper, CRUDattendanceHrRepository crudAttendanceHrRepository, EntityManager entityManager, MemberRepository memberRepository) {
+    public AttendanceHrService(ModelMapper modelMapper, CRUDattendanceHrRepository crudAttendanceHrRepository, EntityManager entityManager, MemberRepository memberRepository, MypageSelectAttendanceRepository mypageSelectAttendanceRepository) {
         this.modelMapper = modelMapper;
 
         this.crudAttendanceHrRepository = crudAttendanceHrRepository;
         this.entityManager = entityManager;
         this.memberRepository = memberRepository;
+        this.mypageSelectAttendanceRepository = mypageSelectAttendanceRepository;
     }
 
     public List<AttendanceHrDTO> selectAttendance(SelectAttendanceDTO selectAttendanceDTO) {
@@ -312,5 +313,14 @@ public class AttendanceHrService {
         }
 
         return (result == 1) ? "등록성공" : "등록실패" ;
+    }
+
+
+
+    public List<MypageSelectAttendanceDTO> attendanceMypageFinishRegistCommute(String memberCode) {
+
+        List<MypageSelectAttendance> mypageSelectAttendanceList = mypageSelectAttendanceRepository.findByMemberCode(memberCode);
+
+        return mypageSelectAttendanceList.stream().map(mypageSelectAttendance -> modelMapper.map(mypageSelectAttendance, MypageSelectAttendanceDTO.class)).collect(Collectors.toList());
     }
 }

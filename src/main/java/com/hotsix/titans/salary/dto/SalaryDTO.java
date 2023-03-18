@@ -1,6 +1,7 @@
 package com.hotsix.titans.salary.dto;
 
 import com.hotsix.titans.member.dto.MemberDTO;
+import com.hotsix.titans.member.dto.MemberSalaryDTO;
 import com.hotsix.titans.member.dto.RankDTO;
 import com.hotsix.titans.member.dto.TeamDTO;
 import com.hotsix.titans.member.entity.Member;

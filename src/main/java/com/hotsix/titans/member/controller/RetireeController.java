@@ -1,11 +1,14 @@
 package com.hotsix.titans.member.controller;
 
 import com.hotsix.titans.commons.ResponseDTO;
+import com.hotsix.titans.member.dto.RetireeDTO;
 import com.hotsix.titans.member.service.RetireeService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -18,11 +21,12 @@ public class RetireeController {
     }
 
     @Operation(summary = "퇴직자 급여 조회 요청", description = "퇴직 급여 목록이 조회됩니다.", tags = { "RetireeController" })
-    @GetMapping("/salary/severance/{severancePaymentsYN}")
-    public ResponseEntity<ResponseDTO> selectRetireeSalary(@PathVariable String severancePaymentsYN) {
+    @GetMapping("/salary/severance/{severancePaymentsYn}")
+    public ResponseEntity<ResponseDTO> selectRetireeSalary(@PathVariable String severancePaymentsYn) {
 
+        List<RetireeDTO> retireeList = retireeService.selectRetireeSalary(severancePaymentsYn);
 
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 성공", retireeService.selectRetireeSalary(severancePaymentsYN)));
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 성공", retireeList));
     }
 
     @PutMapping(value = "/salary/severance/N/{retireeCode}")

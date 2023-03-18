@@ -59,6 +59,7 @@ public class MessageController {
         System.out.println("messageTitle = " + messageDTO.getMessageTitle());
         System.out.println("messageContent = " + messageDTO.getMessageContent());
         System.out.println("recipients = " + messageDTO.getRecipients());
+        System.out.println("memberCode = " + messageDTO.getMemberCode());
 
 
 
@@ -67,18 +68,19 @@ public class MessageController {
 
     /*받은 편지함*/
     @GetMapping("/messageReceived")
-    public ResponseEntity<ResponseDTO> checkReceivedEmail(){
+    public ResponseEntity<ResponseDTO> checkReceivedEmail(MessageDTO messageDTO){
 
+        System.out.println("messageDTO = " + messageDTO);
 
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회성공", messageService.checkReceivedEmail()));
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회성공", messageService.checkReceivedEmail(messageDTO)));
     }
 
     /*받은 편지함 카운트*/
     @GetMapping("/messageReceivedCount")
-    public ResponseEntity<ResponseDTO> checkReceivedEmailCount(){
+    public ResponseEntity<ResponseDTO> checkReceivedEmailCount(MessageDTO messageDTO){
 
 
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회성공", messageService.checkReceivedEmail().size()));
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회성공", messageService.checkReceivedEmail(messageDTO).size()));
     }
 
 
