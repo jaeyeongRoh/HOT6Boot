@@ -21,7 +21,7 @@ import java.sql.Date;
 public class BoardCommunity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_BOARD")
+//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_BOARD")
     @Column(name = "BOARD_CODE")
     private String boardCode;
 
