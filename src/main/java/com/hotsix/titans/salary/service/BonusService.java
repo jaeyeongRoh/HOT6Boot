@@ -12,6 +12,7 @@ import com.hotsix.titans.salary.dto.BonusDTO;
 import com.hotsix.titans.salary.dto.SalaryDTO;
 import com.hotsix.titans.salary.entity.Bonus;
 import com.hotsix.titans.salary.entity.Salary;
+import com.hotsix.titans.salary.entity.Tax;
 import com.hotsix.titans.salary.repository.BonusRepository;
 import com.hotsix.titans.salary.repository.SalaryRepository;
 import org.modelmapper.ModelMapper;
@@ -79,6 +80,7 @@ public class BonusService {
         int result = 0;
 
         Salary salary = salaryRepository.findById(salaryCode).orElse(null);
+
         if(salary == null) {
             throw new IllegalArgumentException("Salary not found");
         }
@@ -86,6 +88,7 @@ public class BonusService {
         try {
 
             Bonus insertBonus = modelMapper.map(bonusDTO, Bonus.class);
+            Tax tax = salary.getTax();
 
             /* 세전 급액 계산식  기본급 + 상여금 */
 
@@ -95,8 +98,20 @@ public class BonusService {
             salary.setBeforeSalary(salary.getBasicSalary() + insertBonus.getBonusSalary());
             salary.setBonus(insertBonus);
 
-            System.out.println("salary.getBonus() = " + salary.getBonus());
+            Double incomTaxRate = tax.getIncomTaxRate();
+            Double healthTaxRate = tax.getHealthTaxRate();
+            Double natinalTaxRate = tax.getNationalTaxRate();
 
+            Long incomTax = Math.round(salary.getBeforeSalary() * incomTaxRate);
+            Long healthTax = Math.round(salary.getBeforeSalary() * healthTaxRate);
+            Long nationalTax = Math.round(salary.getBeforeSalary() * natinalTaxRate);
+
+            Long afterSalary = salary.getBeforeSalary() - (incomTax + healthTax + nationalTax);
+
+            salary.setIncomTax(incomTax);
+            salary.setHealthTax(healthTax);
+            salary.setNationalTax(nationalTax);
+            salary.setAfterSalary(afterSalary);
 
             result = 1;
         } catch (Exception e) {
@@ -138,5 +153,13 @@ public class BonusService {
         System.out.println("salaryMember = " + salaryMember);
 
         return salaryMember;
+    }
+
+    /* 상여번호로 상여 상세정보 조회 */
+    public BonusDTO selectBonusModal(String bonusCode) {
+
+        Bonus bonus = bonusRepository.findByBonusCode(bonusCode);
+
+        return modelMapper.map(bonus, BonusDTO.class);
     }
 }
