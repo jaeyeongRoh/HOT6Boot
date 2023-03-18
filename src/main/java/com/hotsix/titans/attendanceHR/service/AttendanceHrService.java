@@ -56,7 +56,8 @@ public class AttendanceHrService {
                         "JOIN m.team t " +
                         "WHERE t.teamCode = :teamCode " +
                         "AND  (:memberName is null OR m.memberName = :memberName) " +
-                        "AND a.commuteDate BETWEEN :startDate AND :startDate2", AttendanceHR.class);
+                        "AND a.commuteDate BETWEEN :startDate AND :startDate2 "+
+                        "ORDER BY a.commuteDate DESC", AttendanceHR.class);
 
 
         query.setParameter("teamCode", selectAttendanceDTO.getTeamCode());

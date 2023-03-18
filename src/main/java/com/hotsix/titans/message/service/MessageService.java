@@ -180,6 +180,8 @@ public class MessageService {
 
         }
 
+        System.out.println("selectReceivedEmail 값 확인 = " + selectReceivedEmail);
+
         /*여기 코드가 받은 메세지 인데, MessageDTO 에 맴버 네임이 나오지 않았어서, 셋으로 발신자를 표시하기 위함*/
 
 
@@ -201,6 +203,10 @@ public class MessageService {
             System.out.println("4   messageDTO = " + messageDTO);
 
             result.add(messageDTOlist);
+
+            System.out.println("최종결과 result = " + result);
+
+
         }
 
 
