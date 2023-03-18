@@ -1,6 +1,6 @@
 package com.hotsix.titans.member.dto;
 
-import com.hotsix.titans.attendanceManagement.dto.LeavePaymentHistoryAndUseHistoryDTO;
+import com.hotsix.titans.attendanceManagement.dto.LeaveHistoryAndMemberDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,7 +20,7 @@ public class FindMemberAndLeaveDTO {
     private Date joinDate;
     private String teamName;
     private String rankName;
-    private List<LeavePaymentHistoryAndUseHistoryDTO> leavePaymentHistoryAndUseHistoryList;
+    private List<LeaveHistoryAndMemberDTO> leaveHistoryAndMemberList;
 
     @Override
     public String toString() {
