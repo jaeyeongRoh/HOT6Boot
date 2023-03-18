@@ -25,14 +25,8 @@ public class AttendanceHrDTO {
     private Timestamp commuteFcountTime;
     private int  commuteTotalTime;
     private String commuteStatus;
-
     private MemberDTO member;
-
-
     private List<AttendanceHrReasonDTO> attendanceHrReasonList;
-
-
-
 
     @Override
     public String toString() {
