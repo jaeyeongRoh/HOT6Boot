@@ -11,7 +11,7 @@ import java.util.List;
 public interface BoardNoticeRepository extends JpaRepository<BoardNotice, String> {
 
 
-    List<BoardNotice> findByNoticeDeleteYN(char deleteYn);
+    List<BoardNotice> findByNoticeDeleteYNOrderByNoticeCodeDesc(char deleteYn);
 
     BoardNotice findByNoticeCode(String noticeCode);
 }

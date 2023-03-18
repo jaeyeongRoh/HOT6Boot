@@ -1,24 +1,12 @@
 package com.hotsix.titans.board.entity;
 
 
-import com.hotsix.titans.attendanceHR.entity.AttendanceHR;
-import com.hotsix.titans.commons.StringPrefixSequenceGenerator;
-import com.hotsix.titans.member.entity.ProfileImage;
-import com.hotsix.titans.member.entity.Rank;
-import com.hotsix.titans.member.entity.RetireeHistory;
-import com.hotsix.titans.member.entity.Team;
-import com.hotsix.titans.message.entity.Message;
-import com.hotsix.titans.salary.entity.Salary;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -26,7 +14,7 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "TBL_MEMBER")
-public class MiniMember {
+public class BoardNoticeMember {
 
     @Id
     @Column(name = "MEMBER_CODE")
