@@ -9,8 +9,15 @@ import com.hotsix.titans.attendanceManagement.entity.LeavePaymentHistory;
 import com.hotsix.titans.attendanceManagement.repository.LeavePaymentHistoryRepository;
 import com.hotsix.titans.attendanceManagement.repository.LeaveRepository;
 import com.hotsix.titans.attendanceManagement.repository.LeaveRepositoryAndLeavePaymentHistory;
+import com.hotsix.titans.member.dto.MemberAndLeaveDTO;
+import com.hotsix.titans.member.entity.MemberAndLeave;
+import com.hotsix.titans.member.repository.MemberAndLeaveRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -25,12 +32,15 @@ public class LeaveService {
     private final ModelMapper modelMapper;
     private final LeavePaymentHistoryRepository leavePaymentHistoryRepository;
 
+    private final MemberAndLeaveRepository memberAndLeaveRepository;
+
     @Autowired
-    public LeaveService(LeaveRepositoryAndLeavePaymentHistory leaveRepositoryAndLeavePaymentHistory, LeaveRepository leaveRepository, ModelMapper modelMapper, LeavePaymentHistoryRepository leavePaymentHistoryRepository) {
+    public LeaveService(LeaveRepositoryAndLeavePaymentHistory leaveRepositoryAndLeavePaymentHistory, LeaveRepository leaveRepository, ModelMapper modelMapper, LeavePaymentHistoryRepository leavePaymentHistoryRepository, MemberAndLeaveRepository memberAndLeaveRepository) {
         this.leaveRepositoryAndLeavePaymentHistory = leaveRepositoryAndLeavePaymentHistory;
         this.leaveRepository = leaveRepository;
         this.modelMapper = modelMapper;
         this.leavePaymentHistoryRepository = leavePaymentHistoryRepository;
+        this.memberAndLeaveRepository = memberAndLeaveRepository;
     }
 
 
@@ -73,5 +83,12 @@ public class LeaveService {
         List<LeavePaymentHistory> leavePaymentHistoryList = leavePaymentHistoryRepository.findByMemberCode(memberCode);
 
         return leavePaymentHistoryList.stream().map(leavePaymentHistory -> modelMapper.map(leavePaymentHistory, LeavePaymentHistoryDTO.class)).collect(Collectors.toList());
+    }
+
+    public Page<MemberAndLeave> selectLeaveInPutList(int page, int size) {
+
+        Pageable pageable = PageRequest.of(page, size);
+
+        return memberAndLeaveRepository.findAll(pageable);
     }
 }

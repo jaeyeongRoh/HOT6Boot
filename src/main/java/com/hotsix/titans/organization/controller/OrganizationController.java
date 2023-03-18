@@ -31,4 +31,13 @@ public class OrganizationController {
 
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 성공", (Object)memberList));
     }
+
+    @GetMapping("/organization/retireeChart")
+    public ResponseEntity<ResponseDTO> selectRetireeMemberList() {
+
+        System.out.println("=======" + organizationService.selectRetireeMemberList());
+        List<MemberAllDTO> memberList = organizationService.selectRetireeMemberList();
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 성공", (Object)memberList));
+    }
 }

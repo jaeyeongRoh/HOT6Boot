@@ -1,14 +1,12 @@
-package com.hotsix.titans.member.repository;
+package com.hotsix.titans.attendanceHR.repository;
 
-import com.hotsix.titans.member.dto.MemberDTO;
+import com.hotsix.titans.attendanceHR.entity.MemberAttendance;
 import com.hotsix.titans.member.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 
-import java.sql.Date;
 import java.util.List;
 
-public interface MemberRepository extends JpaRepository<Member, String> {
+public interface MemberAttendanceRepository extends JpaRepository<MemberAttendance, String> {
 
     Member findByMemberCode(String string);
 
@@ -18,7 +16,8 @@ public interface MemberRepository extends JpaRepository<Member, String> {
 
     Member findByMemberName(String memberName);
 
-    long countByWorkingStatus(String string);
+
+
 //
 //    Member findByMemberEmail(String memberEmail);
 //
