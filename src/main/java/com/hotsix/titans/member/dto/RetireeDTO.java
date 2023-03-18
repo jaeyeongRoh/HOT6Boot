@@ -1,5 +1,7 @@
 package com.hotsix.titans.member.dto;
 
+import com.hotsix.titans.member.entity.Rank;
+import com.hotsix.titans.member.entity.Team;
 import lombok.*;
 
 import java.util.Date;
@@ -20,4 +22,7 @@ public class RetireeDTO {
     private String severancePaymentsYn;
 
     private Date paymentsDate;
+
+    private Team team;
+    private Rank rank;
 }

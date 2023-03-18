@@ -1,9 +1,11 @@
 package com.hotsix.titans.attendanceHR.dto;
 
-import com.hotsix.titans.member.dto.MemberDTO;
 import lombok.*;
 
-import java.sql.Date;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 
@@ -11,39 +13,26 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-//@ToString
+//@ToString  주석 아래 정리
 public class AttendanceHrDTO {
 
     private String commuteCode;
     private String memberCode;
     private Date commuteDate;
-    private Date commuteStartTime;
-    private Date commuteScountTime;
-    private Date commuteFinishTime;
-    private Date commuteFcountTime;
-    private int commuteTotalTime;
-    private int commuteTotalMonthTime;
+    private Timestamp commuteStartTime;
+    private Timestamp commuteScountTime;
+    private Timestamp commuteFinishTime;
+    private Timestamp commuteFcountTime;
+    private int  commuteTotalTime;
     private String commuteStatus;
-//    private MemberDTO member;
-    private String teamName;
-    private String rankName;
-    private String memberName;
 
+    private MemberDTO member;
 
 
     private List<AttendanceHrReasonDTO> attendanceHrReasonList;
 
 
-//    public String getMemberName() {
-//        return member.getMemberName();
-//    }
-//    public String getTeamName() {
-//        return member.getTeamName();
-//    }
-//
-//    public String getRankName() {
-//        return member.getRankName();
-//    }
+
 
     @Override
     public String toString() {
