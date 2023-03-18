@@ -1,14 +1,22 @@
 package com.hotsix.titans.attendanceHR.controller;
 
+import com.hotsix.titans.attendanceHR.dto.AttendanceHrDTO;
+import com.hotsix.titans.attendanceHR.dto.MemberDTO;
 import com.hotsix.titans.attendanceHR.dto.SelectAttendanceDTO;
 import com.hotsix.titans.attendanceHR.service.AttendanceHrService;
 import com.hotsix.titans.commons.ResponseDTO;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
+
 
 @RestController
 @RequestMapping("/api/v1")
@@ -34,13 +42,61 @@ public class AttendanceHrController {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "메세지 전송 성공",attendanceHrService.selectAttendance(selectAttendanceDTO)));
     }
 
+    /*출근하기 버튼 눌렀을때*/
+    @GetMapping("/attendance/mypageAregist")
+    public ResponseEntity<ResponseDTO> attendanceMypageRegistCommute(@RequestParam String commuteStartTime , @ModelAttribute MemberDTO memberDTO) throws ParseException {
 
-//    @GetMapping("/attendance/attendanceAlldatas")
-//    public ResponseEntity<ResponseDTO> selectMessageAllMember(){
-//
-//        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회성공", attendanceHrService.selectAttendanceAlldatas()));
-//    }
+        List<String> test = new ArrayList<>();
+        test.add("마이페이지 출근하기 등록 후 리스폰스값 반환");
 
+        System.out.println("commuteStartTime = " + commuteStartTime);
+        System.out.println("memberDTO = " + memberDTO);
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회성공", attendanceHrService.attendanceMypageRegistCommute(commuteStartTime,memberDTO)));
+    }
+
+    /*퇴근하기 버튼 눌렀을때*/
+    @GetMapping("/attendance/mypageAfinishRegist")
+    public ResponseEntity<ResponseDTO> attendanceMypageFinishRegistCommute(@RequestParam String commuteFinishTime , @ModelAttribute MemberDTO memberDTO) throws ParseException {
+
+        List<String> test = new ArrayList<>();
+        test.add("마이페이지 출근하기 등록 후 리스폰스값 반환");
+
+        System.out.println("commuteFinishTime = " + commuteFinishTime);
+        System.out.println("memberDTO = " + memberDTO);
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회성공", attendanceHrService.attendanceMypageRegistFinishCommute(commuteFinishTime,memberDTO)));
+    }
+
+
+
+    /*출근 시간이 출력*/
+
+    @GetMapping("/attendance/mypageAregistSelect")
+    public ResponseEntity<ResponseDTO> attendanceMypageSelectRegistCommute(@RequestParam String commuteStartTime , @ModelAttribute MemberDTO memberDTO) throws ParseException {
+
+        List<String> test = new ArrayList<>();
+        test.add("마이페이지 출근하기 등록 후 조회값 반환");
+
+        System.out.println("commuteStartTime = " + commuteStartTime);
+        System.out.println("memberDTO = " + memberDTO);
+        System.out.println("반환값"+attendanceHrService.attendanceMypageSelectRegistCommute(commuteStartTime,memberDTO));
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회성공", attendanceHrService.attendanceMypageSelectRegistCommute(commuteStartTime,memberDTO)));
+    }
+
+
+
+
+    /*모달창 저장 누를시*/
+    @PostMapping("/attendance/modalSave")
+    public ResponseEntity<ResponseDTO> attendanceMypageAttendanceModalSave(@RequestBody SelectAttendanceDTO selectAttendanceDTO) {
+
+        List<String> test = new ArrayList<>();
+        test.add("마이페이지 출근하기 등록 후 조회값 반환");
+        System.out.println("selectAttendanceDTO = " + selectAttendanceDTO);
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회성공",attendanceHrService.attendanceMypageAttendanceModalSave(selectAttendanceDTO)));
+    }
 
 
 }
