@@ -98,7 +98,7 @@ public class MessageService {
 
         try {
 
-            String memberCode = "140001";
+            String memberCode = messageDTO.getMemberCode();
 
             Message message = new Message();
 
@@ -148,9 +148,9 @@ public class MessageService {
 
 
     /*받은 편지함*/
-    public List<MessageDTO> checkReceivedEmail() {
+    public List<MessageDTO> checkReceivedEmail(MessageDTO messageDTO) {
 
-        String memberEmail = "jominseo@titan.com";
+        String memberEmail = messageDTO.getMemberEmail();
 
 
         List<MessageHistory> messageHistory = messageHistoryRepository.findByMessageReceiverEmailAndMessageReceiverDeleteYn(memberEmail, "N");
@@ -172,11 +172,11 @@ public class MessageService {
 
         List<MessageDTO> result = new ArrayList<>();
         for (Message message : selectReceivedEmail){
-            MessageDTO messageDTO = modelMapper.map(message,MessageDTO.class);
+            MessageDTO messageDTOlist = modelMapper.map(message,MessageDTO.class);
             String memberCode = message.getMember().getMemberCode();
             Member member = memberRepository.findByMemberCode(memberCode);
             messageDTO.setMemberName(member.getMemberName());
-            result.add(messageDTO);
+            result.add(messageDTOlist);
         }
 
 
