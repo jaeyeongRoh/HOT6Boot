@@ -58,7 +58,7 @@ public class LeaveController {
 //    public ResponseEntity<ResponseDTO> selectLeaveInPutList() {
 //
 //        List<MemberAndLeaveDTO> memberAndLeaveList = leaveService.selectLeaveInPutList();
-//        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK,"전사원 연차 조회 성공",(Object) memberAndLeaveList));
+//        return ResponseEntity.ok().body(new ResponseDTO(원HttpStatus.OK,"전사원 연차 조회 성공",(Object) memberAndLeaveList));
 //    }
 
     @GetMapping("/annual/management/{startIndex}/{endIndex}")

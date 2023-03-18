@@ -48,7 +48,6 @@ public class SecurityConfig {
 	}
 
 	/* 3. HTTP요청에 대한 권한별 설정(세션 인증 -> 토큰 인증으로 인해 바뀐 부분 존재) */
-
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
@@ -64,33 +63,82 @@ public class SecurityConfig {
 		    	.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()		// cors를 위해 preflight 요청 처리용 options 요청 허용
 		    				// preflight request란? 요청 할 url이 외부 도메인일 경우 웹 브라우저에서 자체 실행되며 options 메소드로 사전 요청을 보내게 된다.
 
-				.antMatchers("/ea/**").permitAll()
-				.antMatchers("/ea/eaLeave/**").permitAll() // 사전에 요청이 안전한지 확인하기 위함(유효한지 서버에 미리 파악할 수 있도록 보내는 수단이다.)
+				/* 로그인 */
+				.antMatchers("/auth/login").permitAll()
 
-
-
-
-				.antMatchers("/api/vi/attendance/**").permitAll()
-				.antMatchers("/api/v1/annual/**").permitAll()
+				/* 마이페이지 */
 				.antMatchers("/api/v1/members/**").permitAll()
 				.antMatchers("/api/vi/simpleMember/**").permitAll()
 				.antMatchers("/api/v1/mypage/**").permitAll()
-				.antMatchers("/api/v1/calendar/**").hasRole("ADMIN")
-				.antMatchers("/api/v1/salary/**").hasRole("ADMIN")
-				.antMatchers("/api/v1/salary/check/{memberCode}/**").hasRole("MEMBER")
-				.antMatchers("/api/v1/organization/chart/**").permitAll()
+//				.antMatchers("/api/v1/members/{memberCode}").permitAll()	// 회원 한명 조회
+//				.antMatchers("/api/vi/simpleMember/{memberCode}").permitAll()	// 회원 간단정보 조회
+//				.antMatchers("/api/v1/members/allMember/count").permitAll()		// 전사원 count
+//				.antMatchers("/api/v1/mypage/management/update/{memberCode}").permitAll()	// 개인정보 변경
+//				.antMatchers("/api/v1/members/password/{memberCode}").permitAll()	// 비밀번호 변경
+//				.antMatchers("/api/v1/members/profileImage/{memberCode}").permitAll()	// 프로필 이미지 변경
 
-				.antMatchers("/auth/**").permitAll()
-				.antMatchers("/auth/signup/**").hasRole("ADMIN")	//@@ 신규 사원 등록
+				/* 인사 */
+				.antMatchers("/api/v1/organization/chart").permitAll()	//	재직자 명단 조회
+				// 증명서 신청현황
+				.antMatchers("/auth/signup").hasRole("ADMIN")	// 신규 사원 등록
+				.antMatchers("/api/v1/organization/retireeChart").hasRole("ADMIN")	// 퇴직자 명단 조회
 
-				.antMatchers("/api/v2/board/**").hasRole("MEMBER") // 추후 수정 필요
-				.antMatchers("/api/v2/board/notice/insert/**").hasRole("ADMIN")
+				/* 근태 - 현재는 인사팀 기능만 있음 */
+				.antMatchers("/api/v1/attendance/**").hasRole("ADMIN")
+//				.antMatchers("/api/v1/attendance").permitAll()
+//				.antMatchers("/api/v1/attendance/mypageAregist").permitAll()
+//				.antMatchers("/api/v1/attendance/mypageAfinishRegist").permitAll()
+//				.antMatchers("/api/v1/attendance/mypageAregistSelect").permitAll()
+//				.antMatchers("/api/v1/attendance/modalSave").permitAll()
 
-				.antMatchers("/api/v1/organization/retireeChart/**").permitAll()
-				.antMatchers("/api/v1/calendar/**").permitAll()
+				/* 휴가 */
+				.antMatchers("/api/v1/annual/**").permitAll()
+//				.antMatchers("/api/v1/annual/standardsManagement/**").permitAll()		// 휴가 기준
+//				.antMatchers("/api/v1/mypage/main/{memberCode}")	----?????
+//				.antMatchers("/api/v1//annual/management/{startIndex}/{endIndex}").hasRole("ADMIN")		// 전사원 연차 조회
+
+				/* 전자결재 */
+				.antMatchers("/ea/**").permitAll()
+				.antMatchers("/ea/eaLeave/**").permitAll() // 사전에 요청이 안전한지 확인하기 위함(유효한지 서버에 미리 파악할 수 있도록 보내는 수단이다.)
+
+				/* 급여 */
+//				.antMatchers("/api/v1/salary/check/{memberCode}/**").permitAll()
+				.antMatchers("/api/v1/salary/check/{memberCode}/{year}/{month}").permitAll()	// 날짜에 따른 내 급여 조회
+
+				.antMatchers("/api/v1/salary/check/detail/{selectedSalaryCode}").hasRole("ADMIN")	// 급여 코드에 해당하는 상세 급여 조회
+				.antMatchers("/api/v1/salary/check/all/{year}/{month}/{paymentsYn}").hasRole("ADMIN")	// 지급 여부와 날짜에 따른 급여 조회
+				.antMatchers("/api/v1/salary/check/insert/{memberCode}").hasRole("ADMIN")	// 사원번호 입력받아 급여 정보 조회
+				.antMatchers("/api/v1/salary/check/all/{selectedSalaryCode}").hasRole("ADMIN")	// 급여 지급하여 지급여부 상태 변경
+				.antMatchers("/api/v1/salary/month/insert").hasRole("ADMIN")		// 급여 지급하기
+
+				.antMatchers("/api/v1/salary/bonus/**").hasRole("ADMIN")	// 상여금
+//				.antMatchers("/api/v1/salary/bonus/{year}/{month}").hasRole("ADMIN")		// 상여금 명단 리스트 조회
+//				.antMatchers("/api/v1/salary/bonus/check/{memberCode}").hasRole("ADMIN")		// 사원번호에 해당하는 상여자 조회
+//				.antMatchers("/api/v1/salary/bonus/insert/{salaryCode}").hasRole("ADMIN")	// 상여 명단 추가
+
+				/* 게시판 */
+				.antMatchers("/api/v1/board/notice").permitAll()	// 공지사항 리스트 조회
+				.antMatchers("/api/v1/board/notice/insert").hasRole("ADMIN")	// 공지사항 글쓰기
+				.antMatchers("/api/v1//board/notice/{noticeCode}").hasRole("ADMIN")	// 공지사항 수정, 삭제
+
+				/* 캘린더 */
+				.antMatchers("/api/v1/calendar/main").permitAll()
+				.antMatchers("/api/v1/calendar/addSchedule").hasRole("ADMIN")
+				.antMatchers("/api/v1/calendar/delete/{calendarCode}").hasRole("ADMIN")
+
+				/* 메세지 */
+				.antMatchers("/api/v1/message/**").permitAll()
+//				.antMatchers("/api/v1/message/msgAllMember").permitAll()
+//				.antMatchers("/api/v1/message/{messageCode}").permitAll()
+//				.antMatchers("/api/v1/message/search/{memberName1}").permitAll()
+				.antMatchers("/api/v1/messageReceived").permitAll()
+				.antMatchers("/api/v1/messageReceivedCount").permitAll()
+				.antMatchers("/api/v1/messageSent").permitAll()
+				.antMatchers("/api/v1/messageSentCount").permitAll()
+
 //		    	.antMatchers("/api/**").hasRole("MEMBER")
 //		    	.antMatchers("/api/**").hasRole("ADMIN")
-				.antMatchers("/api/**").hasAnyRole("MEMBER", "ADMIN")
+//				.antMatchers("/api/**").hasAnyRole("MEMBER", "ADMIN")
 //		    	.anyRequest().permitAll();	// 어떤 요청이든 허용 가능, 시큐리티를 활용한 로그인이 모두 완성 되지 않았을 때 활용할 것
 			.and()
 

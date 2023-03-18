@@ -16,7 +16,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v2") // 추후 수정 필요
+@RequestMapping("api/v1") // 추후 수정 필요
 public class BoardNoticeController {
 
     private final BoardNoticeService boardNoticeService;
