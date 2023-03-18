@@ -59,6 +59,7 @@ public class MessageController {
         System.out.println("messageTitle = " + messageDTO.getMessageTitle());
         System.out.println("messageContent = " + messageDTO.getMessageContent());
         System.out.println("recipients = " + messageDTO.getRecipients());
+        System.out.println("memberCode = " + messageDTO.getMemberCode());
 
 
 
@@ -66,33 +67,34 @@ public class MessageController {
     }
 
     /*받은 편지함*/
-    @GetMapping("/messageReceived")
-    public ResponseEntity<ResponseDTO> checkReceivedEmail(){
+    @PostMapping("/messageReceived")
+    public ResponseEntity<ResponseDTO> checkReceivedEmail(@RequestBody MessageDTO messageDTO){
 
+        System.out.println("messageDTO 받은편지함 = " + messageDTO);
 
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회성공", messageService.checkReceivedEmail()));
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "받은메세지 테스트", messageService.checkReceivedEmail(messageDTO)));
     }
 
     /*받은 편지함 카운트*/
-    @GetMapping("/messageReceivedCount")
-    public ResponseEntity<ResponseDTO> checkReceivedEmailCount(){
+    @PostMapping("/messageReceivedCount")
+    public ResponseEntity<ResponseDTO> checkReceivedEmailCount(@RequestBody MessageDTO messageDTO){
 
 
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회성공", messageService.checkReceivedEmail().size()));
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회성공", messageService.checkReceivedEmail(messageDTO).size()));
     }
 
 
     /*보낸 편지함*/
-    @GetMapping("/messageSent")
-    public ResponseEntity<ResponseDTO> checkSentEmail(){
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회성공", messageService.checkSentEmail()));
+    @PostMapping("/messageSent")
+    public ResponseEntity<ResponseDTO> checkSentEmail(@RequestBody MessageDTO messageDTO){
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회성공", messageService.checkSentEmail(messageDTO)));
     }
 
 
     /*보낸 편지함 카운트*/
-    @GetMapping("/messageSentCount")
-    public ResponseEntity<ResponseDTO> checkSentEmailCount(){
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회성공", messageService.checkSentEmail().size()));
+    @PostMapping("/messageSentCount")
+    public ResponseEntity<ResponseDTO> checkSentEmailCount(@RequestBody MessageDTO messageDTO){
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회성공", messageService.checkSentEmail(messageDTO).size()));
     }
 
 }

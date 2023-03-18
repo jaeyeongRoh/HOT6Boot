@@ -30,6 +30,10 @@ public class AttendanceHrController {
     }
 
 
+
+
+
+
     /*받은 값으로 조회*/
     @PostMapping("/attendance")
     public ResponseEntity <ResponseDTO> selectAttendance(@RequestBody SelectAttendanceDTO selectAttendanceDTO) {
@@ -96,6 +100,22 @@ public class AttendanceHrController {
         System.out.println("selectAttendanceDTO = " + selectAttendanceDTO);
 
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회성공",attendanceHrService.attendanceMypageAttendanceModalSave(selectAttendanceDTO)));
+    }
+
+
+
+
+    /*마이페이지 개인 근태관리*/
+
+    @GetMapping("/attendance/myPageSelectAttendance/{memberCode}")
+    public ResponseEntity<ResponseDTO> attendanceMypageFinishRegistCommute(@PathVariable String memberCode) {
+
+        List<String> test = new ArrayList<>();
+        test.add("마이페이지 출근하기 등록 후 리스폰스값 반환");
+
+        System.out.println("memberCode = " + memberCode);
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회성공", attendanceHrService.attendanceMypageFinishRegistCommute(memberCode)));
     }
 
 

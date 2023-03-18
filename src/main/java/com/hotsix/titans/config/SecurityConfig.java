@@ -74,6 +74,7 @@ public class SecurityConfig {
 				.antMatchers("/api/v1/board/**").permitAll()
 				.antMatchers("/api/v1/mypage/**").permitAll()
 				.antMatchers("/api/v1/salary/**").permitAll()
+				.antMatchers("/api/v1/attendance/**").permitAll()
 				.antMatchers("/api/v1/organization/chart/**").permitAll()
 				.antMatchers("/api/v1/organization/retireeChart/**").permitAll()
 				.antMatchers("/api/v1/calendar/**").permitAll()
