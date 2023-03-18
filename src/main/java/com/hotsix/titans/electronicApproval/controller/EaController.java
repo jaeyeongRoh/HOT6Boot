@@ -193,14 +193,5 @@ public class EaController {
 
 
 
-    /* 전자결재 결재자 승인/반려 처리 의사코드
-
-    1. 결재하려는 문서 정보 가져오기
-    2. 문서정보에서 승인 반려 항목 값 입력
-    3. 문서정보 update
-
-
-    * memberCode, eaCode */
-
 
 }
