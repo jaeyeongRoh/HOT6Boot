@@ -47,11 +47,11 @@ public class BonusController {
     }
 
     /* 상여 명단 상세 조회 */
-    @GetMapping("/salary/bonus/detail/{bonusCode}")
-    public ResponseEntity<ResponseDTO> selectBonusModal(@PathVariable String bonusCode) {
-
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "상여번호로 상세정보 조회 성공", bonusService.selectBonusModal(bonusCode)));
-    }
+//    @GetMapping("/salary/bonus/detail/{bonusCode}")
+//    public ResponseEntity<ResponseDTO> selectBonusModal(@PathVariable String bonusCode) {
+//
+//        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "상여번호로 상세정보 조회 성공", bonusService.selectBonusModal(bonusCode)));
+//    }
 
     /* 상여 명단 추가 */
     @PutMapping("/salary/bonus/insert/{salaryCode}")
