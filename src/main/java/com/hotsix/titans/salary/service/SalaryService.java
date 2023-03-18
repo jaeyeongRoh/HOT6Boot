@@ -9,6 +9,7 @@ import com.hotsix.titans.member.dto.RankDTO;
 import com.hotsix.titans.member.dto.TeamDTO;
 import com.hotsix.titans.member.entity.MemberSalary;
 import com.hotsix.titans.member.repository.MemberSalaryRepository;
+import com.hotsix.titans.salary.dto.BonusDTO;
 import com.hotsix.titans.salary.dto.SalaryDTO;
 import com.hotsix.titans.salary.entity.Bonus;
 import com.hotsix.titans.salary.entity.Salary;
@@ -129,6 +130,7 @@ public class SalaryService {
 
             salaryDTO.setMemberCode(memberDTO.getMemberCode());
             salaryDTO.setMemberName(memberDTO.getMemberName());
+
             salaryDTO.setTeam(teamDTO);
             salaryDTO.setRank(rankDTO);
             salaryDTO.setBeforeSalary(beforeSalary);
