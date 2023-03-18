@@ -54,13 +54,6 @@ public class LeaveController {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK,"조회성공",(Object) leavePaymentHistoryList));
     }
 
-//    @GetMapping("/annual/management")
-//    public ResponseEntity<ResponseDTO> selectLeaveInPutList() {
-//
-//        List<MemberAndLeaveDTO> memberAndLeaveList = leaveService.selectLeaveInPutList();
-//        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK,"전사원 연차 조회 성공",(Object) memberAndLeaveList));
-//    }
-
     @GetMapping("/annual/management/{startIndex}/{endIndex}")
     public ResponseEntity<ResponseDTO> selectLeaveInPutList(@PathVariable int startIndex, @PathVariable int endIndex) {
 
@@ -68,6 +61,7 @@ public class LeaveController {
         System.out.println("endIndex = " + endIndex);
 
         Page<MemberAndLeave> memberAndLeavePage = leaveService.selectLeaveInPutList(startIndex, endIndex);
+
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전사원 연차 조회 성공", (Object) memberAndLeavePage));
     }
 }
