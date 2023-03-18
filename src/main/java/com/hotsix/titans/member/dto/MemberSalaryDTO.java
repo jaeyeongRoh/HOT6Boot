@@ -13,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-public class MemberDTO implements UserDetails {
+public class MemberSalaryDTO implements UserDetails {
 
     private String memberCode;
     private String memberPassword;

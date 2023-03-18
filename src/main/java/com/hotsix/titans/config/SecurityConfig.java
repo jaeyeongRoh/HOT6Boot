@@ -86,9 +86,11 @@ public class SecurityConfig {
 				.antMatchers("/api/v2/board/**").hasRole("MEMBER") // 추후 수정 필요
 				.antMatchers("/api/v2/board/notice/insert/**").hasRole("ADMIN")
 
+				.antMatchers("/api/v1/organization/retireeChart/**").permitAll()
+				.antMatchers("/api/v1/calendar/**").permitAll()
 //		    	.antMatchers("/api/**").hasRole("MEMBER")
 //		    	.antMatchers("/api/**").hasRole("ADMIN")
-//				.antMatchers("/api/**").hasAnyRole("MEMBER", "ADMIN")
+				.antMatchers("/api/**").hasAnyRole("MEMBER", "ADMIN")
 //		    	.anyRequest().permitAll();	// 어떤 요청이든 허용 가능, 시큐리티를 활용한 로그인이 모두 완성 되지 않았을 때 활용할 것
 			.and()
 

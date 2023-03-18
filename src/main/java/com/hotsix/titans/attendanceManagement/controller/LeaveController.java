@@ -3,12 +3,11 @@ package com.hotsix.titans.attendanceManagement.controller;
 import com.hotsix.titans.attendanceManagement.dto.LeaveCategoryAndLeavePaymentHistoryDTO;
 import com.hotsix.titans.attendanceManagement.dto.LeaveCategoryDTO;
 import com.hotsix.titans.attendanceManagement.dto.LeavePaymentHistoryDTO;
-import com.hotsix.titans.attendanceManagement.entity.LeavePaymentHistory;
-import com.hotsix.titans.attendanceManagement.repository.LeavePaymentHistoryRepository;
 import com.hotsix.titans.attendanceManagement.service.LeaveService;
 import com.hotsix.titans.commons.ResponseDTO;
-import io.swagger.v3.oas.annotations.Operation;
+import com.hotsix.titans.member.entity.MemberAndLeave;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -53,5 +52,22 @@ public class LeaveController {
 
         List<LeavePaymentHistoryDTO> leavePaymentHistoryList = leaveService.selectMyLeaveInfo(memberCode);
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK,"조회성공",(Object) leavePaymentHistoryList));
+    }
+
+//    @GetMapping("/annual/management")
+//    public ResponseEntity<ResponseDTO> selectLeaveInPutList() {
+//
+//        List<MemberAndLeaveDTO> memberAndLeaveList = leaveService.selectLeaveInPutList();
+//        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK,"전사원 연차 조회 성공",(Object) memberAndLeaveList));
+//    }
+
+    @GetMapping("/annual/management/{startIndex}/{endIndex}")
+    public ResponseEntity<ResponseDTO> selectLeaveInPutList(@PathVariable int startIndex, @PathVariable int endIndex) {
+
+        System.out.println("startIndex = " + startIndex);
+        System.out.println("endIndex = " + endIndex);
+
+        Page<MemberAndLeave> memberAndLeavePage = leaveService.selectLeaveInPutList(startIndex, endIndex);
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전사원 연차 조회 성공", (Object) memberAndLeavePage));
     }
 }

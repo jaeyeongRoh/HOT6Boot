@@ -2,15 +2,17 @@ package com.hotsix.titans.salary.entity;
 
 import com.hotsix.titans.commons.StringPrefixSequenceGenerator;
 import com.hotsix.titans.member.entity.Member;
+import com.hotsix.titans.member.entity.MemberSalary;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
 import javax.persistence.*;
-import java.nio.MappedByteBuffer;
 import java.sql.Date;
 
 @AllArgsConstructor
@@ -18,6 +20,8 @@ import java.sql.Date;
 @Getter
 @Setter
 @Entity
+@DynamicInsert
+@DynamicUpdate
 @Table(name = "TBL_SALARY")
 public class Salary {
 
@@ -62,13 +66,13 @@ public class Salary {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MEMBER_CODE", insertable = false, updatable = false)
-    private Member member;
+    private MemberSalary member;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "TAX_CODE")
     private Tax tax;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "BONUS_CODE")
     private Bonus bonus;
 
@@ -85,7 +89,7 @@ public class Salary {
                 ", nationalTax=" + nationalTax +
                 ", paymentDate=" + paymentDate +
                 ", paymentsYn='" + paymentsYn + '\'' +
-//                ", memberCode='" + memberCode + '\'' +
+                ", memberCode='" + memberCode + '\'' +
                 ", tax=" + tax +
                 ", bonus=" + bonus +
                 '}';

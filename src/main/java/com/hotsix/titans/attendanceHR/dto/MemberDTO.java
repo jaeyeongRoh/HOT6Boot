@@ -1,10 +1,15 @@
-package com.hotsix.titans.member.dto;
+package com.hotsix.titans.attendanceHR.dto;
 
-import com.hotsix.titans.attendanceHR.dto.AttendanceHrDTO;
+import com.hotsix.titans.member.dto.ProfileImageDTO;
+import com.hotsix.titans.member.dto.TeamRoleDTO;
 import com.hotsix.titans.salary.dto.SalaryDTO;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -27,16 +32,16 @@ public class MemberDTO implements UserDetails {
     private String workingStatus;
     private String memberGender;
     private String memberMarried;
+//    private TeamDTO team;
+//    private RankDTO rank;
     private int teamCode;
     private int rankCode;
     private String teamName;
     private String rankName;
-    private int commuteTotalTime;
-    private int commuteTotalMonthTime;
     private List<TeamRoleDTO> teamRole;
     private List<ProfileImageDTO> profileImageList;
     private List<SalaryDTO> salaryList;
-    private List<AttendanceHrDTO> attendanceHrList;
+    private List<AttendanceHrDTO> attendanceHrDTOList;
 
     /* 이하 코드들을 UserDetails로부터 물려받는 추상메소드들을 오버라이딩 한 것이다.(필요한 것만 작성하자) */
     /* MemberDTO는 Member와 매핑 될 DTO이자 UserDetails로써 속성을 추가로 가짐 */

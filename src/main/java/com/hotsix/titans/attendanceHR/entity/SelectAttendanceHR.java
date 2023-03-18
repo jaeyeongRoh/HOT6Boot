@@ -1,8 +1,13 @@
 package com.hotsix.titans.attendanceHR.entity;
 
-import lombok.*;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -12,14 +17,14 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AttendanceHR {
+public class SelectAttendanceHR {
 
     @Id
     @Column(name = "COMMUTE_CODE")
     private String commuteCode;
 
     @Column(name = "COMMUTE_DATE")
-    private Date commuteDate;
+    private LocalDateTime commuteDate;
 
     @Column(name = "COMMUTE_START_TIME")
     private Date commuteStartTime;

@@ -1,15 +1,19 @@
-package com.hotsix.titans.member.entity;
+package com.hotsix.titans.attendanceHR.entity;
 
 
-import com.hotsix.titans.attendanceHR.entity.AttendanceHR;
 import com.hotsix.titans.commons.StringPrefixSequenceGenerator;
+import com.hotsix.titans.member.entity.ProfileImage;
+import com.hotsix.titans.member.entity.Rank;
+import com.hotsix.titans.member.entity.RetireeHistory;
+import com.hotsix.titans.member.entity.Team;
+import com.hotsix.titans.message.entity.Message;
 import com.hotsix.titans.salary.entity.Salary;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.GenericGenerator;
-
-import com.hotsix.titans.message.entity.Message;
-
 
 import javax.persistence.*;
 import java.util.Date;
@@ -22,7 +26,7 @@ import java.util.List;
 @Entity
 @Table(name = "TBL_MEMBER")
 @DynamicInsert
-public class Member {
+public class MemberAttendance {
 
     @Id
     @Column(name = "MEMBER_CODE")
@@ -94,6 +98,7 @@ public class Member {
     @JoinColumn(name = "MEMBER_CODE")
     private List<AttendanceHR> attendanceHRList;
 
+
     @Override
     public String toString() {
         return "Member{" +
@@ -111,8 +116,6 @@ public class Member {
                 ", memberMarried='" + memberMarried + '\'' +
                 ", team=" + team +
                 ", rank=" + rank +
-                ", retireeHistory=" + retireeHistory +
-                ", messages=" + messages +
                 '}';
     }
 }

@@ -3,8 +3,7 @@ package com.hotsix.titans.attendanceHR.entity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.List;
+import java.sql.Date;
 
 @Entity
 @Table(name = "TBL_ATTENDANCE")
@@ -12,7 +11,7 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AttendanceHR {
+public class AttendanceSalary {
 
     @Id
     @Column(name = "COMMUTE_CODE")
@@ -34,22 +33,10 @@ public class AttendanceHR {
     private Date commuteFcountTime;
 
     @Column(name = "COMMUTE_TOTAL_TIME")
-    private int  commuteTotalTime;
+    private int commuteTotalTime;
 
     @Column(name = "COMMUTE_STATUS")
     private String commuteStatus;
-
-//    @Column(name = "MEMBER_CODE")
-//    private String memberCode;
-
-    @OneToMany
-    @JoinColumn(name = "COMMUTE_NO")
-    private List<AttendanceHrReason> attendanceHrReasonList;
-
-    @ManyToOne
-    @JoinColumn(name = "MEMBER_CODE", insertable = false, updatable = false)
-    private MemberAttendance memberAttendance;
-
 
 
     @Override
