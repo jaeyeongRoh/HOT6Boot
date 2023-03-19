@@ -97,7 +97,7 @@ public class EaService {
 
     public Object selectAllCert() {
         List<EaCert> eaCertList = eaCertRepository.findAll();
-        return eaCertList.stream().map(eaCert -> modelMapper.map(eaCert, EaCertDTO.class)).collect(Collectors.toList());
+        return eaCertList.stream().map(eaCert -> modelMapper.map(eaCert, EaCertSelectDTO.class)).collect(Collectors.toList());
     }
 
     public Object selectAllDuty() {
@@ -199,7 +199,6 @@ public class EaService {
      */
     @Transactional
     public Object insertLeave(EaLeaveDTO eaLeaveDTO) {
-        EaLeave eaLeave;
 
         eaLeaveDTO.setEaDate(LocalDate.now());
         eaLeaveDTO.setLeaveCategoryCode("LC1");
@@ -207,6 +206,8 @@ public class EaService {
         eaLeaveDTO.setLeaveStartDate(LocalDate.now());
         eaLeaveDTO.setLeaveEndDate(LocalDate.now());
         log.info("getEaApproverInfoListDTO{}", eaLeaveDTO.getEaApproverInfoList());
+
+        EaLeave eaLeave;
         eaLeave = modelMapper.map(eaLeaveDTO, EaLeave.class);
 
         eaLeave.setEaApproverInfoList(eaLeaveDTO.getEaApproverInfoList().stream().map(eaApproverInfoDTO -> modelMapper.map(eaApproverInfoDTO, EaApproverInfo.class)).collect(Collectors.toList()));
