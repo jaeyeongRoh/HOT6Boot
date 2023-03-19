@@ -45,7 +45,7 @@ public class BoardNoticeController {
     }
 
     @PutMapping("/board/notice/{noticeCode}") /* 끝에 / 적으면 안됨 */
-    public ResponseEntity<ResponseDTO> updateBoardNotice(@RequestBody BoardNoticeDTO boardNoticeDTO) {
+    public ResponseEntity<ResponseDTO> updateBoardNotice(@ModelAttribute BoardNoticeDTO boardNoticeDTO) {
 
         System.out.println("boardNoticeDTO = " + boardNoticeDTO);
 
