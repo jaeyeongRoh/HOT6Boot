@@ -3,11 +3,8 @@ package com.hotsix.titans.attendanceHR.service;
 
 import com.hotsix.titans.attendanceHR.dto.*;
 import com.hotsix.titans.attendanceHR.entity.*;
-import com.hotsix.titans.attendanceHR.repository.AttendanceHrReasonRepository;
-import com.hotsix.titans.attendanceHR.repository.AttendanceHrRepository;
-import com.hotsix.titans.attendanceHR.repository.CRUDattendanceHrRepository;
+import com.hotsix.titans.attendanceHR.repository.*;
 
-import com.hotsix.titans.attendanceHR.repository.MypageSelectAttendanceRepository;
 import com.hotsix.titans.member.entity.Member;
 import com.hotsix.titans.member.repository.MemberRepository;
 import com.hotsix.titans.util.FileUploadUtils;
@@ -44,13 +41,14 @@ public class AttendanceHrService {
     private final MypageSelectAttendanceRepository mypageSelectAttendanceRepository;
     private final AttendanceHrRepository attendanceHrRepository;
     private final AttendanceHrReasonRepository attendanceHrReasonRepository;
+    private final MyAttendanceHRRepository myAttendanceHRRepository;
 
     @Value("src/main/resources/static/files")
     private String FILE_DIR;
     @Value("http://localhost:8888/files/")
     private String FILE_URL;
     @Autowired
-    public AttendanceHrService(ModelMapper modelMapper, CRUDattendanceHrRepository crudAttendanceHrRepository, EntityManager entityManager, MemberRepository memberRepository, MypageSelectAttendanceRepository mypageSelectAttendanceRepository, AttendanceHrRepository attendanceHrRepository, AttendanceHrReasonRepository attendanceHrReasonRepository) {
+    public AttendanceHrService(ModelMapper modelMapper, CRUDattendanceHrRepository crudAttendanceHrRepository, EntityManager entityManager, MemberRepository memberRepository, MypageSelectAttendanceRepository mypageSelectAttendanceRepository, AttendanceHrRepository attendanceHrRepository, AttendanceHrReasonRepository attendanceHrReasonRepository, MyAttendanceHRRepository myAttendanceHRRepository) {
         this.modelMapper = modelMapper;
         this.crudAttendanceHrRepository = crudAttendanceHrRepository;
         this.entityManager = entityManager;
@@ -58,6 +56,7 @@ public class AttendanceHrService {
         this.mypageSelectAttendanceRepository = mypageSelectAttendanceRepository;
         this.attendanceHrRepository = attendanceHrRepository;
         this.attendanceHrReasonRepository = attendanceHrReasonRepository;
+        this.myAttendanceHRRepository = myAttendanceHRRepository;
     }
 
     public List<AttendanceHrDTO> selectAttendance(SelectAttendanceDTO selectAttendanceDTO) {
@@ -335,12 +334,12 @@ public class AttendanceHrService {
         return mypageSelectAttendanceList.stream().map(mypageSelectAttendance -> modelMapper.map(mypageSelectAttendance, MypageSelectAttendanceDTO.class)).collect(Collectors.toList());
     }
 
-    public Page<AttendanceHR> selectMyAttendance(String memberCode, int page, int size) {
+    public Page<MyAttendanceHR> selectMyAttendance(String memberCode, int page, int size) {
 
         Sort sort = Sort.by("commuteDate").descending();
         Pageable pageable = PageRequest.of(page, size, sort);
 
-        return attendanceHrRepository.findByMemberCode(pageable, memberCode);
+        return myAttendanceHRRepository.findByMemberCode(pageable, memberCode);
     }
 
     @Transactional
@@ -350,10 +349,6 @@ public class AttendanceHrService {
         String reasonFileName = null;
         int result = 0;
 
-        System.out.println("changeFileName = " + changeFileName);
-        System.out.println("reasonFileName = " + reasonFileName);
-        
-        
         try {
             reasonFileName = FileUploadUtils.saveFile(FILE_DIR, changeFileName, reasonFile);
 
