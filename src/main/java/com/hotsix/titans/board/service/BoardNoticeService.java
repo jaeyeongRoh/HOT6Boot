@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,7 +31,7 @@ public class BoardNoticeService {
 
         char deleteYn = 'N';
 
-        List<BoardNotice> boardNoticeList = boardNoticeRepository.findByNoticeDeleteYNOrderByNoticeCodeDesc(deleteYn);
+        List<BoardNotice> boardNoticeList = boardNoticeRepository.findByNoticeDeleteYNOrderByNoticeDateDesc(deleteYn);
 
         System.out.println("boardNoticeList : " + boardNoticeList);
         return boardNoticeList.stream().map(boardNotice -> modelMapper.map(boardNotice, BoardNoticeDTO.class)).collect(Collectors.toList());
@@ -54,7 +54,7 @@ public class BoardNoticeService {
         log.info("[BoardNoticeService] boardNoticeDTO {}", boardNoticeDTO);
 
         BoardNotice boardNotice = modelMapper.map(boardNoticeDTO, BoardNotice.class);
-        boardNotice.setNoticeDate(LocalDate.now());
+        boardNotice.setNoticeDate(LocalDateTime.now());
 
         BoardNotice result = boardNoticeRepository.save(boardNotice);
         System.out.println("result : " + result);
@@ -67,8 +67,7 @@ public class BoardNoticeService {
 
     @Transactional
     public Object updateBoardNotice(BoardNoticeDTO boardNoticeDTO) {
-
-        log.info("[BoardNoticeService] updateMyInfo Start");
+        log.info("[BoardNoticeService] updateBoardNotice Start =====================");
 
         int result = 0;
 
@@ -76,21 +75,18 @@ public class BoardNoticeService {
         BoardNotice boardNotice = boardNoticeRepository.findByNoticeCode(boardNoticeDTO.getNoticeCode());
 
         /* update를 위한 엔티티 값 수정 */
-        boardNotice.setNoticeCode(boardNoticeDTO.getNoticeCode());
-        boardNotice.setMemberCode(boardNoticeDTO.getMemberCode());
         boardNotice.setNoticeTitle(boardNoticeDTO.getNoticeTitle());
-        boardNotice.setNoticeDate(boardNoticeDTO.getNoticeDate());
-        boardNotice.setNoticeCount(boardNoticeDTO.getNoticeCount());
         boardNotice.setNoticeContent(boardNoticeDTO.getNoticeContent());
-        boardNotice.setNoticeDeleteYN(boardNoticeDTO.getNoticeDeleteYN());
+//        boardNotice.setNoticeDeleteYN(boardNoticeDTO.getNoticeDeleteYN());
 
         if (boardNotice.getNoticeCode() == boardNoticeDTO.getNoticeCode()) {
             result = 1;
         }
 
-        log.info("[BoardNoticeService] updateBoardNotice End ");
+        log.info("[BoardNoticeService] updateBoardNotice End ===========================");
         return (result > 0) ? "공지사항 수정 성공" : "공지사항 수정 실패";
     }
+
 //    @Transactional
 //    public Object updateBoardNotice(BoardNoticeDTO boardNoticeDTO) {
 //
