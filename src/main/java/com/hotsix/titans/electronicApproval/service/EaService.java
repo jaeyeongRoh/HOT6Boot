@@ -97,7 +97,7 @@ public class EaService {
 
     public Object selectAllCert() {
         List<EaCert> eaCertList = eaCertRepository.findAll();
-        return eaCertList.stream().map(eaCert -> modelMapper.map(eaCert, EaCertDTO.class)).collect(Collectors.toList());
+        return eaCertList.stream().map(eaCert -> modelMapper.map(eaCert, EaCertSelectDTO.class)).collect(Collectors.toList());
     }
 
     public Object selectAllDuty() {
