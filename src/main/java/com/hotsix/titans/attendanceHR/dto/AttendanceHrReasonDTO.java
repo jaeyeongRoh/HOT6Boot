@@ -23,7 +23,5 @@ public class AttendanceHrReasonDTO {
     private Date    reasonFcreate;
     private String	reasonStatus;
     private String	reasonDyn;
-    private AttendanceHrDTO attendanceHr;
-
-
+    private MyAttendanceHRDTO myAttendanceHR;
 }

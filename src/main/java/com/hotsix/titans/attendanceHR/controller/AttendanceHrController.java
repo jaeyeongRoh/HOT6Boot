@@ -5,6 +5,7 @@ import com.hotsix.titans.attendanceHR.dto.AttendanceHrReasonDTO;
 import com.hotsix.titans.attendanceHR.dto.MemberDTO;
 import com.hotsix.titans.attendanceHR.dto.SelectAttendanceDTO;
 import com.hotsix.titans.attendanceHR.entity.AttendanceHR;
+import com.hotsix.titans.attendanceHR.entity.MyAttendanceHR;
 import com.hotsix.titans.attendanceHR.service.AttendanceHrService;
 import com.hotsix.titans.commons.ResponseDTO;
 
@@ -109,17 +110,14 @@ public class AttendanceHrController {
     @GetMapping("/attendance/mypage/history/{memberCode}/{startIndex}/{endIndex}")
     public ResponseEntity<ResponseDTO> selectMyAttendance(@PathVariable String memberCode, @PathVariable int startIndex, @PathVariable int endIndex) {
 
-        Page<AttendanceHR> attendanceHrList = attendanceHrService.selectMyAttendance(memberCode, startIndex, endIndex);
+        Page<MyAttendanceHR> myAttendanceHrList = attendanceHrService.selectMyAttendance(memberCode, startIndex, endIndex);
 
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "나의 근태 이력 성공",(Object) attendanceHrList));
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "나의 근태 이력 성공",(Object) myAttendanceHrList));
     }
 
     /* 마이페이지 근태이력 테이블 사유서 제출 */
     @PostMapping(value = "/attendance/mypage/history/reason/create")
     public ResponseEntity<ResponseDTO> createReason(@ModelAttribute AttendanceHrReasonDTO attendanceHrReasonDTO, @RequestBody MultipartFile reasonFile) {
-
-        System.out.println("-----------------------------------------sdfsdfsdfsfsdfdsfsfsfsdfsdfsdfsdfdsf");
-        System.out.println("sdfsdfdsf" + reasonFile);
 
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "사유서 등록 성공", attendanceHrService.createReason(attendanceHrReasonDTO, reasonFile)));
     }
