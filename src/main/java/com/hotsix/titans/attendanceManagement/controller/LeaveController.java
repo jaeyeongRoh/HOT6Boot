@@ -2,6 +2,7 @@ package com.hotsix.titans.attendanceManagement.controller;
 
 import com.hotsix.titans.attendanceManagement.dto.LeaveCategoryAndLeavePaymentHistoryDTO;
 import com.hotsix.titans.attendanceManagement.dto.LeaveCategoryDTO;
+import com.hotsix.titans.attendanceManagement.dto.LeaveHistoryAndMemberDTO;
 import com.hotsix.titans.attendanceManagement.dto.LeavePaymentHistoryDTO;
 import com.hotsix.titans.attendanceManagement.service.LeaveService;
 import com.hotsix.titans.commons.ResponseDTO;
@@ -57,11 +58,16 @@ public class LeaveController {
     @GetMapping("/annual/management/{startIndex}/{endIndex}")
     public ResponseEntity<ResponseDTO> selectLeaveInPutList(@PathVariable int startIndex, @PathVariable int endIndex) {
 
-        System.out.println("startIndex = " + startIndex);
-        System.out.println("endIndex = " + endIndex);
-
         Page<MemberAndLeave> memberAndLeavePage = leaveService.selectLeaveInPutList(startIndex, endIndex);
 
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전사원 연차 조회 성공", (Object) memberAndLeavePage));
+    }
+
+    @GetMapping("/annual/management/detail/{memberCode}")
+    public ResponseEntity<ResponseDTO> selectLeaveDetail(@PathVariable String memberCode) {
+
+        List<LeaveHistoryAndMemberDTO> leaveHistoryAndMemberDTOList = leaveService.selectLeaveDetail(memberCode);
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK,"사원 휴가 정보 조회 성공",(Object) leaveHistoryAndMemberDTOList));
     }
 }

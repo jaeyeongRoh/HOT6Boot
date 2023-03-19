@@ -46,9 +46,9 @@ public class AttendanceHR {
     @JoinColumn(name = "COMMUTE_NO")
     private List<AttendanceHrReason> attendanceHrReasonList;
 
-//    @ManyToOne
-//    @JoinColumn(name = "MEMBER_CODE", insertable = false, updatable = false)
-//    private MemberAttendance memberAttendance;
+    @ManyToOne
+    @JoinColumn(name = "MEMBER_CODE", insertable = false, updatable = false)
+    private MemberAttendance memberAttendance;
 
     @Override
     public String toString() {

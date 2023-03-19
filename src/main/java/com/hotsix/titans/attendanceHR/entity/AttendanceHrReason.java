@@ -59,7 +59,4 @@ public class AttendanceHrReason {
 
     @Column(name = "REASON_D_YN")
     private String	reasonDyn;
-
-
-
 }
