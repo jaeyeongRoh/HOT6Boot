@@ -101,7 +101,6 @@ public class EaController {
 
     /**
      * 전자결재 개별 조회 API
-     *
      * @param eaCode 전자결재 문서번호
      * @return
      */
@@ -113,7 +112,6 @@ public class EaController {
 
     /**
      * 전자결재 전체 리스트 조회 API
-     *
      * @return
      */
     @Operation(summary = "전자결재", description = "기안조회합니다", tags = {"EAController"})
@@ -125,7 +123,6 @@ public class EaController {
 
     /**
      * 전자결재 휴가신청 insert API
-     *
      * @return
      */
     @Operation(summary = "전자결재", description = "기안조회합니다", tags = {"EAController"})
@@ -136,7 +133,6 @@ public class EaController {
 
     /**
      * 전자결재 급여정정 insert API
-     *
      * @return
      */
     @Operation(summary = "전자결재", description = "기안조회합니다", tags = {"EAController"})
