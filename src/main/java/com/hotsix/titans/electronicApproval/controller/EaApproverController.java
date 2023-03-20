@@ -20,12 +20,15 @@ public class EaApproverController {
     public EaApproverController(EaApproverService eaApproverService) {
         this.eaApproverService = eaApproverService;
     }
+
+
+//    @GetMapping("/drafter/{memberCode}")
+//    public ResponseEntity<ResponseDTO> selectApproverMember(@PathVariable String memberCode) {
 //
-//    /**
-//     * 전자결재자 정보 개별조회
-//     * @param memberCode
-//     * @return
-//     */
+//        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 기안자 문서 리스트 성공", eaApproverService.selectDrafterDocumentList(memberCode)));
+//    }
+
+
 //    @GetMapping("/approver/{memberCode}")
 //    public ResponseEntity<ResponseDTO> selectApproverMember(@PathVariable String memberCode) {
 //
@@ -39,6 +42,23 @@ public class EaApproverController {
 
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 결재처리 성공", eaApproverService.updateEaApproverInfo(eaApproverDTO)));
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
