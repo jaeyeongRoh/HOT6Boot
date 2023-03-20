@@ -59,8 +59,7 @@ public class AuthController {
         System.out.println("memberImage = " + memberImage);
 
         return ResponseEntity
-                .ok()
-                .body(new ResponseDTO(HttpStatus.OK, "신규 사원 등록 성공", authService.registMember(memberDTO, profileImageDTO, memberImage)));
+                .ok().body(new ResponseDTO(HttpStatus.OK, "신규 사원 등록 성공", authService.registMember(memberDTO, profileImageDTO, memberImage)));
     }
 
 }

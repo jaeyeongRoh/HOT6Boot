@@ -150,17 +150,27 @@ public class MessageService {
     /*받은 편지함*/
     public List<MessageDTO> checkReceivedEmail(MessageDTO messageDTO) {
 
-        String memberEmail = messageDTO.getMemberEmail();
+        MemberAll members = memberAllRepository.findByMemberCode(messageDTO.getMemberCode());
 
+        System.out.println("members 받은 편지함 = " + members);
 
+        String memberEmail = members.getMemberEmail();
+
+        System.out.println(" 전달 받은 이메일 = " + memberEmail);
+
+        /*내가 받은 이메일과, 읽은여부가 n경우를 검색*/
         List<MessageHistory> messageHistory = messageHistoryRepository.findByMessageReceiverEmailAndMessageReceiverDeleteYn(memberEmail, "N");
+
         List<String> ReceivedMessage = new ArrayList<>();
 
+        /*검색한 결과의 메세지 코드를 가져오기*/
         for(int i=0; i<messageHistory.size(); i++){
             ReceivedMessage.add((messageHistory.get(i).getMessageCode()));
         }
 
         System.out.println("ReceivedMessage = " + ReceivedMessage);
+
+
 
         List<Message> selectReceivedEmail = new ArrayList<>();
 
@@ -170,12 +180,26 @@ public class MessageService {
 
         }
 
+        /*여기 코드가 받은 메세지 인데, MessageDTO 에 맴버 네임이 나오지 않았어서, 셋으로 발신자를 표시하기 위함*/
+
+
         List<MessageDTO> result = new ArrayList<>();
         for (Message message : selectReceivedEmail){
             MessageDTO messageDTOlist = modelMapper.map(message,MessageDTO.class);
+
+            System.out.println("1   messageDTOlist = " + messageDTOlist);
+
             String memberCode = message.getMember().getMemberCode();
+
+            System.out.println("2   memberCode = " + memberCode);
+
             Member member = memberRepository.findByMemberCode(memberCode);
-            messageDTO.setMemberName(member.getMemberName());
+
+            System.out.println("3   member = " + member);
+            messageDTOlist.setMemberName(member.getMemberName());
+
+            System.out.println("4   messageDTO = " + messageDTO);
+
             result.add(messageDTOlist);
         }
 
@@ -184,9 +208,9 @@ public class MessageService {
     }
 
     /*보낸 편지함*/
-    public List<MessageDTO> checkSentEmail() {
+    public List<MessageDTO> checkSentEmail(MessageDTO messageDTO) {
 
-        String memberCode = "140001";
+        String memberCode = messageDTO.getMemberCode();
         List<Message> messageList = entityManager.createQuery(
                         "SELECT DISTINCT m FROM Message m JOIN m.messageHistory mh WHERE mh.memberCode = :memberCode")
                 .setParameter("memberCode", memberCode)
@@ -194,14 +218,14 @@ public class MessageService {
 
         return messageList.stream()
                 .map(message -> {
-                    MessageDTO messageDTO = modelMapper.map(message, MessageDTO.class);
+                    MessageDTO messageDTOList = modelMapper.map(message, MessageDTO.class);
                     List<String> receiverNames = message.getMessageHistory().stream()
                             .map(MessageHistory::getMessageReceiver)
                             .distinct()
                             .collect(Collectors.toList());
                     String receiverNameString = String.join(", ", receiverNames);
-                    messageDTO.setMessageReceiver(receiverNameString);
-                    return messageDTO;
+                    messageDTOList.setMessageReceiver(receiverNameString);
+                    return messageDTOList;
                 })
                 .collect(Collectors.toList());
 

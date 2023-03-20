@@ -26,4 +26,5 @@ public class EaDocumentDTO {
     private EaStatusCategory eaStatusCategory;
     private List<EaApproverInfoDTO> eaApproverInfoList;
     private String dtype;
+    private String approverType;
 }

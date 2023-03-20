@@ -2,18 +2,21 @@ package com.hotsix.titans.attendanceHR.service;
 
 
 import com.hotsix.titans.attendanceHR.dto.*;
-import com.hotsix.titans.attendanceHR.entity.CRUDattendanceHR;
-import com.hotsix.titans.attendanceHR.entity.MypageSelectAttendance;
-import com.hotsix.titans.attendanceHR.entity.SelectAttendanceHR;
-import com.hotsix.titans.attendanceHR.repository.CRUDattendanceHrRepository;
+import com.hotsix.titans.attendanceHR.entity.*;
+import com.hotsix.titans.attendanceHR.repository.*;
 
-import com.hotsix.titans.attendanceHR.repository.MypageSelectAttendanceRepository;
 import com.hotsix.titans.member.entity.Member;
-import com.hotsix.titans.attendanceHR.entity.AttendanceHR;
 import com.hotsix.titans.member.repository.MemberRepository;
+import com.hotsix.titans.util.FileUploadUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 
 import javax.persistence.EntityManager;
@@ -25,26 +28,35 @@ import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
 public class AttendanceHrService {
 
     private final ModelMapper modelMapper;
-
     private final CRUDattendanceHrRepository crudAttendanceHrRepository;
     private final EntityManager entityManager;
     private final MemberRepository memberRepository;
     private final MypageSelectAttendanceRepository mypageSelectAttendanceRepository;
+    private final AttendanceHrRepository attendanceHrRepository;
+    private final AttendanceHrReasonRepository attendanceHrReasonRepository;
+    private final MyAttendanceHRRepository myAttendanceHRRepository;
 
+    @Value("src/main/resources/static/files")
+    private String FILE_DIR;
+    @Value("http://localhost:8888/files/")
+    private String FILE_URL;
     @Autowired
-    public AttendanceHrService(ModelMapper modelMapper, CRUDattendanceHrRepository crudAttendanceHrRepository, EntityManager entityManager, MemberRepository memberRepository, MypageSelectAttendanceRepository mypageSelectAttendanceRepository) {
+    public AttendanceHrService(ModelMapper modelMapper, CRUDattendanceHrRepository crudAttendanceHrRepository, EntityManager entityManager, MemberRepository memberRepository, MypageSelectAttendanceRepository mypageSelectAttendanceRepository, AttendanceHrRepository attendanceHrRepository, AttendanceHrReasonRepository attendanceHrReasonRepository, MyAttendanceHRRepository myAttendanceHRRepository) {
         this.modelMapper = modelMapper;
-
         this.crudAttendanceHrRepository = crudAttendanceHrRepository;
         this.entityManager = entityManager;
         this.memberRepository = memberRepository;
         this.mypageSelectAttendanceRepository = mypageSelectAttendanceRepository;
+        this.attendanceHrRepository = attendanceHrRepository;
+        this.attendanceHrReasonRepository = attendanceHrReasonRepository;
+        this.myAttendanceHRRepository = myAttendanceHRRepository;
     }
 
     public List<AttendanceHrDTO> selectAttendance(SelectAttendanceDTO selectAttendanceDTO) {
@@ -315,12 +327,46 @@ public class AttendanceHrService {
         return (result == 1) ? "등록성공" : "등록실패" ;
     }
 
-
-
     public List<MypageSelectAttendanceDTO> attendanceMypageFinishRegistCommute(String memberCode) {
 
         List<MypageSelectAttendance> mypageSelectAttendanceList = mypageSelectAttendanceRepository.findByMemberCode(memberCode);
 
         return mypageSelectAttendanceList.stream().map(mypageSelectAttendance -> modelMapper.map(mypageSelectAttendance, MypageSelectAttendanceDTO.class)).collect(Collectors.toList());
+    }
+
+    public Page<MyAttendanceHR> selectMyAttendance(String memberCode, int page, int size) {
+
+        Sort sort = Sort.by("commuteDate").descending();
+        Pageable pageable = PageRequest.of(page, size, sort);
+
+        return myAttendanceHRRepository.findByMemberCode(pageable, memberCode);
+    }
+
+    @Transactional
+    public Object createReason(AttendanceHrReasonDTO attendanceHrReasonDTO, MultipartFile reasonFile) {
+
+        String changeFileName = UUID.randomUUID().toString().replace("-", "");
+        String reasonFileName = null;
+        int result = 0;
+
+        try {
+            reasonFileName = FileUploadUtils.saveFile(FILE_DIR, changeFileName, reasonFile);
+
+            attendanceHrReasonDTO.setReasonFname(reasonFile.getOriginalFilename());
+            attendanceHrReasonDTO.setReasonCname(reasonFileName);
+            attendanceHrReasonDTO.setReasonFaddress(FILE_URL);
+
+            AttendanceHrReason attendanceHrReason = modelMapper.map(attendanceHrReasonDTO, AttendanceHrReason.class);
+
+            attendanceHrReasonRepository.save(attendanceHrReason);
+
+        } catch (Exception e) {
+
+            System.out.println("등록 실패입니다 ㅉㅏ식아");
+            FileUploadUtils.deleteFile(FILE_DIR, reasonFileName);
+            throw new RuntimeException(e);
+        }
+
+        return (result > 0) ? "사유서 등록 성공" : "사유서 등록 실패";
     }
 }

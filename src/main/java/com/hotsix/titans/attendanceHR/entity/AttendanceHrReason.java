@@ -1,11 +1,11 @@
 package com.hotsix.titans.attendanceHR.entity;
 
+import com.hotsix.titans.commons.StringPrefixSequenceGenerator;
 import lombok.*;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -15,14 +15,20 @@ import java.util.Date;
 @Getter
 @Setter
 @ToString
+@DynamicInsert
 public class AttendanceHrReason {
 
     @Id
     @Column(name = "REASON_CODE")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_ATTENDANCE_REASON_CODE")
+    @GenericGenerator(name = "SEQ_ATTENDANCE_REASON_CODE", strategy = "com.hotsix.titans.commons.StringPrefixSequenceGenerator",
+            parameters = {
+                    @Parameter(name = StringPrefixSequenceGenerator.VALUE_PREFIX_PARAMETER, value = "AHR")
+            })
     private String	reasonCode;
 
     @Column(name = "COMMUTE_NO")
-    private String	commuteNo;
+    private String	commuteCode;
 
     @Column(name = "REASON_CATEGORY")
     private String	reasonCategory;
@@ -53,7 +59,4 @@ public class AttendanceHrReason {
 
     @Column(name = "REASON_D_YN")
     private String	reasonDyn;
-
-
-
 }

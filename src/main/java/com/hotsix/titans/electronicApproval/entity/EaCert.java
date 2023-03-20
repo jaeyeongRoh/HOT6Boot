@@ -6,10 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.DynamicInsert;
 
-import javax.persistence.Column;
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "TBL_EA_CERT")
@@ -21,8 +18,12 @@ import javax.persistence.Table;
 @DynamicInsert
 public class EaCert extends EaDocument {
 
-    @Column(name = "CERT_CATEGORY")
-    private String certCategory;
+    @Column(name = "CERT_CATEGORY_CODE")
+    private String certCategoryCode;
+
+    @ManyToOne
+    @JoinColumn(name = "CERT_CATEGORY_CODE", insertable = false, updatable = false)
+    private EaCertCategory eaCertCategory;
 
     @Column(name = "CERT_REQUIRE_COUNT")
     private Integer certRequireCount;

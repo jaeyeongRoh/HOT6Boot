@@ -1,20 +1,19 @@
 package com.hotsix.titans.attendanceHR.dto;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
-
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-//@ToString  주석 아래 정리
-public class AttendanceHrDTO {
+public class MyAttendanceHRDTO {
 
     private String commuteCode;
     private String memberCode;

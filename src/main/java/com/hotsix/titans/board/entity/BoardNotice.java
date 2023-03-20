@@ -6,7 +6,7 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -41,7 +41,7 @@ public class BoardNotice {
     private String noticeTitle;
 
     @Column(name = "NOTICE_DATE")
-    private LocalDate noticeDate;
+    private LocalDateTime noticeDate;
 
     @Column(name = "NOTICE_COUNT")
     private Integer noticeCount;

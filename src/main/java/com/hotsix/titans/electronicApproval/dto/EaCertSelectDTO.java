@@ -8,9 +8,9 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
-public class EaCertDTO extends EaDocumentDTO {
+public class EaCertSelectDTO extends EaDocumentDTO{
 
-    private String certCategoryCode;
     private EaCertCategory eaCertCategory;
     private Integer certRequireCount;
+
 }
