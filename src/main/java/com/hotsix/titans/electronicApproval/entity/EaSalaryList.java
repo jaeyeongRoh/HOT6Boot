@@ -20,7 +20,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @DynamicInsert
-public class EaSalary extends EaDocument {
+public class EaSalaryList extends EaCertDocument {
 
     @Column(name = "SAL_CORRECTION_DATE")
     private LocalDate salCorrectionDate;

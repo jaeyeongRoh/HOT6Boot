@@ -2,7 +2,6 @@ package com.hotsix.titans.electronicApproval.entity;
 
 
 import com.hotsix.titans.commons.StringPrefixedSequenceIdGenerator;
-import com.hotsix.titans.member.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -43,7 +42,7 @@ public class EaCertDocument {
 
     @ManyToOne
     @JoinColumn(name = "MEMBER_CODE", insertable = false, updatable = false)
-    private Member Member;
+    private EaCertMember eaMember;
 
     @Column(name = "EA_SUBJECT")
     private String eaSubject;
