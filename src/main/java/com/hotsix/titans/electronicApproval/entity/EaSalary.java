@@ -1,16 +1,15 @@
 package com.hotsix.titans.electronicApproval.entity;
 
+import com.hotsix.titans.salary.entity.Salary;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.DynamicInsert;
 
-import javax.persistence.Column;
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import java.util.Date;
+import javax.persistence.*;
+import java.time.LocalDate;
+
 
 @Entity
 @Table(name = "TBL_EA_SALARY")
@@ -23,5 +22,12 @@ import java.util.Date;
 public class EaSalary extends EaDocument {
 
     @Column(name = "SAL_CORRECTION_DATE")
-    private Date salCorrectionDate;
+    private LocalDate salCorrectionDate;
+
+    @Column(name = "SALARY_CODE")
+    private String salaryCode;
+
+    @ManyToOne
+    @JoinColumn(name = "SALARY_CODE", insertable = false, updatable = false)
+    private Salary salary;
 }

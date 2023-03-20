@@ -15,7 +15,7 @@ import java.sql.Date;
         name = "BOARD_SEQ_GENERATOR",
         sequenceName = "SEQ_BOARD",
         initialValue = 1,
-        allocationSize = 50
+        allocationSize = 1
 )
 @Table(name = "TBL_BOARD")
 public class BoardCommunity {

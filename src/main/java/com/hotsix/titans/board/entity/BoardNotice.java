@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
         name = "NOTICE_SEQ_GENERATOR",
         sequenceName = "SEQ_NOTICE",
         initialValue = 1,
-        allocationSize = 50
+        allocationSize = 1
 )
 @Table(name = "TBL_NOTICE")
 @DynamicInsert
