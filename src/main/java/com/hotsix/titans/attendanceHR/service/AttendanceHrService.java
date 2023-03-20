@@ -369,4 +369,21 @@ public class AttendanceHrService {
 
         return (result > 0) ? "사유서 등록 성공" : "사유서 등록 실패";
     }
+
+    public Page<MyAttendanceHR> searchMyAttendance(SearchDTO searchDTO) {
+
+        Sort sort = Sort.by("commuteDate").descending();
+        Pageable pageable = PageRequest.of(searchDTO.getPage(), searchDTO.getSize(), sort);
+
+        java.sql.Date start = java.sql.Date.valueOf(searchDTO.getStartDate());
+        java.sql.Date end = java.sql.Date.valueOf(searchDTO.getEndDate());
+
+        System.out.println("searchDTO = " + searchDTO);
+        System.out.println("start = " + start);
+        System.out.println("end = " + end);
+
+        Page<MyAttendanceHR> myAttendances = myAttendanceHRRepository.findByMemberCodeWithConditions(pageable, searchDTO.getMemberCode(), searchDTO.getAttendanceSelect(), start, end);
+
+        return myAttendances;
+    }
 }
