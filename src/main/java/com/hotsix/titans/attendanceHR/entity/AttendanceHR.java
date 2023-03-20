@@ -39,8 +39,8 @@ public class AttendanceHR {
     @Column(name = "COMMUTE_STATUS")
     private String commuteStatus;
 
-//    @Column(name = "MEMBER_CODE")
-//    private String memberCode;
+    @Column(name = "MEMBER_CODE")
+    private String memberCode;
 
     @OneToMany
     @JoinColumn(name = "COMMUTE_NO")
@@ -49,8 +49,6 @@ public class AttendanceHR {
     @ManyToOne
     @JoinColumn(name = "MEMBER_CODE", insertable = false, updatable = false)
     private MemberAttendance memberAttendance;
-
-
 
     @Override
     public String toString() {
@@ -63,7 +61,6 @@ public class AttendanceHR {
                 ", commuteFcountTime=" + commuteFcountTime +
                 ", commuteTotalTime=" + commuteTotalTime +
                 ", commuteStatus='" + commuteStatus + '\'' +
-
                 '}';
     }
 }

@@ -3,6 +3,8 @@ package com.hotsix.titans.board.dto;
 import lombok.*;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -15,7 +17,9 @@ public class BoardCommunityCommentDTO {
     private String boardCode;
     private String memberCode;
     private String commentContent;
-    private Date commentInsertDate;
-    private Date commentUpdateDate;
-    private char commentDeleteYN;
+    private LocalDateTime commentInsertDate;
+    private LocalDateTime commentUpdateDate;
+    private Character commentDeleteYN;
+    private BoardMemberDTO BoardMember;
+
 }

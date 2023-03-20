@@ -15,7 +15,6 @@ public class SelectAttendanceDTO {
     private int teamCode;
     private Date startDate;
     private Date startDate2;
-
     private String commuteCode;
     private String commuteStatus;
 

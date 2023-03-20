@@ -12,7 +12,7 @@ import java.util.Date;
 public class AttendanceHrReasonDTO {
 
     private String	reasonCode;
-    private String	commuteNo;
+    private String	commuteCode;
     private String	reasonCategory;
     private String	reasonTitle;
     private String	reasonDetail;
@@ -23,7 +23,5 @@ public class AttendanceHrReasonDTO {
     private Date    reasonFcreate;
     private String	reasonStatus;
     private String	reasonDyn;
-    private AttendanceHrDTO attendanceHr;
-
-
+    private MyAttendanceHRDTO myAttendanceHR;
 }

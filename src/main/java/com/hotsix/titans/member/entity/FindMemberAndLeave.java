@@ -1,5 +1,6 @@
 package com.hotsix.titans.member.entity;
 
+import com.hotsix.titans.attendanceManagement.entity.LeaveHistoryAndMember;
 import com.hotsix.titans.attendanceManagement.entity.LeavePaymentHistoryAndUseHistory;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -33,7 +34,7 @@ public class FindMemberAndLeave {
     private Rank rank;
     @OneToMany
     @JoinColumn(name = "MEMBER_CODE")
-    private List<LeavePaymentHistoryAndUseHistory> leavePaymentHistoryAndUseHistoryList;
+    private List<LeaveHistoryAndMember> leaveHistoryAndMemberList;
 
     @Override
     public String toString() {

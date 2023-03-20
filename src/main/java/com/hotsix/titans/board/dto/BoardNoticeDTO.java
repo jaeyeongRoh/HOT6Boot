@@ -1,8 +1,10 @@
 package com.hotsix.titans.board.dto;
 
+import com.hotsix.titans.board.entity.BoardCommunityComment;
 import lombok.*;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -14,9 +16,10 @@ public class BoardNoticeDTO {
     private String noticeCode;
     private String memberCode;
     private String noticeTitle;
-    private LocalDate noticeDate;
+    private LocalDateTime noticeDate;
     private Integer noticeCount;
     private String noticeContent;
     private Character noticeDeleteYN;
-    private BoardNoticeMemberDTO member;
+    private BoardMemberDTO member;
+    private List<BoardCommunityComment> boardCommunityComment;
 }

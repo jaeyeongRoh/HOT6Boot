@@ -8,7 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class BoardNoticeMemberDTO {
+public class BoardMemberDTO {
 
     private String memberCode;
     private String memberName;

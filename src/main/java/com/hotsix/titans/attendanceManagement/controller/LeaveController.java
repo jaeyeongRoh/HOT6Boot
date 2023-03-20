@@ -1,8 +1,7 @@
 package com.hotsix.titans.attendanceManagement.controller;
 
-import com.hotsix.titans.attendanceManagement.dto.LeaveCategoryAndLeavePaymentHistoryDTO;
-import com.hotsix.titans.attendanceManagement.dto.LeaveCategoryDTO;
-import com.hotsix.titans.attendanceManagement.dto.LeavePaymentHistoryDTO;
+import com.hotsix.titans.attendanceManagement.dto.*;
+import com.hotsix.titans.attendanceManagement.entity.LeavePaymentHistory;
 import com.hotsix.titans.attendanceManagement.service.LeaveService;
 import com.hotsix.titans.commons.ResponseDTO;
 import com.hotsix.titans.member.entity.MemberAndLeave;
@@ -54,20 +53,32 @@ public class LeaveController {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK,"조회성공",(Object) leavePaymentHistoryList));
     }
 
-//    @GetMapping("/annual/management")
-//    public ResponseEntity<ResponseDTO> selectLeaveInPutList() {
-//
-//        List<MemberAndLeaveDTO> memberAndLeaveList = leaveService.selectLeaveInPutList();
-//        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK,"전사원 연차 조회 성공",(Object) memberAndLeaveList));
-//    }
-
     @GetMapping("/annual/management/{startIndex}/{endIndex}")
     public ResponseEntity<ResponseDTO> selectLeaveInPutList(@PathVariable int startIndex, @PathVariable int endIndex) {
 
-        System.out.println("startIndex = " + startIndex);
-        System.out.println("endIndex = " + endIndex);
-
         Page<MemberAndLeave> memberAndLeavePage = leaveService.selectLeaveInPutList(startIndex, endIndex);
+
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전사원 연차 조회 성공", (Object) memberAndLeavePage));
+    }
+
+    @GetMapping("/annual/management/detail/{memberCode}")
+    public ResponseEntity<ResponseDTO> selectLeaveDetail(@PathVariable String memberCode) {
+
+        List<LeaveHistoryAndMemberDTO> leaveHistoryAndMemberDTOList = leaveService.selectLeaveDetail(memberCode);
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK,"사원 휴가 정보 조회 성공",(Object) leaveHistoryAndMemberDTOList));
+    }
+
+    /* ==================================================== */
+    @PostMapping(value = "/annual/payment/create")
+    public ResponseEntity<ResponseDTO> insertLeavePayment(@ModelAttribute LeavePaymentHistoryDTO leavePaymentHistoryDTO) {
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "휴가지급 성공",  leaveService.insertLeavePayment(leavePaymentHistoryDTO)));
+    }
+
+    @PostMapping(value = "/annual/use/create")
+    public ResponseEntity<ResponseDTO> insertLeaveUse(@ModelAttribute LeaveUseHistoryDTO leaveUseHistoryDTO) {
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "휴가사용 성공",  leaveService.insertLeaveUse(leaveUseHistoryDTO)));
     }
 }

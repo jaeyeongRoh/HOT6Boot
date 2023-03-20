@@ -39,13 +39,13 @@ public class BoardNoticeController {
     @PostMapping(value = "/board/notice/write")
     public ResponseEntity<ResponseDTO> insertBoardNotice(@RequestBody BoardNoticeDTO boardNoticeDTO) {
 
-        System.out.println("boardNoticeDTO =================================== " + boardNoticeDTO);
+        System.out.println("boardNoticeDTO : " + boardNoticeDTO);
 
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "공지사항 등록 성공", boardNoticeService.insertBoardNotice(boardNoticeDTO)));
     }
 
     @PutMapping("/board/notice/{noticeCode}") /* 끝에 / 적으면 안됨 */
-    public ResponseEntity<ResponseDTO> updateBoardNotice(@RequestBody BoardNoticeDTO boardNoticeDTO) {
+    public ResponseEntity<ResponseDTO> updateBoardNotice(@ModelAttribute BoardNoticeDTO boardNoticeDTO) {
 
         System.out.println("boardNoticeDTO = " + boardNoticeDTO);
 

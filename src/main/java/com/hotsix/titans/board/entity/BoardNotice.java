@@ -6,7 +6,7 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,7 +18,7 @@ import java.time.LocalDate;
         name = "NOTICE_SEQ_GENERATOR",
         sequenceName = "SEQ_NOTICE",
         initialValue = 1,
-        allocationSize = 50
+        allocationSize = 1
 )
 @Table(name = "TBL_NOTICE")
 @DynamicInsert
@@ -41,7 +41,7 @@ public class BoardNotice {
     private String noticeTitle;
 
     @Column(name = "NOTICE_DATE")
-    private LocalDate noticeDate;
+    private LocalDateTime noticeDate;
 
     @Column(name = "NOTICE_COUNT")
     private Integer noticeCount;
@@ -54,7 +54,7 @@ public class BoardNotice {
 
     @ManyToOne // (fetch = FetchType.LAZY)
     @JoinColumn(name = "MEMBER_CODE", insertable = false, updatable = false)
-    private BoardNoticeMember member;
+    private BoardMember member;
 
 }
 

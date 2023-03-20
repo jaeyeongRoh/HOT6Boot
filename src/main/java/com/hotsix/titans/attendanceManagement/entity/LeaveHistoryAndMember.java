@@ -47,4 +47,19 @@ public class LeaveHistoryAndMember {
     @OneToMany
     @JoinColumn(name = "LEAVE_PAYMENT_HISTORY_CODE")
     private List<LeaveUseHistory> leaveUseHistoryList;
+
+    @Override
+    public String toString() {
+        return "LeaveHistoryAndMember{" +
+                "leavePaymentHistoryCode='" + leavePaymentHistoryCode + '\'' +
+                ", memberCode='" + memberCode + '\'' +
+                ", leaveCategoryCode='" + leaveCategoryCode + '\'' +
+                ", leavePaymentDate='" + leavePaymentDate + '\'' +
+                ", leavePaymentCount=" + leavePaymentCount +
+                ", leaveLeftoverCount=" + leaveLeftoverCount +
+                ", leavePaymentProcess='" + leavePaymentProcess + '\'' +
+                ", leavePaymentMemo='" + leavePaymentMemo + '\'' +
+                ", leavePaymentCancellYn=" + leavePaymentCancellYn +
+                '}';
+    }
 }

@@ -40,13 +40,19 @@ springdoc:
 
 image:
 
-
   add-resource-locations: classpath:/static/profileImages/
   add-resource-handler: /profileImages/**
 
-
   image-dir: src/main/resources/static/profileImages
   image-url: http://localhost:8888/profileImages/
+
+file:
+
+  add-resource-locations: classpath:/static/files/
+  add-resource-handler: /files/**
+
+  file-dir: src/main/resources/static/files
+  file-url: http://localhost:8888/files/
 
 # Logging Level
 logging:
