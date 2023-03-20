@@ -2,10 +2,9 @@ package com.hotsix.titans.attendanceHR.service;
 
 
 import com.hotsix.titans.attendanceHR.dto.*;
-import com.hotsix.titans.attendanceHR.entity.AttendanceHR;
-import com.hotsix.titans.attendanceHR.entity.CRUDattendanceHR;
-import com.hotsix.titans.attendanceHR.entity.MypageSelectAttendance;
-import com.hotsix.titans.attendanceHR.entity.SelectAttendanceHR;
+import com.hotsix.titans.attendanceHR.entity.*;
+import com.hotsix.titans.attendanceHR.repository.CRUDattendanceHrRepository;
+import com.hotsix.titans.attendanceHR.entity.*;
 import com.hotsix.titans.attendanceHR.repository.*;
 
 import com.hotsix.titans.member.entity.Member;
@@ -334,10 +333,165 @@ public class AttendanceHrService {
         return (result == 1) ? "등록성공" : "등록실패" ;
     }
 
+
+
     public List<MypageSelectAttendanceDTO> attendanceMypageFinishRegistCommute(String memberCode) {
 
         List<MypageSelectAttendance> mypageSelectAttendanceList = mypageSelectAttendanceRepository.findByMemberCode(memberCode);
 
         return mypageSelectAttendanceList.stream().map(mypageSelectAttendance -> modelMapper.map(mypageSelectAttendance, MypageSelectAttendanceDTO.class)).collect(Collectors.toList());
+    }
+
+    public Page<MyAttendanceHR> selectMyAttendance(String memberCode, int page, int size) {
+
+        Sort sort = Sort.by("commuteDate").descending();
+        Pageable pageable = PageRequest.of(page, size, sort);
+
+        return myAttendanceHRRepository.findByMemberCode(pageable, memberCode);
+    }
+
+    @Transactional
+    public Object createReason(AttendanceHrReasonDTO attendanceHrReasonDTO, MultipartFile reasonFile) {
+
+        String changeFileName = UUID.randomUUID().toString().replace("-", "");
+        String reasonFileName = null;
+        int result = 0;
+
+        try {
+            reasonFileName = FileUploadUtils.saveFile(FILE_DIR, changeFileName, reasonFile);
+
+            attendanceHrReasonDTO.setReasonFname(reasonFile.getOriginalFilename());
+            attendanceHrReasonDTO.setReasonCname(reasonFileName);
+            attendanceHrReasonDTO.setReasonFaddress(FILE_URL);
+
+            AttendanceHrReason attendanceHrReason = modelMapper.map(attendanceHrReasonDTO, AttendanceHrReason.class);
+
+            attendanceHrReasonRepository.save(attendanceHrReason);
+
+        } catch (Exception e) {
+
+            System.out.println("등록 실패입니다 ㅉㅏ식아");
+            FileUploadUtils.deleteFile(FILE_DIR, reasonFileName);
+            throw new RuntimeException(e);
+        }
+
+        return (result > 0) ? "사유서 등록 성공" : "사유서 등록 실패";
+    }
+
+    public Page<MyAttendanceHR> searchMyAttendance(SearchDTO searchDTO) {
+
+        Sort sort = Sort.by("commuteDate").descending();
+        Pageable pageable = PageRequest.of(searchDTO.getPage(), searchDTO.getSize(), sort);
+
+        java.sql.Date start = java.sql.Date.valueOf(searchDTO.getStartDate());
+        java.sql.Date end = java.sql.Date.valueOf(searchDTO.getEndDate());
+
+        System.out.println("searchDTO = " + searchDTO);
+        System.out.println("start = " + start);
+        System.out.println("end = " + end);
+
+        Page<MyAttendanceHR> myAttendances = myAttendanceHRRepository.findByMemberCodeWithConditions(pageable, searchDTO.getMemberCode(), searchDTO.getAttendanceSelect(), start, end);
+
+        return myAttendances;
+    }
+
+
+
+
+
+
+    public MypageAttendanceCheckDTO myPageAttendanceMonth(AttendanceHrDTO attendanceHrDTO) {
+
+        int count1 = 0;
+        int count2 = 0;
+
+        Member member = memberRepository.findByMemberCode(attendanceHrDTO.getMemberCode());
+
+        TypedQuery<MyPageSelectAttendanceHR> query = entityManager.createQuery(
+                "SELECT a FROM MyPageSelectAttendanceHR a " +
+                        "WHERE a.memberAttendance.memberCode = :memberCode " +
+                        "AND a.commuteDate BETWEEN :startDate AND :endDate",
+                MyPageSelectAttendanceHR.class
+        );
+
+        LocalDate now = LocalDate.now();
+        int month = now.getMonthValue(); //달 구하기
+
+        LocalDate startDateTime = now.withDayOfMonth(1);  //이번달 시작일
+        LocalDate endDateTime =  now.withDayOfMonth(now.lengthOfMonth()); //이번달 막날
+
+        query.setParameter("memberCode", member.getMemberCode());
+        query.setParameter("startDate", startDateTime);
+        query.setParameter("endDate", endDateTime);
+
+        List<MyPageSelectAttendanceHR> attendanceHR = query.getResultList();
+
+
+        for(int i =0; i < attendanceHR.size(); i++) {
+
+            if ("정상출근".equals(attendanceHR.get(i).getCommuteStatus())) {
+                count1++;
+                System.out.println("count 정상출근 갯수 확인 = " + count1);
+            }
+        }
+
+        for(int i =0; i < attendanceHR.size(); i++) {
+
+            if("지각".equals(attendanceHR.get(i).getCommuteStatus())) {
+                count2++;
+                System.out.println("count 지각 갯수 확인 = " + count2);
+            }
+        }
+
+        System.out.println("attendanceHR 결과값 확인 = " + attendanceHR);
+
+
+        List<MypageAttendanceCheckDTO> mypageAttendanceCheckDTOList = new ArrayList<>();
+        MypageAttendanceCheckDTO checkList = new MypageAttendanceCheckDTO();
+
+        checkList.setThisMonth(month);
+        checkList.setCountOnTime(count1);
+        checkList.setCountLate(count2);
+
+        System.out.println("checkList = " + checkList);
+
+
+        /* 이번주 일한 시간 구하기*/
+
+
+        TypedQuery<MyPageSelectAttendanceHR> query2 = entityManager.createQuery(
+                "SELECT a FROM MyPageSelectAttendanceHR a " +
+                        "WHERE a.memberAttendance.memberCode = :memberCode2 " +
+                        "AND a.commuteDate BETWEEN :startDate2 AND :endDate2",
+                MyPageSelectAttendanceHR.class
+        );
+
+        LocalDate startOfWeek = now.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY)); //이번주 시작일
+        LocalDate endOfWeek = now.with(TemporalAdjusters.next(DayOfWeek.SUNDAY)); //이번주 마지막 일
+
+        System.out.println("startOfWeek = " + startOfWeek);
+        System.out.println("endOfWeek = " + endOfWeek);
+
+        query2.setParameter("memberCode2", member.getMemberCode());
+        query2.setParameter("startDate2", startOfWeek);
+        query2.setParameter("endDate2", endOfWeek);
+
+        List<MyPageSelectAttendanceHR> attendanceHR2 = query2.getResultList();
+
+        System.out.println("attendanceHR2 = " + attendanceHR2);
+
+        int totalTime =0;
+
+        for(int i =0; i < attendanceHR2.size(); i++) {
+
+
+            totalTime += attendanceHR2.get(i).getCommuteTotalTime();
+
+            System.out.println("total확인 = " + totalTime);
+        }
+
+        checkList.setThisWeekTotalTime(totalTime);
+
+        return checkList;
     }
 }

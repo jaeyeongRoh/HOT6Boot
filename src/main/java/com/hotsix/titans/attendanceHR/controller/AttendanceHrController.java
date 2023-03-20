@@ -30,10 +30,6 @@ public class AttendanceHrController {
     }
 
 
-
-
-
-
     /*받은 값으로 조회*/
     @PostMapping("/attendance")
     public ResponseEntity<ResponseDTO> selectAttendance(@RequestBody SelectAttendanceDTO selectAttendanceDTO) {
@@ -84,8 +80,6 @@ public class AttendanceHrController {
         System.out.println("반환값" + attendanceHrService.attendanceMypageSelectRegistCommute(commuteStartTime, memberDTO));
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회성공", attendanceHrService.attendanceMypageSelectRegistCommute(commuteStartTime, memberDTO)));
     }
-
-
 
 
     /*모달창 저장 누를시*/
