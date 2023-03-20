@@ -30,7 +30,7 @@ public class MemberController {
     }
 
     @Operation(summary = "회원 간단 조회 요청", description = "회원의 간단한 정보를 조회됩니다.", tags = { "MemberController" })
-    @GetMapping("/simpleMember/{memberCode}")
+    @GetMapping("/members/simpleInfo/{memberCode}")
     public ResponseEntity<ResponseDTO> selectSimpleMemberInfo(@PathVariable String memberCode) {
 
         System.out.println("========" + memberCode);

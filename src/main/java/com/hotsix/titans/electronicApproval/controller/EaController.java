@@ -166,28 +166,12 @@ public class EaController {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 휴직신청 insert 성공", eaService.insertLoa(eaLoaDTO)));
     }
 
+    /* 인사에서 로그인한 사원의 증명서 리스트 조회*/
+    @GetMapping("/eaList/cert/{memberCode}")
+    public ResponseEntity<ResponseDTO> selectMyCertificate(@PathVariable String memberCode) {
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "  성공", eaService.selectMyCertificate(memberCode)));
+    }
 
 
 }

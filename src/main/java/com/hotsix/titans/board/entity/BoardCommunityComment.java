@@ -21,7 +21,7 @@ import java.sql.Date;
 public class BoardCommunityComment {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_BOARD_COMMENT")
+//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_BOARD_COMMENT")
     @Column(name = "COMMENT_CODE")
     private String commentCode;
 

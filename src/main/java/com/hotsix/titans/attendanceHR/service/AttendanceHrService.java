@@ -1,6 +1,5 @@
 package com.hotsix.titans.attendanceHR.service;
 
-
 import com.hotsix.titans.attendanceHR.dto.*;
 import com.hotsix.titans.attendanceHR.entity.*;
 import com.hotsix.titans.attendanceHR.repository.*;
@@ -47,6 +46,7 @@ public class AttendanceHrService {
     private String FILE_DIR;
     @Value("http://localhost:8888/files/")
     private String FILE_URL;
+
     @Autowired
     public AttendanceHrService(ModelMapper modelMapper, CRUDattendanceHrRepository crudAttendanceHrRepository, EntityManager entityManager, MemberRepository memberRepository, MypageSelectAttendanceRepository mypageSelectAttendanceRepository, AttendanceHrRepository attendanceHrRepository, AttendanceHrReasonRepository attendanceHrReasonRepository, MyAttendanceHRRepository myAttendanceHRRepository) {
         this.modelMapper = modelMapper;
@@ -369,4 +369,49 @@ public class AttendanceHrService {
 
         return (result > 0) ? "사유서 등록 성공" : "사유서 등록 실패";
     }
+
+    @Transactional
+    public AttendanceHrDTO selectFile(String commuteNo) {
+
+        AttendanceHR attendanceHR = attendanceHrRepository.findByCommuteCode(commuteNo);
+        AttendanceHrReason attendanceHrReason = attendanceHrReasonRepository.findByCommuteCode(commuteNo);
+        attendanceHrReason.setReasonFaddress(FILE_URL + attendanceHrReason.getReasonCname());
+
+        System.out.println("attendanceHR = " + attendanceHR);
+        System.out.println("attendanceHrReason.getReasonCname = " + attendanceHrReason.getReasonCname());
+
+        return modelMapper.map(attendanceHR, AttendanceHrDTO.class);
+    }
+
+//    @Transactional
+//    public Object downloadFile(AttendanceHrReasonDTO attendanceHrReasonDTO, MultipartFile reasonFile) {
+//
+//        // 파일 ID에 해당하는 파일 엔티티를 가져옵니다.
+//        FileEntity fileEntity = fileRepository.findById(fileId)
+//                .orElseThrow(() -> new FileNotFoundException("File not found with id " + fileId));
+//
+//        // 파일이 저장된 경로를 가져옵니다.
+//        String filePath = fileEntity.getFilePath();
+//
+//        // 파일의 실제 경로를 생성합니다.
+//        Path file = Paths.get(filePath).normalize().toAbsolutePath();
+//
+//        // 파일이 존재하는지 확인합니다.
+//        if (!Files.exists(file)) {
+//            throw new FileNotFoundException("File not found with id " + fileId);
+//        }
+//
+//        // 파일의 리소스 객체를 생성하여 반환합니다.
+//        return new FileSystemResource(file);
+//    }
+//
+//    public String getFileName(Long fileId) {
+//        // 파일 ID에 해당하는 파일 엔티티를 가져옵니다.
+//        FileEntity fileEntity = fileRepository.findById(fileId)
+//                .orElseThrow(() -> new FileNotFoundException("File not found with id " + fileId));
+//
+//        // 파일 이름을 반환합니다.
+//        return fileEntity.getFileName();
+//    }
+
 }

@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 @AllArgsConstructor
@@ -24,10 +25,14 @@ public class SimpleMember {
     private String memberName;
     @ManyToOne
     @JoinColumn(name = "TEAM_CODE")
-    private Team team;                  // 조직 테이블 다대일 매핑
+    private Team team;
     @ManyToOne
     @JoinColumn(name = "RANK_CODE")
     private Rank rank;
+    @Column(name = "JOIN_DATE")
+    private Date joinDate;
+    @Column(name = "WORKING_STATUS")
+    private String workingStatus;
     @OneToMany
     @JoinColumn(name = "MEMBER_CODE")
     private List<ProfileImage> profileImageList;
