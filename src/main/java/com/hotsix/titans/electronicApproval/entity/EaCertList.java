@@ -16,7 +16,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @DynamicInsert
-public class EaCert extends EaDocument {
+public class EaCertList extends EaCertDocument {
 
     @Column(name = "CERT_CATEGORY_CODE")
     private String certCategoryCode;

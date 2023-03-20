@@ -20,6 +20,10 @@ import com.hotsix.titans.salary.repository.SalaryRepository;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -102,25 +106,19 @@ public class SalaryService {
     }
 
     /* 지급 여부에 따른 급여 전체 목록 조회 */
-    public List<SalaryDTO> selectPaymentYNSalary(String paymentsYn, Date start, Date end) {
+    public Page<SalaryDTO> selectAllSalaryList(String paymentsYn, Date start, Date end, Pageable pageable) {
 
-        List<Salary> salaryList = salaryRepository.findByPaymentsYnAndPaymentDateBetween(paymentsYn, start, end);
+//        Pageable pageable = PageRequest.of(page, size);
+        Page<Salary> salaryPage = salaryRepository.findByPaymentsYnAndPaymentDateBetween(paymentsYn, start, end, pageable);
 
         List<SalaryDTO> selectSalary = new ArrayList<>();
-        for(Salary salary : salaryList) {
+        for (Salary salary : salaryPage) {
             Bonus bonus = salary.getBonus();
             Long bonusSalary = bonus != null ? bonus.getBonusSalary() : 0L;
             Tax tax = salary.getTax();
             MemberSalary member = salary.getMember();
 
-            System.out.println("bonus = " + bonus);
-            System.out.println("bonusSalary = " + bonusSalary);
-            System.out.println("tax = " + tax);
-            System.out.println("member = " + member);
-
             Long beforeSalary = salary.getBasicSalary() + salary.getMealSalary() + bonusSalary;
-
-            System.out.println("beforeSalary = " + beforeSalary);
 
             Double incomTaxRate = tax.getIncomTaxRate();
             Double healthTaxRate = tax.getHealthTaxRate();
@@ -156,51 +154,8 @@ public class SalaryService {
 
         }
 
-        return selectSalary.stream().map(salary -> modelMapper.map(salary, SalaryDTO.class))
-                .collect(Collectors.toList());
+        return new PageImpl<>(selectSalary, pageable, salaryPage.getTotalElements());
     }
-
-    /* 급여 지급하여 급여상태 변경 */
-//    public Object updateSalaryPaymentsYn(String selectedSalaryCode) {
-//
-//        System.out.println("selectedSalaryCode = " + selectedSalaryCode);
-//        Salary salary = salaryRepository.findBySalaryCode(selectedSalaryCode);
-//
-//        System.out.println("test2==========================");
-//
-//        if (salary.getPaymentsYn().equals("N")) {
-//            salary.setPaymentsYn("Y");
-//        } else {
-//            throw new SalaryPaymentsYnException("이미 급여가 지급되었습니다.");
-//        }
-//        salaryRepository.save(salary);
-//
-//        return salary;
-//    }
-
-//    /* 저번 달 총 근무시간 구하기 */
-//    public List<AttendanceHrDTO> selectCommuteMonth() {
-//
-//        int intMonth = new java.util.Date().getMonth();
-//
-//        String month = String.valueOf(intMonth);
-//        System.out.println("month = " + month);
-//
-//        month = month + "-";
-//
-//        List<AttendanceHR> attendanceList = attendanceHrRepository.selectCommuteMonth(month);
-//
-//        int totlaTime = 0;
-//
-//        for(int i = 0; i < attendanceList.size(); i++){
-//            totlaTime += attendanceList.get(i).getCommuteTotalTime();
-//        }
-//        System.out.println("totlaTime = " + totlaTime);
-//
-//        System.out.println("attendanceList = " + attendanceList);
-//
-//        return attendanceList.stream().map(attendance -> modelMapper.map(attendance, AttendanceHrDTO.class)).collect(Collectors.toList());
-//    }
 
 
     /* 사원 번호 입력하여 정보 불러오기 */
@@ -296,4 +251,5 @@ public class SalaryService {
 
         return modelMapper.map(salary, SalaryDTO.class);
     }
+
 }

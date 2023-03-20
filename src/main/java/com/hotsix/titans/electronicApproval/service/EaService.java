@@ -26,10 +26,11 @@ public class EaService {
     private final EaLoaRepository eaLoaRepository;
     private final EaRnsttRepository eaRnsttRepository;
     private final EaCertRepository eaCertRepository;
+    private final EaCertListRepository eaCertListRepository;
     private final ModelMapper modelMapper;
 
     @Autowired
-    public EaService(EaRetireRepository eaRetireRepository, EaDutyRepository eaDutyRepository, EaDocumentRepository eaDocumentRepository, EaSalaryRepository eaSalaryRepository, EaLeaveRepository eaLeaveRepository, EaLoaRepository eaLoaRepository, EaRnsttRepository eaRnsttRepository, EaCertRepository eaCertRepository, ModelMapper modelMapper) {
+    public EaService(EaRetireRepository eaRetireRepository, EaDutyRepository eaDutyRepository, EaDocumentRepository eaDocumentRepository, EaSalaryRepository eaSalaryRepository, EaLeaveRepository eaLeaveRepository, EaLoaRepository eaLoaRepository, EaRnsttRepository eaRnsttRepository, EaCertRepository eaCertRepository, EaCertListRepository eaCertListRepository, ModelMapper modelMapper) {
         this.eaRetireRepository = eaRetireRepository;
         this.eaDutyRepository = eaDutyRepository;
         this.eaDocumentRepository = eaDocumentRepository;
@@ -38,6 +39,7 @@ public class EaService {
         this.eaLoaRepository = eaLoaRepository;
         this.eaRnsttRepository = eaRnsttRepository;
         this.eaCertRepository = eaCertRepository;
+        this.eaCertListRepository = eaCertListRepository;
         this.modelMapper = modelMapper;
     }
 
@@ -97,7 +99,7 @@ public class EaService {
 
     public Object selectAllCert() {
         List<EaCert> eaCertList = eaCertRepository.findAll();
-        return eaCertList.stream().map(eaCert -> modelMapper.map(eaCert, EaCertDTO.class)).collect(Collectors.toList());
+        return eaCertList.stream().map(eaCert -> modelMapper.map(eaCert, EaCertSelectDTO.class)).collect(Collectors.toList());
     }
 
     public Object selectAllDuty() {
@@ -199,7 +201,6 @@ public class EaService {
      */
     @Transactional
     public Object insertLeave(EaLeaveDTO eaLeaveDTO) {
-        EaLeave eaLeave;
 
         eaLeaveDTO.setEaDate(LocalDate.now());
         eaLeaveDTO.setLeaveCategoryCode("LC1");
@@ -207,6 +208,8 @@ public class EaService {
         eaLeaveDTO.setLeaveStartDate(LocalDate.now());
         eaLeaveDTO.setLeaveEndDate(LocalDate.now());
         log.info("getEaApproverInfoListDTO{}", eaLeaveDTO.getEaApproverInfoList());
+
+        EaLeave eaLeave;
         eaLeave = modelMapper.map(eaLeaveDTO, EaLeave.class);
 
         eaLeave.setEaApproverInfoList(eaLeaveDTO.getEaApproverInfoList().stream().map(eaApproverInfoDTO -> modelMapper.map(eaApproverInfoDTO, EaApproverInfo.class)).collect(Collectors.toList()));
@@ -316,5 +319,12 @@ public class EaService {
     public Object selectAllLoa(String status) {
         List<EaLoa> eaLoaList = eaLoaRepository.findAllByEaStatusCode(status);
         return eaLoaList.stream().map(eaLoa -> modelMapper.map(eaLoa, EaLoaDTO.class)).collect(Collectors.toList());
+    }
+
+    public Object selectMyCertificate(String memberCode) {
+
+        List<EaCertList> eaCertList = eaCertListRepository.findByMemberCode(memberCode);
+
+        return eaCertList.stream().map(eaCert -> modelMapper.map(eaCert, EaCertListSelectDTO.class)).collect(Collectors.toList());
     }
 }
