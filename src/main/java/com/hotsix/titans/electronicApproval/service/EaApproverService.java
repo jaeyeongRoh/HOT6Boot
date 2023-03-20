@@ -1,18 +1,20 @@
 package com.hotsix.titans.electronicApproval.service;
 
 import com.hotsix.titans.commons.ResponseDTO;
-import com.hotsix.titans.electronicApproval.dto.EaApproverDTO;
+import com.hotsix.titans.electronicApproval.dto.*;
 import com.hotsix.titans.electronicApproval.entity.*;
 import com.hotsix.titans.electronicApproval.repository.*;
 import org.modelmapper.ModelMapper;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.slf4j.Logger;
 
 @Service
 public class EaApproverService {
-
+    private static final Logger log = LoggerFactory.getLogger(EaApproverService.class);
     private final EaRetireRepository eaRetireRepository;
     private final EaDutyRepository eaDutyRepository;
     private final EaDocumentRepository eaDocumentRepository;
@@ -55,7 +57,7 @@ public class EaApproverService {
                 EaLeave eaLeave = eaLeaveRepository.findByEaCode(eaCode);
 
             case "급여정정신청":
-                EaSalary eaSalary =  eaSalaryRepository.findByEaCode(eaCode);
+                EaSalary eaSalary = eaSalaryRepository.findByEaCode(eaCode);
 
             case "퇴직신청":
                 EaRetire eaRetire = eaRetireRepository.findByEaCode(eaCode);
@@ -76,6 +78,79 @@ public class EaApproverService {
                 result = -1;
                 break;
         }
+        return result;
+    }
+
+
+    @Transactional
+    public Object updateSalary(EaSalaryDTO eaSalaryDTO) {
+        EaSalary eaSalary;
+
+        log.info("날짜", eaSalaryDTO.getSalCorrectionDate());
+
+//        eaSalaryDTO.setSalCorrectionDate(LocalDate.now());
+
+        eaSalary = modelMapper.map(eaSalaryDTO, EaSalary.class);
+        eaSalaryRepository.save(eaSalary);
+        int result = 1;
+        return result;
+    }
+
+    @Transactional
+    public Object updateCert(EaCertDTO eaCertDTO) {
+
+        EaCert eaCert;
+        eaCert = modelMapper.map(eaCertDTO, EaCert.class);
+        eaCertRepository.save(eaCert);
+        int result = 1;
+        return result;
+    }
+
+    @Transactional
+    public Object updateDuty(EaDutyDTO eaDutyDTO) {
+
+        EaDuty eaDuty;
+        eaDuty = modelMapper.map(eaDutyDTO, EaDuty.class);
+        eaDutyRepository.save(eaDuty);
+        int result = 1;
+        return result;
+    }
+
+    @Transactional
+    public Object updateRnstt(EaRnsttDTO eaRnsttDTO) {
+
+        EaRnstt eaRnstt;
+        eaRnstt = modelMapper.map(eaRnsttDTO, EaRnstt.class);
+        eaRnsttRepository.save(eaRnstt);
+        int result = 1;
+        return result;
+    }
+
+    @Transactional
+    public Object updateRetire(EaRetireDTO eaRetireDTO) {
+
+        EaRetire eaRetire;
+        eaRetire = modelMapper.map(eaRetireDTO, EaRetire.class);
+        eaRetireRepository.save(eaRetire);
+        int result = 1;
+        return result;
+    }
+
+    @Transactional
+    public Object updateLoa(EaLoaDTO eaLoaDTO) {
+
+        EaLoa eaLoa;
+        eaLoa = modelMapper.map(eaLoaDTO, EaLoa.class);
+        eaLoaRepository.save(eaLoa);
+        int result = 1;
+        return result;
+    }
+
+    public Object updateLeave(EaLeaveDTO eaLeaveDTO) {
+        EaLeave eaLeave;
+        eaLeave = modelMapper.map(eaLeaveDTO, EaLeave.class);
+        eaLeaveRepository.save(eaLeave);
+        int result = 1;
         return result;
     }
 }
