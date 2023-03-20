@@ -26,7 +26,7 @@ import java.util.List;
 public class BoardCommunity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_BOARD")
+//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_BOARD")
     @Column(name = "BOARD_CODE")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_BOARD") // insert 시 의미있음
     @GenericGenerator(name = "SEQ_BOARD", strategy = "com.hotsix.titans.commons.StringPrefixSequenceGenerator",

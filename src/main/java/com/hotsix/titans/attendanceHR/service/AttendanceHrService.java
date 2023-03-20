@@ -2,10 +2,11 @@ package com.hotsix.titans.attendanceHR.service;
 
 
 import com.hotsix.titans.attendanceHR.dto.*;
+import com.hotsix.titans.attendanceHR.entity.AttendanceHR;
 import com.hotsix.titans.attendanceHR.entity.CRUDattendanceHR;
 import com.hotsix.titans.attendanceHR.entity.MypageSelectAttendance;
 import com.hotsix.titans.attendanceHR.entity.SelectAttendanceHR;
-import com.hotsix.titans.attendanceHR.repository.CRUDattendanceHrRepository;
+import com.hotsix.titans.attendanceHR.repository.*;
 
 import com.hotsix.titans.member.entity.Member;
 import com.hotsix.titans.member.repository.MemberRepository;

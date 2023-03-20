@@ -25,7 +25,7 @@ import java.time.LocalDateTime;
 public class BoardCommunityComment {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_BOARD_COMMENT")
+//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_BOARD_COMMENT")
     @Column(name = "COMMENT_CODE")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_BOARD_COMMENT") // insert 시 의미있음
     @GenericGenerator(name = "SEQ_BOARD_COMMENT", strategy = "com.hotsix.titans.commons.StringPrefixSequenceGenerator",
