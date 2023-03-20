@@ -15,7 +15,7 @@ import java.sql.Date;
         name = "NOTICE_ATTACHMENT_SEQ_GENERATOR",
         sequenceName = "SEQ_NOTICE_ATTACHMENT",
         initialValue = 1,
-        allocationSize = 50
+        allocationSize = 1
 )
 @Table(name = "TBL_NOTICE_ATTACHMENT")
 public class BoardNoticeAttachment {

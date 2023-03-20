@@ -11,10 +11,9 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @ToString
-public class EaSalaryDTO extends EaDocumentDTO {
+public class EaSalarySelectDTO extends EaDocumentDTO {
 
     private LocalDate salCorrectionDate;
     private Salary salary;
-    private String salaryCode;
 
 }

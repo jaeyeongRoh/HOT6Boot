@@ -41,7 +41,6 @@ public class EaService {
         this.modelMapper = modelMapper;
     }
 
-
     /**
      * 전자결재 전체 목록 조회하는 메소드
      */
@@ -228,9 +227,11 @@ public class EaService {
      */
     @Transactional
     public Object insertSalary(EaSalaryDTO eaSalaryDTO) {
-        EaSalary eaSalary = new EaSalary();
+        EaSalary eaSalary;
 
+//        eaSalaryDTO.setSalCorrectionDate(LocalDate.now());
 
+        eaSalary = modelMapper.map(eaSalaryDTO, EaSalary.class);
         eaSalaryRepository.save(eaSalary);
         int result = 1;
         return result;
@@ -245,6 +246,7 @@ public class EaService {
         int result = 1;
         return result;
     }
+
     @Transactional
     public Object insertDuty(EaDutyDTO eaDutyDTO) {
 
@@ -254,6 +256,7 @@ public class EaService {
         int result = 1;
         return result;
     }
+
     @Transactional
     public Object insertRnstt(EaRnsttDTO eaRnsttDTO) {
 
@@ -263,6 +266,7 @@ public class EaService {
         int result = 1;
         return result;
     }
+
     @Transactional
     public Object insertRetire(EaRetireDTO eaRetireDTO) {
 
@@ -272,6 +276,7 @@ public class EaService {
         int result = 1;
         return result;
     }
+
     @Transactional
     public Object insertLoa(EaLoaDTO eaLoaDTO) {
 
@@ -281,7 +286,6 @@ public class EaService {
         int result = 1;
         return result;
     }
-
 
 
     public Object selectAllLeave(String status) {

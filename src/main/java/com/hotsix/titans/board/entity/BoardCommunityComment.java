@@ -11,12 +11,12 @@ import java.sql.Date;
 @Setter
 @ToString
 @Entity
-@SequenceGenerator(
-        name = "BOARD_COMMENT_SEQ_GENERATOR",
-        sequenceName = "SEQ_BOARD_COMMENT",
-        initialValue = 1,
-        allocationSize = 50
-)
+//@SequenceGenerator(
+//        name = "BOARD_COMMENT_SEQ_GENERATOR",
+//        sequenceName = "SEQ_BOARD_COMMENT",
+//        initialValue = 1,
+//        allocationSize = 1
+//)
 @Table(name = "TBL_BOARD_COMMENT")
 public class BoardCommunityComment {
 
