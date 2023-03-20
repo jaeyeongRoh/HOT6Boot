@@ -5,10 +5,14 @@ import com.hotsix.titans.salary.dto.SalaryDTO;
 import com.hotsix.titans.salary.service.SalaryPaymentService;
 import com.hotsix.titans.salary.service.SalaryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.nio.file.Path;
 import java.sql.Date;
 import java.util.*;
 
@@ -55,9 +59,12 @@ public class SalaryController {
 
     /* (관리자) 지급 여부와 날짜에 따른 급여 조회 */
     @GetMapping("/salary/check/all/{year}/{month}/{paymentsYn}")
-    public ResponseEntity<ResponseDTO> selectPaymentYNSalary(@PathVariable String paymentsYn,
-                                                             @PathVariable int year,
-                                                             @PathVariable int month) {
+    public ResponseEntity<ResponseDTO> selectAllSalaryList( @PathVariable String paymentsYn,
+                                                            @PathVariable int year,
+                                                            @PathVariable int month,
+                                                            Pageable pageable
+    ) {
+
         String startDate = year + "-" + month + "-" + "01";
         Date start = Date.valueOf(startDate);
         System.out.println("start = " + start); // 2015-03-01
@@ -65,7 +72,7 @@ public class SalaryController {
         Date end = Date.valueOf(endDate);
         System.out.println("end =-============ " + end); // 2015-03-31
 
-        List<SalaryDTO> salaryList = salaryService.selectPaymentYNSalary(paymentsYn, start, end);
+        Page<SalaryDTO> salaryList = salaryService.selectAllSalaryList(paymentsYn, start, end, pageable);
 
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "지급여부와 날짜에 따른 급여 조회 성공", salaryList));
     }
