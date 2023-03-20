@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -62,6 +63,25 @@ public class MessageService {
 
         return modelMapper.map(message, MessageDTO.class);
     }
+
+    /*메세지 코드 삭제*/
+    public String selectMessageCodeDelete(MessageDTO messageDTO) {
+
+        int result;
+
+        MessageHistory message = messageHistoryRepository.findByMessageCode(messageDTO.getMessageCode());
+
+        System.out.println("messageDTO 메세지 코드 삭제 = " + messageDTO.getMessageCode());
+
+        message.setMessageReceiverDeleteYn("Y");
+
+        messageHistoryRepository.save(message);
+
+        result = 1;
+
+        return result == 1 ? "삭제성공" : "실패";
+    }
+
 
 
      /*근무하는 사람들 출력*/
@@ -172,13 +192,16 @@ public class MessageService {
 
 
 
-        List<Message> selectReceivedEmail = new ArrayList<>();
+//        List<Message> selectReceivedEmail = new ArrayList<>();
 
-        for(int j=0; j<ReceivedMessage.size(); j++) {
+//        for(int j=0; j<ReceivedMessage.size(); j++) {
+//
+//            selectReceivedEmail.add(messageRepository.findAllByMessageCode(ReceivedMessage.get(j)));
+//
+//        }
 
-            selectReceivedEmail.add(messageRepository.findByMessageCode(ReceivedMessage.get(j)));
+        List<Message> selectReceivedEmail = messageRepository.findAllByMessageCodeInOrderByMessageSendDateDesc(ReceivedMessage);
 
-        }
 
         System.out.println("selectReceivedEmail 값 확인 = " + selectReceivedEmail);
 
@@ -206,12 +229,82 @@ public class MessageService {
 
             System.out.println("최종결과 result = " + result);
 
+        }
+
+
+        return result;
+    }
+
+
+
+    /*휴지통*/
+    public List<MessageDTO> checkTrashEmail(MessageDTO messageDTO) {
+
+        MemberAll members = memberAllRepository.findByMemberCode(messageDTO.getMemberCode());
+
+        System.out.println("members 받은 편지함 = " + members);
+
+        String memberEmail = members.getMemberEmail();
+
+        System.out.println(" 전달 받은 이메일 = " + memberEmail);
+
+        /*내가 받은 이메일과, 읽은여부가 n경우를 검색*/
+        List<MessageHistory> messageHistory = messageHistoryRepository.findByMessageReceiverEmailAndMessageReceiverDeleteYn(memberEmail, "Y");
+
+        List<String> ReceivedMessage = new ArrayList<>();
+
+        /*검색한 결과의 메세지 코드를 가져오기*/
+        for(int i=0; i<messageHistory.size(); i++){
+            ReceivedMessage.add((messageHistory.get(i).getMessageCode()));
+        }
+
+        System.out.println("ReceivedMessage = " + ReceivedMessage);
+
+
+
+//        List<Message> selectReceivedEmail = new ArrayList<>();
+
+//        for(int j=0; j<ReceivedMessage.size(); j++) {
+//
+//            selectReceivedEmail.add(messageRepository.findAllByMessageCode(ReceivedMessage.get(j)));
+//
+//        }
+
+        List<Message> selectReceivedEmail = messageRepository.findAllByMessageCodeInOrderByMessageSendDateDesc(ReceivedMessage);
+
+
+        System.out.println("selectReceivedEmail 값 확인 = " + selectReceivedEmail);
+
+        /*여기 코드가 받은 메세지 인데, MessageDTO 에 맴버 네임이 나오지 않았어서, 셋으로 발신자를 표시하기 위함*/
+
+
+        List<MessageDTO> result = new ArrayList<>();
+        for (Message message : selectReceivedEmail){
+            MessageDTO messageDTOlist = modelMapper.map(message,MessageDTO.class);
+
+            System.out.println("1   messageDTOlist = " + messageDTOlist);
+
+            String memberCode = message.getMember().getMemberCode();
+
+            System.out.println("2   memberCode = " + memberCode);
+
+            Member member = memberRepository.findByMemberCode(memberCode);
+
+            System.out.println("3   member = " + member);
+            messageDTOlist.setMemberName(member.getMemberName());
+
+            System.out.println("4   messageDTO = " + messageDTO);
+
+            result.add(messageDTOlist);
+
+            System.out.println("최종결과 result = " + result);
 
         }
 
 
         return result;
     }
+
 
     /*보낸 편지함*/
     public List<MessageDTO> checkSentEmail(MessageDTO messageDTO) {

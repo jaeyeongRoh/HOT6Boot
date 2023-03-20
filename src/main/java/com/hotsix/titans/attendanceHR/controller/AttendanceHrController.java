@@ -30,25 +30,21 @@ public class AttendanceHrController {
     }
 
 
-
-
-
-
     /*받은 값으로 조회*/
     @PostMapping("/attendance")
-    public ResponseEntity <ResponseDTO> selectAttendance(@RequestBody SelectAttendanceDTO selectAttendanceDTO) {
+    public ResponseEntity<ResponseDTO> selectAttendance(@RequestBody SelectAttendanceDTO selectAttendanceDTO) {
 
         ArrayList<String> test = new ArrayList<>();
         test.add("메세지입니다.");
         System.out.println("selectAttendanceDTO = " + selectAttendanceDTO);
         System.out.println("받은 값 출력" + attendanceHrService.selectAttendance(selectAttendanceDTO));
 
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "메세지 전송 성공",attendanceHrService.selectAttendance(selectAttendanceDTO)));
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "메세지 전송 성공", attendanceHrService.selectAttendance(selectAttendanceDTO)));
     }
 
     /*출근하기 버튼 눌렀을때*/
     @GetMapping("/attendance/mypageAregist")
-    public ResponseEntity<ResponseDTO> attendanceMypageRegistCommute(@RequestParam String commuteStartTime , @ModelAttribute MemberDTO memberDTO) throws ParseException {
+    public ResponseEntity<ResponseDTO> attendanceMypageRegistCommute(@RequestParam String commuteStartTime, @ModelAttribute MemberDTO memberDTO) throws ParseException {
 
         List<String> test = new ArrayList<>();
         test.add("마이페이지 출근하기 등록 후 리스폰스값 반환");
@@ -56,12 +52,12 @@ public class AttendanceHrController {
         System.out.println("commuteStartTime = " + commuteStartTime);
         System.out.println("memberDTO = " + memberDTO);
 
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회성공", attendanceHrService.attendanceMypageRegistCommute(commuteStartTime,memberDTO)));
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회성공", attendanceHrService.attendanceMypageRegistCommute(commuteStartTime, memberDTO)));
     }
 
     /*퇴근하기 버튼 눌렀을때*/
     @GetMapping("/attendance/mypageAfinishRegist")
-    public ResponseEntity<ResponseDTO> attendanceMypageFinishRegistCommute(@RequestParam String commuteFinishTime , @ModelAttribute MemberDTO memberDTO) throws ParseException {
+    public ResponseEntity<ResponseDTO> attendanceMypageFinishRegistCommute(@RequestParam String commuteFinishTime, @ModelAttribute MemberDTO memberDTO) throws ParseException {
 
         List<String> test = new ArrayList<>();
         test.add("마이페이지 출근하기 등록 후 리스폰스값 반환");
@@ -69,7 +65,7 @@ public class AttendanceHrController {
         System.out.println("commuteFinishTime = " + commuteFinishTime);
         System.out.println("memberDTO = " + memberDTO);
 
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회성공", attendanceHrService.attendanceMypageRegistFinishCommute(commuteFinishTime,memberDTO)));
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회성공", attendanceHrService.attendanceMypageRegistFinishCommute(commuteFinishTime, memberDTO)));
     }
 
 
@@ -77,18 +73,16 @@ public class AttendanceHrController {
     /*출근 시간이 출력*/
 
     @GetMapping("/attendance/mypageAregistSelect")
-    public ResponseEntity<ResponseDTO> attendanceMypageSelectRegistCommute(@RequestParam String commuteStartTime , @ModelAttribute MemberDTO memberDTO) throws ParseException {
+    public ResponseEntity<ResponseDTO> attendanceMypageSelectRegistCommute(@RequestParam String commuteStartTime, @ModelAttribute MemberDTO memberDTO) throws ParseException {
 
         List<String> test = new ArrayList<>();
         test.add("마이페이지 출근하기 등록 후 조회값 반환");
 
         System.out.println("commuteStartTime = " + commuteStartTime);
         System.out.println("memberDTO = " + memberDTO);
-        System.out.println("반환값"+attendanceHrService.attendanceMypageSelectRegistCommute(commuteStartTime,memberDTO));
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회성공", attendanceHrService.attendanceMypageSelectRegistCommute(commuteStartTime,memberDTO)));
+        System.out.println("반환값" + attendanceHrService.attendanceMypageSelectRegistCommute(commuteStartTime, memberDTO));
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회성공", attendanceHrService.attendanceMypageSelectRegistCommute(commuteStartTime, memberDTO)));
     }
-
-
 
 
     /*모달창 저장 누를시*/
@@ -99,7 +93,7 @@ public class AttendanceHrController {
         test.add("마이페이지 출근하기 등록 후 조회값 반환");
         System.out.println("selectAttendanceDTO = " + selectAttendanceDTO);
 
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회성공",attendanceHrService.attendanceMypageAttendanceModalSave(selectAttendanceDTO)));
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회성공", attendanceHrService.attendanceMypageAttendanceModalSave(selectAttendanceDTO)));
     }
 
 
@@ -119,4 +113,22 @@ public class AttendanceHrController {
     }
 
 
+    /*마이페이지 근태기록 확인*/
+    @PostMapping ("/attendance/myPageAttendanceMonth")
+    public ResponseEntity<ResponseDTO> myPageAttendanceMonth(@RequestBody AttendanceHrDTO attendanceHrDTO) {
+
+        List<String> test = new ArrayList<>();
+        test.add("마이페이지 출근하기 등록 후 리스폰스값 반환");
+
+        System.out.println("memberCode = " + attendanceHrDTO);
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회성공", attendanceHrService.myPageAttendanceMonth(attendanceHrDTO)));
+    }
+
+
+
+
 }
+
+
+
