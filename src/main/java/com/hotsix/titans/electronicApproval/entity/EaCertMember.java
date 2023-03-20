@@ -14,7 +14,7 @@ import java.sql.Date;
 @Getter
 @Table(name = "TBL_MEMBER")
 @Entity
-public class EaMember {
+public class EaCertMember {
 
     @Id
     @Column(name = "MEMBER_CODE")
@@ -22,6 +22,12 @@ public class EaMember {
 
     @Column(name = "MEMBER_NAME")
     private String memberName;
+
+    @Column(name = "JOIN_DATE")
+    private Date joinDate;
+
+    @Column(name = "WORKING_STATUS")
+    private String workingStatus;
 
     @ManyToOne
     @JoinColumn(name = "TEAM_CODE", insertable = false, updatable = false)

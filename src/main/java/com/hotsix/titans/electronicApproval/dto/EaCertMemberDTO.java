@@ -11,9 +11,13 @@ import java.sql.Date;
 @Getter
 @Setter
 @ToString
-public class EaMemberDTO {
+public class EaCertMemberDTO {
 
     private String memberCode;
+
+    private String memberName;
+
+    private Date joinDate;
 
     private String workingStatus;
 

@@ -2,19 +2,23 @@ package com.hotsix.titans.salary.service;
 
 import com.hotsix.titans.attendanceHR.entity.AttendanceSalary;
 import com.hotsix.titans.attendanceHR.repository.AttendanceHrSalaryRepository;
+import com.hotsix.titans.electronicApproval.dto.EaSalaryDTO;
+import com.hotsix.titans.electronicApproval.dto.EaSalaryListDTO;
+import com.hotsix.titans.electronicApproval.entity.EaSalary;
+import com.hotsix.titans.electronicApproval.entity.EaSalaryList;
+import com.hotsix.titans.electronicApproval.repository.EaCertListRepository;
+import com.hotsix.titans.electronicApproval.repository.EaSalaryListRepository;
+import com.hotsix.titans.electronicApproval.repository.EaSalaryRepository;
 import com.hotsix.titans.exception.MemberCodeException;
-import com.hotsix.titans.exception.SalaryPaymentsYnException;
 import com.hotsix.titans.member.dto.MemberSalaryDTO;
 import com.hotsix.titans.member.dto.RankDTO;
 import com.hotsix.titans.member.dto.TeamDTO;
 import com.hotsix.titans.member.entity.MemberSalary;
 import com.hotsix.titans.member.repository.MemberAllRepository;
 import com.hotsix.titans.member.repository.MemberSalaryRepository;
-import com.hotsix.titans.salary.dto.BonusDTO;
 import com.hotsix.titans.salary.dto.SalaryDTO;
 import com.hotsix.titans.salary.entity.Bonus;
 import com.hotsix.titans.salary.entity.Salary;
-import com.hotsix.titans.salary.entity.SalaryPayment;
 import com.hotsix.titans.salary.entity.Tax;
 import com.hotsix.titans.salary.repository.SalaryRepository;
 import org.modelmapper.ModelMapper;
@@ -22,7 +26,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,13 +45,17 @@ public class SalaryService {
     private final MemberSalaryRepository memberSalaryRepository;
     private final AttendanceHrSalaryRepository attendanceHrSalaryRepository;
     private final MemberAllRepository memberAllRepository;
+    private final EaCertListRepository eaCertListRepository;
+    private final EaSalaryListRepository eaSalaryListRepository;
 
-    public SalaryService(SalaryRepository salaryRepository, ModelMapper modelMapper, MemberSalaryRepository memberSalaryRepository, AttendanceHrSalaryRepository attendanceHrSalaryRepository, MemberAllRepository memberAllRepository) {
+    public SalaryService(SalaryRepository salaryRepository, ModelMapper modelMapper, MemberSalaryRepository memberSalaryRepository, AttendanceHrSalaryRepository attendanceHrSalaryRepository, MemberAllRepository memberAllRepository, EaCertListRepository eaCertListRepository, EaSalaryListRepository eaSalaryListRepository) {
         this.salaryRepository = salaryRepository;
         this.modelMapper = modelMapper;
         this.memberSalaryRepository = memberSalaryRepository;
         this.attendanceHrSalaryRepository = attendanceHrSalaryRepository;
         this.memberAllRepository = memberAllRepository;
+        this.eaCertListRepository = eaCertListRepository;
+        this.eaSalaryListRepository = eaSalaryListRepository;
     }
 
 
@@ -56,11 +63,6 @@ public class SalaryService {
     public List<SalaryDTO> selectMySalary(String memberCode, Date start, Date end) {
 
         List<Salary> salaryList = salaryRepository.findByMemberCodeAndPaymentDateBetween(memberCode, start, end);
-//        Rank rank = rankRepository.findByMemberCode(memberCode);
-//        Team team = teamRepository.findByMemberCode(memberCode);
-//
-//        RankDTO rankDTO = modelMapper.map(rank, RankDTO.class);
-//        TeamDTO teamDTO = modelMapper.map(team, TeamDTO.class);
 
         List<SalaryDTO> selectSalary = new ArrayList<>();
         for(Salary salary : salaryList) {
@@ -94,8 +96,6 @@ public class SalaryService {
             salaryDTO.setIncomTax(incomTax);
             salaryDTO.setHealthTax(healthTax);
             salaryDTO.setNationalTax(nationalTax);
-//            salaryDTO.setRank(rankDTO);
-//            salaryDTO.setTeam(teamDTO);
             selectSalary.add(salaryDTO);
         }
 
@@ -252,4 +252,18 @@ public class SalaryService {
         return modelMapper.map(salary, SalaryDTO.class);
     }
 
+    /* 멤버코드 입력받아 나의 급여 정정 신청 조회 */
+    public Object selectMyRequire(String memberCode) {
+
+        List<EaSalaryList> eaSalaryList = eaSalaryListRepository.findByMemberCode(memberCode);
+
+        return eaSalaryList.stream().map(eaSalary -> modelMapper.map(eaSalary, EaSalaryListDTO.class)).collect(Collectors.toList());
+    }
+
+    public Object selectAllSalaryRequire() {
+
+        List<EaSalaryList> eaSalaryList = eaSalaryListRepository.findAll();
+
+        return eaSalaryList.stream().map(eaSalary -> modelMapper.map(eaSalary, EaSalaryListDTO.class)).collect(Collectors.toList());
+    }
 }
