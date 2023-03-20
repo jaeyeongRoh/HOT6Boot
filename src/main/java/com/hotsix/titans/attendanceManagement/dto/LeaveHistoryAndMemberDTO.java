@@ -8,11 +8,11 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
 public class LeaveHistoryAndMemberDTO {
 
     private String leavePaymentHistoryCode; // 휴가발생내역번호
     private String leaveCategoryCode;       // 휴가구분번호
+    private String memberCode;
     private String leavePaymentDate;          // 발생날짜
     private int leavePaymentCount;          // 발생갯수
     private int leaveLeftoverCount;         // 잔여갯수
@@ -23,9 +23,10 @@ public class LeaveHistoryAndMemberDTO {
 
     @Override
     public String toString() {
-        return "LeavePaymentHistoryAndUseHistoryDTO{" +
+        return "LeaveHistoryAndMemberDTO{" +
                 "leavePaymentHistoryCode='" + leavePaymentHistoryCode + '\'' +
                 ", leaveCategoryCode='" + leaveCategoryCode + '\'' +
+                ", memberCode='" + memberCode + '\'' +
                 ", leavePaymentDate='" + leavePaymentDate + '\'' +
                 ", leavePaymentCount=" + leavePaymentCount +
                 ", leaveLeftoverCount=" + leaveLeftoverCount +
