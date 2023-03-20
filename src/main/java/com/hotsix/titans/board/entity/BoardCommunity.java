@@ -1,12 +1,14 @@
 package com.hotsix.titans.board.entity;
 
 import com.hotsix.titans.commons.StringPrefixSequenceGenerator;
+import com.hotsix.titans.member.entity.TeamRole;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -58,6 +60,10 @@ public class BoardCommunity {
     @ManyToOne // (fetch = FetchType.LAZY)
     @JoinColumn(name = "MEMBER_CODE", insertable = false, updatable = false)
     private BoardNoticeMember member;
+
+    @OneToMany
+    @JoinColumn(name = "COMMENT_CODE")
+    private List<BoardCommunityComment> boardCommunityComment;
 
 }
 

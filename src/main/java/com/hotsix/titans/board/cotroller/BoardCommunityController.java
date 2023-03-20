@@ -33,6 +33,14 @@ public class BoardCommunityController {
     @GetMapping("/board/community/{communityCode}")
     public ResponseEntity<ResponseDTO> selectBoardCommunityDetail(@PathVariable String communityCode) {
 
+
+//        /* 댓글 작성 완료 후 추가할 것 */
+//        List<ReplyDTO> replyList = boardService.selectAllReplyList(no);
+//        model.addAttribute("replyList", replyList);
+//        log.info("[BoardController] replyList : " + replyList);
+//
+//        log.info("[BoardController] =========================================================");
+//        return "content/board/boardDetail";
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 성공", boardCommunityService.selectBoardCommunityDetail(communityCode)));
     }
 
@@ -51,6 +59,24 @@ public class BoardCommunityController {
 
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "자유게시판 수정(삭제) 성공", boardCommunityService.updateBoardCommunity(boardCommunityDTO)));
     }
+
+
+    // 댓글
+//    @PostMapping("/registReply")
+//    public ResponseEntity<List<ReplyDTO>> registReply(@RequestBody ReplyDTO registReply) throws ReplyRegistException {
+//
+//        log.info("");
+//        log.info("");
+//        log.info("[BoardController] =========================================================");
+//        log.info("[BoardController] registReply Request : " + registReply);
+//
+//        List<ReplyDTO> replyList = boardService.registReply(registReply);
+//
+//        log.info("[BoardController] replyList : " + replyList);
+//        log.info("[BoardController] =========================================================");
+//
+//        return ResponseEntity.ok(replyList);
+//    }
 
 //    @PutMapping("/board/community/{communityCode}") /* 끝에 / 적으면 안됨 */
 //    public ResponseEntity<ResponseDTO> updateBoardCommunity(@ModelAttribute BoardCommunityDTO boardCommunityDTO) {

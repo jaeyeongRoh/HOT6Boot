@@ -92,6 +92,50 @@ public class BoardCommunityService {
         log.info("[BoardCommunityService] updateBoardCommunity End ");
         return (result > 0) ? "공지사항 수정 성공" : "공지사항 수정 실패";
     }
+
+
+//    /* 해당 게시글의 전체 댓글 조회용 메소드 */
+//    public List<ReplyDTO> selectAllReplyList(Long boardNo) {
+//        List<ReplyDTO> replyList = null;
+//
+//        replyList = mapper.selectReplyList(boardNo);
+//
+//        return replyList;
+//    }
+
+
+//    /* 댓글 등록용 메소드 */
+//    @org.springframework.transaction.annotation.Transactional
+//    public List<ReplyDTO> registReply(ReplyDTO registReply) throws ReplyRegistException {
+//        List<ReplyDTO> replyList = null;
+//
+//        int result = mapper.insertReply(registReply);
+//
+//        if(result > 0) {
+//            replyList = mapper.selectReplyList(registReply.getRefBoardNo());
+//        } else {
+//            throw new ReplyRegistException("댓글 등록에 실패하셨습니다.");
+//        }
+//
+//        return replyList;
+//    }
+
+//    /* 댓글 삭제용 메소드 */
+//    @org.springframework.transaction.annotation.Transactional
+//    public List<ReplyDTO> removeReply(ReplyDTO removeReply) throws ReplyRemoveException {
+//        List<ReplyDTO> replyList = null;
+//
+//        int result = mapper.deleteReply(removeReply.getNo());
+//
+//        if(result > 0) {
+//            replyList = mapper.selectReplyList(removeReply.getRefBoardNo());
+//        } else {
+//            throw new ReplyRemoveException("댓글 삭제에 실패하셨습니다.");
+//        }
+//
+//        return replyList;
+//    }
+
 //    @Transactional
 //    public Object updateBoardCommunity(BoardCommunityDTO boardCommunityDTO) {
 //
