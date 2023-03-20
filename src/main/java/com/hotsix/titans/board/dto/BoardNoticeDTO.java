@@ -20,6 +20,6 @@ public class BoardNoticeDTO {
     private Integer noticeCount;
     private String noticeContent;
     private Character noticeDeleteYN;
-    private BoardNoticeMemberDTO member;
+    private BoardMemberDTO member;
     private List<BoardCommunityComment> boardCommunityComment;
 }

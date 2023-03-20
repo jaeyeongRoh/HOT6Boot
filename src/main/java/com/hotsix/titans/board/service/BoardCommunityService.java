@@ -42,7 +42,7 @@ public class BoardCommunityService {
         log.info("[BoardCommunityService] getBoardCommunityDetail Start");
 
         BoardCommunity boardCommunity = boardCommunityRepository.findById(boardCode).get();
-
+        System.out.println("boardCommunity : " + boardCommunity);
         log.info("[BoardCommunityService] getBoardCommunityDetail End");
 
         return modelMapper.map(boardCommunity, BoardCommunityDTO.class);

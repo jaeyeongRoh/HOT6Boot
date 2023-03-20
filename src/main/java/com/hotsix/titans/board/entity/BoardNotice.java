@@ -54,7 +54,7 @@ public class BoardNotice {
 
     @ManyToOne // (fetch = FetchType.LAZY)
     @JoinColumn(name = "MEMBER_CODE", insertable = false, updatable = false)
-    private BoardNoticeMember member;
+    private BoardMember member;
 
 }
 

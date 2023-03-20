@@ -20,6 +20,6 @@ public class BoardCommunityCommentDTO {
     private LocalDateTime commentInsertDate;
     private LocalDateTime commentUpdateDate;
     private Character commentDeleteYN;
-    private BoardNoticeMemberDTO member;
-    private BoardCommunityDTO board;
+    private BoardMemberDTO BoardMember;
+
 }

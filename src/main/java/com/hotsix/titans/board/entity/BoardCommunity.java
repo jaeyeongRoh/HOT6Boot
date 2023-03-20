@@ -1,7 +1,6 @@
 package com.hotsix.titans.board.entity;
 
 import com.hotsix.titans.commons.StringPrefixSequenceGenerator;
-import com.hotsix.titans.member.entity.TeamRole;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.GenericGenerator;
@@ -32,7 +31,7 @@ public class BoardCommunity {
     @GenericGenerator(name = "SEQ_BOARD", strategy = "com.hotsix.titans.commons.StringPrefixSequenceGenerator",
             parameters = {
                     @org.hibernate.annotations.Parameter(name = StringPrefixSequenceGenerator.VALUE_PREFIX_PARAMETER,
-                            value = "BN")
+                            value = "BC")
             })
     private String boardCode;
 
@@ -59,10 +58,10 @@ public class BoardCommunity {
 
     @ManyToOne // (fetch = FetchType.LAZY)
     @JoinColumn(name = "MEMBER_CODE", insertable = false, updatable = false)
-    private BoardNoticeMember member;
+    private BoardMember member;
 
-    @OneToMany
-    @JoinColumn(name = "COMMENT_CODE")
+    @OneToMany // 여기 문제는 아님
+    @JoinColumn(name = "BOARD_CODE")
     private List<BoardCommunityComment> boardCommunityComment;
 
 }

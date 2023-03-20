@@ -6,7 +6,6 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.sql.Date;
 import java.time.LocalDateTime;
 
 @AllArgsConstructor
@@ -35,14 +34,13 @@ public class BoardCommunityComment {
             })
     private String commentCode;
 
-    @ManyToOne
-    @JoinColumn(name = "BOARD_CODE", insertable = false, updatable = false)
-    private BoardCommunity board;
+//    @ManyToOne
+//    @JoinColumn(name = "BOARD_CODE", insertable = false, updatable = false)
+    @Column(name = "BOARD_CODE")
+    private String boardCode;
 
-    @ManyToOne // (fetch = FetchType.LAZY)
-    @JoinColumn(name = "MEMBER_CODE", insertable = false, updatable = false)
-    private BoardNoticeMember member;
-
+//    @ManyToOne
+//    @JoinColumn(name = "MEMBER_CODE", insertable = false, updatable = false)
     @Column(name = "MEMBER_CODE")
     private String memberCode;
 
@@ -58,5 +56,8 @@ public class BoardCommunityComment {
     @Column(name = "COMMENT_DELETE_YN")
     private Character commentDeleteYn;
 
+    @ManyToOne
+    @JoinColumn(name = "MEMBER_CODE", insertable = false, updatable = false)
+    private BoardMember member;
 
 }

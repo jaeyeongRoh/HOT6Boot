@@ -32,7 +32,8 @@ public class BoardCommunityController {
 
     @GetMapping("/board/community/{communityCode}")
     public ResponseEntity<ResponseDTO> selectBoardCommunityDetail(@PathVariable String communityCode) {
-
+        System.out.println("communityCode : " + communityCode);
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 성공", boardCommunityService.selectBoardCommunityDetail(communityCode)));
 
 //        /* 댓글 작성 완료 후 추가할 것 */
 //        List<ReplyDTO> replyList = boardService.selectAllReplyList(no);
@@ -41,7 +42,6 @@ public class BoardCommunityController {
 //
 //        log.info("[BoardController] =========================================================");
 //        return "content/board/boardDetail";
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 성공", boardCommunityService.selectBoardCommunityDetail(communityCode)));
     }
 
     @PostMapping(value = "/board/community/write")
