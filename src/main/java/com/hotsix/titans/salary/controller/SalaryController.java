@@ -99,4 +99,18 @@ public class SalaryController {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK,"급여 지급 성공", salaryService.insertSalary(salaryDTO)));
     }
 
+    /* 나의 급여 정정 신청 현황 조회 */
+    @GetMapping("/salary/my/require/{memberCode}")
+    public ResponseEntity<ResponseDTO> selectMyRequire(@PathVariable String memberCode) {
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK,"급여 지급 성공", salaryService.selectMyRequire(memberCode)));
+    }
+
+    /* 현재 신청된 정정 신청 현황 조회 */
+    @GetMapping("/salary/require/list")
+    public ResponseEntity<ResponseDTO> selectAllSalaryRequire() {
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK,"급여 지급 성공", salaryService.selectAllSalaryRequire()));
+    }
+
 }
