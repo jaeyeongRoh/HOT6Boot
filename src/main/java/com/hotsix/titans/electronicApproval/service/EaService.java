@@ -26,10 +26,11 @@ public class EaService {
     private final EaLoaRepository eaLoaRepository;
     private final EaRnsttRepository eaRnsttRepository;
     private final EaCertRepository eaCertRepository;
+    private final EaCertListRepository eaCertListRepository;
     private final ModelMapper modelMapper;
 
     @Autowired
-    public EaService(EaRetireRepository eaRetireRepository, EaDutyRepository eaDutyRepository, EaDocumentRepository eaDocumentRepository, EaSalaryRepository eaSalaryRepository, EaLeaveRepository eaLeaveRepository, EaLoaRepository eaLoaRepository, EaRnsttRepository eaRnsttRepository, EaCertRepository eaCertRepository, ModelMapper modelMapper) {
+    public EaService(EaRetireRepository eaRetireRepository, EaDutyRepository eaDutyRepository, EaDocumentRepository eaDocumentRepository, EaSalaryRepository eaSalaryRepository, EaLeaveRepository eaLeaveRepository, EaLoaRepository eaLoaRepository, EaRnsttRepository eaRnsttRepository, EaCertRepository eaCertRepository, EaCertListRepository eaCertListRepository, ModelMapper modelMapper) {
         this.eaRetireRepository = eaRetireRepository;
         this.eaDutyRepository = eaDutyRepository;
         this.eaDocumentRepository = eaDocumentRepository;
@@ -38,6 +39,7 @@ public class EaService {
         this.eaLoaRepository = eaLoaRepository;
         this.eaRnsttRepository = eaRnsttRepository;
         this.eaCertRepository = eaCertRepository;
+        this.eaCertListRepository = eaCertListRepository;
         this.modelMapper = modelMapper;
     }
 
@@ -317,5 +319,12 @@ public class EaService {
     public Object selectAllLoa(String status) {
         List<EaLoa> eaLoaList = eaLoaRepository.findAllByEaStatusCode(status);
         return eaLoaList.stream().map(eaLoa -> modelMapper.map(eaLoa, EaLoaDTO.class)).collect(Collectors.toList());
+    }
+
+    public Object selectMyCertificate(String memberCode) {
+
+        List<EaCertList> eaCertList = eaCertListRepository.findByMemberCode(memberCode);
+
+        return eaCertList.stream().map(eaCert -> modelMapper.map(eaCert, EaCertListSelectDTO.class)).collect(Collectors.toList());
     }
 }

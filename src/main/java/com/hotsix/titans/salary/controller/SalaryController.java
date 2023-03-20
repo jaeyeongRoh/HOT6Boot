@@ -96,7 +96,6 @@ public class SalaryController {
     @PostMapping("/salary/month/insert")
     public ResponseEntity<ResponseDTO> insertSalary(@RequestBody SalaryDTO salaryDTO) {
 
-
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK,"급여 지급 성공", salaryService.insertSalary(salaryDTO)));
     }
 

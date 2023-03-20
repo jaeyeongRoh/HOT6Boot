@@ -11,4 +11,6 @@ public interface EaCertRepository extends JpaRepository<EaCert, String> {
     EaCert findByEaCode(String eaCode);
 
     List<EaCert> findAllByEaStatusCode(String status);
+
+    List<EaCert> findByMemberCode(String memberCode);
 }
