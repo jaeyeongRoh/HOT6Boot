@@ -1,13 +1,10 @@
 package com.hotsix.titans.electronicApproval.service;
 
-import com.hotsix.titans.commons.ResponseDTO;
 import com.hotsix.titans.electronicApproval.dto.*;
 import com.hotsix.titans.electronicApproval.entity.*;
 import com.hotsix.titans.electronicApproval.repository.*;
 import org.modelmapper.ModelMapper;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.slf4j.Logger;
@@ -23,9 +20,10 @@ public class EaApproverService {
     private final EaLoaRepository eaLoaRepository;
     private final EaRnsttRepository eaRnsttRepository;
     private final EaCertRepository eaCertRepository;
+    private final EaApproverRepository eaApproverRepository;
     private final ModelMapper modelMapper;
 
-    public EaApproverService(EaRetireRepository eaRetireRepository, EaDutyRepository eaDutyRepository, EaDocumentRepository eaDocumentRepository, EaSalaryRepository eaSalaryRepository, EaLeaveRepository eaLeaveRepository, EaLoaRepository eaLoaRepository, EaRnsttRepository eaRnsttRepository, EaCertRepository eaCertRepository, ModelMapper modelMapper) {
+    public EaApproverService(EaRetireRepository eaRetireRepository, EaDutyRepository eaDutyRepository, EaDocumentRepository eaDocumentRepository, EaSalaryRepository eaSalaryRepository, EaLeaveRepository eaLeaveRepository, EaLoaRepository eaLoaRepository, EaRnsttRepository eaRnsttRepository, EaCertRepository eaCertRepository, EaApproverRepository eaApproverRepository, ModelMapper modelMapper) {
         this.eaRetireRepository = eaRetireRepository;
         this.eaDutyRepository = eaDutyRepository;
         this.eaDocumentRepository = eaDocumentRepository;
@@ -34,6 +32,7 @@ public class EaApproverService {
         this.eaLoaRepository = eaLoaRepository;
         this.eaRnsttRepository = eaRnsttRepository;
         this.eaCertRepository = eaCertRepository;
+        this.eaApproverRepository = eaApproverRepository;
         this.modelMapper = modelMapper;
     }
 
@@ -150,6 +149,29 @@ public class EaApproverService {
         EaLeave eaLeave;
         eaLeave = modelMapper.map(eaLeaveDTO, EaLeave.class);
         eaLeaveRepository.save(eaLeave);
+        int result = 1;
+        return result;
+    }
+
+    @Transactional
+    public Object finalApproverProcess(String eaCode, String eaMember) {
+
+        EaDocument eaDocument = eaDocumentRepository.findByEaCode(eaCode);
+        EaApproverInfo eaApproverInfo = eaApproverRepository.findByEaCodeAndMemberCode(eaCode, eaMember);
+
+
+
+        /* 전자결재 최종결재자 승인으로 변경 */
+        log.info("eaApproverInfo.getEaStatusCode{}", eaApproverInfo.getEaStatusCode());
+        eaApproverInfo.setEaStatusCode("EA_STATUS_SUCCESS");
+        log.info("eaApproverInfo.getEaStatusCode{}", eaApproverInfo.getEaStatusCode());
+
+        /* 전자결재 문서 상태 결재 완료로 변경 */
+        log.info("eaApproverInfo.getEaStatusCode{}", eaApproverInfo.getEaStatusCode());
+        eaDocument.setEaStatusCode("EA_STATUS_FINISH");
+        log.info("eaApproverInfo.getEaStatusCode{}", eaApproverInfo.getEaStatusCode());
+
+
         int result = 1;
         return result;
     }

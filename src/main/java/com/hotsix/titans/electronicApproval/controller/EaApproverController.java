@@ -1,24 +1,37 @@
 package com.hotsix.titans.electronicApproval.controller;
 
 
+import com.hotsix.titans.attendanceManagement.dto.LeaveUseHistoryDTO;
+import com.hotsix.titans.attendanceManagement.entity.LeaveHistoryAndMember;
+import com.hotsix.titans.attendanceManagement.entity.LeavePaymentHistory;
 import com.hotsix.titans.commons.ResponseDTO;
 import com.hotsix.titans.electronicApproval.dto.*;
 import com.hotsix.titans.electronicApproval.service.EaApproverService;
+import com.hotsix.titans.electronicApproval.service.EaService;
 import io.swagger.v3.oas.annotations.Operation;
+import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/ea")
 public class EaApproverController {
-
+    private static final Logger log = LoggerFactory.getLogger(EaApproverController.class);
     private final EaApproverService eaApproverService;
+    private final ModelMapper modelMapper;
+    private final EaService eaService;
 
     @Autowired
-    public EaApproverController(EaApproverService eaApproverService) {
+    public EaApproverController(EaApproverService eaApproverService, ModelMapper modelMapper, EaService eaService) {
         this.eaApproverService = eaApproverService;
+        this.modelMapper = modelMapper;
+        this.eaService = eaService;
     }
 
 
@@ -42,6 +55,34 @@ public class EaApproverController {
 
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 결재처리 성공", eaApproverService.updateEaApproverInfo(eaApproverDTO)));
     }
+
+    @PutMapping("/approver/success/{eaCode}/{eaMember}")
+    public ResponseEntity<ResponseDTO> update(@PathVariable String eaCode, @PathVariable String eaMember){
+
+/* 문서번호 -> eaMember 검색 */
+        log.info("eaCode {}",eaCode);
+        log.info("eaMember {}",eaMember);
+        eaApproverService.finalApproverProcess(eaCode,eaMember);
+
+
+
+//        LeaveUseHistoryDTO leaveUseHistoryDTO;
+
+
+
+
+
+
+
+//        LeavePaymentHistory leavePaymentHistory = modelMapper.map(leavePaymentHistoryDTO, LeavePaymentHistory.class);
+//
+//        leavePaymentHistoryRepository.save(leavePaymentHistory);
+//
+//        List<LeaveHistoryAndMember> leaveHistoryAndMemberList = leaveHistoryAndMemberRepository.findByMemberCode(memberCode);
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 승인처리 성공", "null" /*eaApproverService.updateEaApproverInfo(eaApproverDTO)*/));
+    }
+
 
 
 
