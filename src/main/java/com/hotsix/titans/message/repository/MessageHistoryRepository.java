@@ -14,4 +14,6 @@ public interface MessageHistoryRepository extends JpaRepository<MessageHistory, 
 
 
     List<MessageHistory> findByMessageReceiverEmailAndMessageReceiverDeleteYn(String memberEmail, String messageReceiverDeleteYn);
+
+    MessageHistory findByMessageCode(String messageCode);
 }
