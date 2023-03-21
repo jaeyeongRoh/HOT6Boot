@@ -395,6 +395,21 @@ public class AttendanceHrService {
         return myAttendances;
     }
 
+    @Transactional
+    public AttendanceHrDTO selectFile(String commuteNo) {
+
+        AttendanceHR attendanceHR = attendanceHrRepository.findByCommuteCode(commuteNo);
+        AttendanceHrReason attendanceHrReason = attendanceHrReasonRepository.findByCommuteCode(commuteNo);
+        attendanceHrReason.setReasonFaddress(FILE_URL + attendanceHrReason.getReasonCname());
+
+        System.out.println("attendanceHR = " + attendanceHR);
+        System.out.println("attendanceHrReason.getReasonCname = " + attendanceHrReason.getReasonCname());
+
+
+        return modelMapper.map(attendanceHR, AttendanceHrDTO.class);
+
+    }
+    }
 
 
 
