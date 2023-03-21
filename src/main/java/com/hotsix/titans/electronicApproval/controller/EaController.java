@@ -53,6 +53,10 @@ public class EaController {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 개별 조회성공", "주소가 올바르지 않습니다."));
     }
 
+
+
+
+
     @Operation(summary = "전자결재 기안 종류별 리스트 조회", description = "기안 종류별로 리스트타입으로 조회합니다", tags = {"EAController"})
     @GetMapping("/eaList/{dtype}")
     public ResponseEntity<ResponseDTO> selectAllDtypeDocument(@PathVariable String dtype, @RequestParam(required = false) String status) {
@@ -119,6 +123,34 @@ public class EaController {
     public ResponseEntity<ResponseDTO> selectAllDocument() {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 전체 리스트 조회성공", eaService.selectAllDocument()));
     }
+
+
+    /**
+     * 전자결재 상태별, 유저 문서 리스트 조회 API
+     * @return
+     */
+    @Operation(summary = "전자결재", description = "기안조회합니다", tags = {"EAController"})
+    @GetMapping("/eaList/{eaStatusCode}/{eaMember}")
+    public ResponseEntity<ResponseDTO> selectAllDocument(@PathVariable String eaStatusCode, @PathVariable String eaMember) {
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 전체 리스트 조회성공", eaService.selectStatusMemberAllDocument(eaStatusCode, eaMember)));
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * 전자결재 휴가신청 insert API
