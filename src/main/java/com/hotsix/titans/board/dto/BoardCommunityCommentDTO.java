@@ -19,7 +19,7 @@ public class BoardCommunityCommentDTO {
     private String commentContent;
     private LocalDateTime commentInsertDate;
     private LocalDateTime commentUpdateDate;
-    private Character commentDeleteYN;
+    private Character commentDeleteYn;
     private BoardMemberDTO BoardMember;
 
 }

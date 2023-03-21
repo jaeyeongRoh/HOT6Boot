@@ -15,7 +15,7 @@ package com.hotsix.titans.board.entity;
 //        name = "BOARD_ATTACHMENT_SEQ_GENERATOR",
 //        sequenceName = "SEQ_BOARD_ATTACHMENT",
 //        initialValue = 1,
-//        allocationSize = 50
+//        allocationSize = 1
 //)
 //@Table(name = "TBL_BOARD_ATTACHMENT")
 public class BoardCommunityAttachment {
@@ -44,7 +44,7 @@ public class BoardCommunityAttachment {
 //    private Date attachDate;
 //
 //    @Column(name = "ATTACH_DELETE_YN")
-//    private char attachDeleteYN;
+//    private char attachDeleteYn;
 
 }
 

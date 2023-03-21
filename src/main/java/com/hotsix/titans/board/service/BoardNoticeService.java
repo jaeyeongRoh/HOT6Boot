@@ -31,7 +31,7 @@ public class BoardNoticeService {
 
         char deleteYn = 'N';
 
-        List<BoardNotice> boardNoticeList = boardNoticeRepository.findByNoticeDeleteYNOrderByNoticeDateDesc(deleteYn);
+        List<BoardNotice> boardNoticeList = boardNoticeRepository.findByNoticeDeleteYnOrderByNoticeDateDesc(deleteYn);
 
         System.out.println("boardNoticeList : " + boardNoticeList);
         return boardNoticeList.stream().map(boardNotice -> modelMapper.map(boardNotice, BoardNoticeDTO.class)).collect(Collectors.toList());
@@ -77,7 +77,7 @@ public class BoardNoticeService {
         /* update를 위한 엔티티 값 수정 */
         boardNotice.setNoticeTitle(boardNoticeDTO.getNoticeTitle());
         boardNotice.setNoticeContent(boardNoticeDTO.getNoticeContent());
-//        boardNotice.setNoticeDeleteYN(boardNoticeDTO.getNoticeDeleteYN());
+        boardNotice.setNoticeDeleteYn(boardNoticeDTO.getNoticeDeleteYn());
 
         if (boardNotice.getNoticeCode() == boardNoticeDTO.getNoticeCode()) {
             result = 1;
@@ -86,22 +86,4 @@ public class BoardNoticeService {
         log.info("[BoardNoticeService] updateBoardNotice End ");
         return (result > 0) ? "공지사항 수정 성공" : "공지사항 수정 실패";
     }
-//    @Transactional
-//    public Object updateBoardNotice(BoardNoticeDTO boardNoticeDTO) {
-//
-////        BoardNotice boardNotice = boardNoticeRepository.findByNoticeCode(boardNoticeDTO.getNoticeCode());
-////
-////        boardNotice.setNoticeCode(boardNoticeDTO.getNoticeCode()); // 복사
-////        boardNotice.setMemberCode(boardNoticeDTO.getMemberCode());
-////        boardNotice.setNoticeTitle(boardNoticeDTO.getNoticeTitle());
-////        boardNotice.setNoticeDate(boardNoticeDTO.getNoticeDate());
-////        boardNotice.setNoticeCount(boardNoticeDTO.getNoticeCount());
-////        boardNotice.setNoticeContent(boardNoticeDTO.getNoticeContent());
-////        boardNotice.setNoticeDeleteYN(boardNoticeDTO.getNoticeDeleteYN());
-////
-////        boardNoticeRepository.saveAndFlush(boardNotice);
-//
-//        return null;
-//    }
-
 }
