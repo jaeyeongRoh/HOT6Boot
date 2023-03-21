@@ -380,6 +380,7 @@ public class AttendanceHrService {
         System.out.println("attendanceHR = " + attendanceHR);
         System.out.println("attendanceHrReason.getReasonCname = " + attendanceHrReason.getReasonCname());
 
+
         return modelMapper.map(attendanceHR, AttendanceHrDTO.class);
 
     }
