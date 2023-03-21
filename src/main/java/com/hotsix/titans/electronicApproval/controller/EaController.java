@@ -118,7 +118,7 @@ public class EaController {
      * 전자결재 전체 리스트 조회 API
      * @return
      */
-    @Operation(summary = "전자결재", description = "기안조회합니다", tags = {"EAController"})
+    @Operation(summary = "전자결재", description = "전자결재 문서 전체 조회", tags = {"EAController"})
     @GetMapping("/eaList")
     public ResponseEntity<ResponseDTO> selectAllDocument() {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 전체 리스트 조회성공", eaService.selectAllDocument()));
