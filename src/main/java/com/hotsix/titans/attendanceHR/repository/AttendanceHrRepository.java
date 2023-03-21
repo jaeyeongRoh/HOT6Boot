@@ -6,5 +6,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface AttendanceHrRepository extends JpaRepository<AttendanceHR, String> {
+    AttendanceHR findByCommuteCode(String commuteNo);
 }
 

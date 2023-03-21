@@ -77,7 +77,7 @@ public class BoardNoticeService {
         /* update를 위한 엔티티 값 수정 */
         boardNotice.setNoticeTitle(boardNoticeDTO.getNoticeTitle());
         boardNotice.setNoticeContent(boardNoticeDTO.getNoticeContent());
-        boardNotice.setNoticeDeleteYn(boardNoticeDTO.getNoticeDeleteYn());
+//        boardNotice.setNoticeDeleteYn(boardNoticeDTO.getNoticeDeleteYn());
 
         if (boardNotice.getNoticeCode() == boardNoticeDTO.getNoticeCode()) {
             result = 1;
