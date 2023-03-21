@@ -44,7 +44,7 @@ public class SecurityConfig {
 	@Bean
 	public WebSecurityCustomizer webSecurityCustomizer() {
 		return (web) -> web.ignoring().antMatchers("/css/**", "/js/**", "/images/**",
-				                                   "/lib/**", "/productimgs/**");
+				                                   "/lib/**", "/profileImages/**", "/files/**");
 	}
 
 	/* 3. HTTP요청에 대한 권한별 설정(세션 인증 -> 토큰 인증으로 인해 바뀐 부분 존재) */
@@ -111,9 +111,4 @@ public class SecurityConfig {
 		return source;
 	}
 
-
 }
-
-
-
-

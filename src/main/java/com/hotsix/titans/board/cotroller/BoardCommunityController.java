@@ -3,6 +3,7 @@ package com.hotsix.titans.board.cotroller;
 import com.hotsix.titans.board.dto.BoardCommunityDTO;
 import com.hotsix.titans.board.service.BoardCommunityService;
 import com.hotsix.titans.commons.ResponseDTO;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +22,7 @@ public class BoardCommunityController {
         this.boardCommunityService = boardCommunityService;
     }
 
-    /* */
+    @Operation(summary = "커뮤니티 게시물 전체 조회 요청", description = "커뮤니티 게시물 전체 조회가 진행됩니다.", tags = {"BoardCommunityController"})
     @GetMapping("/board/community")
     public ResponseEntity<ResponseDTO> listAllPrint() {
 
@@ -30,6 +31,7 @@ public class BoardCommunityController {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "자유게시판 조회 성공", boardCommunityList));
     }
 
+    @Operation(summary = "선택한 커뮤니티 게시물 조회 요청", description = "선택한 커뮤니티 게시물 조회가 진행됩니다.", tags = {"BoardCommunityController"})
     @GetMapping("/board/community/{communityCode}")
     public ResponseEntity<ResponseDTO> selectBoardCommunityDetail(@PathVariable String communityCode) {
         System.out.println("communityCode : " + communityCode);
@@ -44,6 +46,7 @@ public class BoardCommunityController {
 //        return "content/board/boardDetail";
     }
 
+    @Operation(summary = "커뮤니티 게시물 등록 요청", description = "커뮤니티 게시물 등록이 진행됩니다.", tags = {"BoardCommunityController"})
     @PostMapping(value = "/board/community/write")
     public ResponseEntity<ResponseDTO> insertBoardCommunity(@RequestBody BoardCommunityDTO boardCommunityDTO) {
 
@@ -52,6 +55,7 @@ public class BoardCommunityController {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "자유게시판 등록 성공", boardCommunityService.insertBoardCommunity(boardCommunityDTO)));
     }
 
+    @Operation(summary = "커뮤니티 게시물 수정 요청", description = "커뮤니티 게시물 수정이 진행됩니다.", tags = {"BoardCommunityController"})
     @PutMapping("/board/community/{communityCode}") /* 끝에 / 적으면 안됨 */
     public ResponseEntity<ResponseDTO> updateBoardCommunity(@RequestBody BoardCommunityDTO boardCommunityDTO) {
 

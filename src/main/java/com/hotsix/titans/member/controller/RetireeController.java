@@ -29,6 +29,7 @@ public class RetireeController {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 성공", retireeList));
     }
 
+    @Operation(summary = "급여 지급상태 변경 요청", description = "급여 지급상태를 변경합니다.", tags = { "RetireeController" })
     @PutMapping(value = "/salary/severance/N/{retireeCode}")
     public ResponseEntity<ResponseDTO> updateSalaryPayment(@PathVariable String retireeCode) {
 

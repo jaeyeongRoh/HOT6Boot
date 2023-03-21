@@ -3,7 +3,6 @@ package com.hotsix.titans.member.controller;
 import com.hotsix.titans.commons.ResponseDTO;
 import com.hotsix.titans.member.dto.MemberDTO;
 import com.hotsix.titans.member.dto.ProfileImageDTO;
-import com.hotsix.titans.member.entity.ProfileImage;
 import com.hotsix.titans.member.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -48,5 +47,4 @@ public class AuthController {
     public ResponseEntity<ResponseDTO> registMember(@ModelAttribute MemberDTO memberDTO, @ModelAttribute ProfileImageDTO profileImageDTO, @RequestParam("memberImage") MultipartFile memberImage) { // 신규 사원 정보를 받아 냄
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "신규 사원 등록 성공", authService.registMember(memberDTO, profileImageDTO, memberImage)));
     }
-
 }

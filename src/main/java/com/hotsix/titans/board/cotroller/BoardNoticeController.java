@@ -22,7 +22,7 @@ public class BoardNoticeController {
         this.boardNoticeService = boardNoticeService;
     }
 
-    /* */
+    @Operation(summary = "공지사항 게시물 전체 조회 요청", description = "공지사항 게시물 전체 조회가 진행됩니다.", tags = {"BoardNoticeController"})
     @GetMapping("/board/notice")
     public ResponseEntity<ResponseDTO> listAllPrint() {
 
@@ -31,12 +31,14 @@ public class BoardNoticeController {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "공지사항 조회 성공", boardNoticeList));
     }
 
+    @Operation(summary = "선택한 공지사항 게시물 조회 요청", description = "선택한 공지사항 게시물 조회가 진행됩니다.", tags = {"BoardNoticeController"})
     @GetMapping("/board/notice/{noticeCode}")
     public ResponseEntity<ResponseDTO> selectBoardNoticeDetail(@PathVariable String noticeCode) {
 
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회 성공", boardNoticeService.selectBoardNoticeDetail(noticeCode)));
     }
 
+    @Operation(summary = "공지사항 게시물 등록 요청", description = "공지사항 게시물 등록이 진행됩니다.", tags = {"BoardNoticeController"})
     @PostMapping(value = "/board/notice/write")
     public ResponseEntity<ResponseDTO> insertBoardNotice(@RequestBody BoardNoticeDTO boardNoticeDTO) {
 
@@ -45,10 +47,10 @@ public class BoardNoticeController {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "공지사항 등록 성공", boardNoticeService.insertBoardNotice(boardNoticeDTO)));
     }
 
-    @Operation(summary = "공지사항 수정", description = "공지사항 제목, 내용 수정 및 저장", tags = { "BoardNoticeController" })
-    @PutMapping("/board/notice/{noticeCode}") /* 끝에 / 적으면 안됨 */
+    @Operation(summary = "공지사항 게시물 수정 요청", description = "공지사항 게시물 수정이 진행됩니다.", tags = {"BoardNoticeController"})
+    @PutMapping("/board/notice/{noticeCode}")
     public ResponseEntity<ResponseDTO> updateBoardNotice(@ModelAttribute BoardNoticeDTO boardNoticeDTO) {
 
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "공지사항 수정(삭제) 성공", boardNoticeService.updateBoardNotice(boardNoticeDTO)));
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "공지사항 수정 성공", boardNoticeService.updateBoardNotice(boardNoticeDTO)));
     }
 }
