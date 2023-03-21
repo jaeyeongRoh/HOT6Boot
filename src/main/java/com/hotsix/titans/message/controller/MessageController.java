@@ -66,6 +66,27 @@ public class MessageController {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "메세지 전송성공", messageService.insertMessage(messageDTO)));
     }
 
+
+
+    /*휴지통*/
+    @PostMapping("/messageTrash")
+    public ResponseEntity<ResponseDTO> checkTrashEmail(@RequestBody MessageDTO messageDTO){
+
+        System.out.println("messageDTO 받은편지함 = " + messageDTO);
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "받은메세지 테스트", messageService.checkTrashEmail(messageDTO)));
+    }
+
+    /*휴지통 카운트*/
+    @PostMapping("/messageTrashCount")
+    public ResponseEntity<ResponseDTO> checkTrashEmailCount(@RequestBody MessageDTO messageDTO){
+
+        System.out.println("messageDTO 받은편지함 = " + messageDTO);
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "받은메세지 테스트", messageService.checkTrashEmail(messageDTO).size()));
+    }
+
+
     /*받은 편지함*/
     @PostMapping("/messageReceived")
     public ResponseEntity<ResponseDTO> checkReceivedEmail(@RequestBody MessageDTO messageDTO){
@@ -95,6 +116,17 @@ public class MessageController {
     @PostMapping("/messageSentCount")
     public ResponseEntity<ResponseDTO> checkSentEmailCount(@RequestBody MessageDTO messageDTO){
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회성공", messageService.checkSentEmail(messageDTO).size()));
+    }
+
+
+    /*휴지통 선택값 y로 변경*/
+
+    @PostMapping("/messageReceivedDelete")
+    public ResponseEntity<ResponseDTO> checkReceivedEmailDelete(@RequestBody MessageDTO messageDTO){
+
+        System.out.println("messageDTO 휴지통" +messageDTO);
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "조회성공",  messageService.selectMessageCodeDelete(messageDTO)));
     }
 
 }

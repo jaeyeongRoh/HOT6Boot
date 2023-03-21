@@ -1,5 +1,6 @@
 package com.hotsix.titans.message.repository;
 
+import com.hotsix.titans.message.dto.MessageDTO;
 import com.hotsix.titans.message.entity.Message;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -15,4 +16,10 @@ public interface MessageRepository extends JpaRepository<Message, Integer>  {
     List<Message> findByMemberCode(String memberCode);
 
     Message findByMessageDeleteYn(String n);
+
+    Message findAllByMessageCode(String s);
+
+    List<Message> findAllByMessageCodeInOrderByMessageSendDateDesc(List<String> receivedMessage);
+
+
 }

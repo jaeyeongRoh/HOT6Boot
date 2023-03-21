@@ -86,9 +86,9 @@ public class Member {
     @JoinColumn(name = "MEMBER_CODE")
     private List<ProfileImage> profileImage;
 
-    @OneToMany
-    @JoinColumn(name = "MEMBER_CODE")
-    private List<Salary> salaryList;
+//    @OneToMany
+//    @JoinColumn(name = "MEMBER_CODE")
+//    private List<Salary> salaryList;
 
 //    @OneToMany
 //    @JoinColumn(name = "MEMBER_CODE")
