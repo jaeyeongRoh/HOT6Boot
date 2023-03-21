@@ -49,30 +49,26 @@ public class EaApproverController {
 //    }
 
 
+//
+//    @PutMapping("/approver/success")
+//    public ResponseEntity<ResponseDTO> updateEaApproverInfo(@ModelAttribute EaApproverDTO eaApproverDTO){
+//
+//        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 결재처리 성공", eaApproverService.updateEaApproverInfo(eaApproverDTO)));
+//    }
 
-    @PutMapping("/approver/success")
-    public ResponseEntity<ResponseDTO> updateEaApproverInfo(@ModelAttribute EaApproverDTO eaApproverDTO){
-
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 결재처리 성공", eaApproverService.updateEaApproverInfo(eaApproverDTO)));
-    }
 
     @PutMapping("/approver/success/{eaCode}/{eaMember}")
-    public ResponseEntity<ResponseDTO> update(@PathVariable String eaCode, @PathVariable String eaMember){
+    public ResponseEntity<ResponseDTO> updateEaApproverInfo(@PathVariable String eaCode, @PathVariable String eaMember){
 
 /* 문서번호 -> eaMember 검색 */
         log.info("eaCode {}",eaCode);
         log.info("eaMember {}",eaMember);
+
+        eaApproverService.middleApproverProcess(eaCode,eaMember);
+
         eaApproverService.finalApproverProcess(eaCode,eaMember);
 
-
-
 //        LeaveUseHistoryDTO leaveUseHistoryDTO;
-
-
-
-
-
-
 
 //        LeavePaymentHistory leavePaymentHistory = modelMapper.map(leavePaymentHistoryDTO, LeavePaymentHistory.class);
 //
@@ -82,6 +78,7 @@ public class EaApproverController {
 
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 승인처리 성공", "null" /*eaApproverService.updateEaApproverInfo(eaApproverDTO)*/));
     }
+
 
 
 

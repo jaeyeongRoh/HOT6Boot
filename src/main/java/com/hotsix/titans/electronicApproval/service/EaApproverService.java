@@ -153,6 +153,30 @@ public class EaApproverService {
         return result;
     }
 
+    /* 중간결재자 결재 과정 */
+    @Transactional
+    public Object middleApproverProcess(String eaCode, String eaMember) {
+
+        EaDocument eaDocument = eaDocumentRepository.findByEaCode(eaCode);
+        EaApproverInfo eaApproverInfo = eaApproverRepository.findByEaCodeAndMemberCode(eaCode, eaMember);
+
+        /* 전자결재 최종결재자 승인으로 변경 */
+        log.info("eaApproverInfo.getEaStatusCode{}", eaApproverInfo.getEaStatusCode());
+        eaApproverInfo.setEaStatusCode("EA_STATUS_SUCCESS");
+        log.info("eaApproverInfo.getEaStatusCode{}", eaApproverInfo.getEaStatusCode());
+
+        /* 전자결재 문서 상태 결재 완료로 변경 */
+        log.info("eaApproverInfo.getEaStatusCode{}", eaApproverInfo.getEaStatusCode());
+        eaDocument.setEaStatusCode("EA_STATUS_PROCESS");
+        log.info("eaApproverInfo.getEaStatusCode{}", eaApproverInfo.getEaStatusCode());
+
+
+        int result = 1;
+        return result;
+    }
+
+
+    /* 최종결재자 결재 과정 */
     @Transactional
     public Object finalApproverProcess(String eaCode, String eaMember) {
 
