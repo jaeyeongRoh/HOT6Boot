@@ -62,32 +62,32 @@ public class EaApproverController {
      */
     @Operation(summary = "전자결재", description = "기안조회합니다", tags = {"EAController"})
     @PutMapping("/eaSalary/update")
-    public ResponseEntity<ResponseDTO> insertSalary(@RequestBody EaSalaryDTO eaSalaryDTO) {
+    public ResponseEntity<ResponseDTO> updateSalary(@RequestBody EaSalaryDTO eaSalaryDTO) {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 급여정정 update 성공", eaApproverService.updateSalary(eaSalaryDTO)));
     }
 
     @PutMapping("/eaCert/update")
-    public ResponseEntity<ResponseDTO> insertCert(@RequestBody EaCertDTO eaCertDTO) {
+    public ResponseEntity<ResponseDTO> updateCert(@RequestBody EaCertDTO eaCertDTO) {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 증명서신청 update 성공", eaApproverService.updateCert(eaCertDTO)));
     }
 
     @PutMapping("/eaDuty/update")
-    public ResponseEntity<ResponseDTO> insertDuty(@RequestBody EaDutyDTO eaDutyDTO) {
+    public ResponseEntity<ResponseDTO> updateDuty(@RequestBody EaDutyDTO eaDutyDTO) {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 예비군신청 update 성공", eaApproverService.updateDuty(eaDutyDTO)));
     }
 
     @PutMapping("/eaRnstt/update")
-    public ResponseEntity<ResponseDTO> insertRnstt(@RequestBody EaRnsttDTO eaRnsttDTO) {
+    public ResponseEntity<ResponseDTO> updateRnstt(@RequestBody EaRnsttDTO eaRnsttDTO) {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 복직신청 update 성공", eaApproverService.updateRnstt(eaRnsttDTO)));
     }
 
     @PutMapping("/eaRetire/update")
-    public ResponseEntity<ResponseDTO> insertRetire(@RequestBody EaRetireDTO eaRetireDTO) {
+    public ResponseEntity<ResponseDTO> updateRetire(@RequestBody EaRetireDTO eaRetireDTO) {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 퇴직신청 update 성공", eaApproverService.updateRetire(eaRetireDTO)));
     }
 
     @PutMapping("/eaLoa/update")
-    public ResponseEntity<ResponseDTO> insertLoa(@RequestBody EaLoaDTO eaLoaDTO) {
+    public ResponseEntity<ResponseDTO> updateLoa(@RequestBody EaLoaDTO eaLoaDTO) {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 휴직신청 update 성공", eaApproverService.updateLoa(eaLoaDTO)));
     }
 
