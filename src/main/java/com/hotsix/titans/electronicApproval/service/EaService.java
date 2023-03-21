@@ -233,10 +233,6 @@ public class EaService {
     public Object insertSalary(EaSalaryDTO eaSalaryDTO) {
         EaSalary eaSalary;
 
-        log.info("날짜",eaSalaryDTO.getSalCorrectionDate());
-
-
-
 //        eaSalaryDTO.setSalCorrectionDate(LocalDate.now());
 
         eaSalary = modelMapper.map(eaSalaryDTO, EaSalary.class);

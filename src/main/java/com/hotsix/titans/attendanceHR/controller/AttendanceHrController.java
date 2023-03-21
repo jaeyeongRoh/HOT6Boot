@@ -9,6 +9,7 @@ import com.hotsix.titans.attendanceHR.entity.MyAttendanceHR;
 import com.hotsix.titans.attendanceHR.service.AttendanceHrService;
 import com.hotsix.titans.commons.ResponseDTO;
 
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -33,7 +34,8 @@ public class AttendanceHrController {
     }
 
 
-    /*받은 값으로 조회*/
+    /*근태이력 조회란 */
+    @Operation(summary = "근태 이력 조회 요청", description = "전 사원 근태 이력 목록이 조회됩니다.", tags = { "AttendanceHrController" })
     @PostMapping("/attendance")
     public ResponseEntity<ResponseDTO> selectAttendance(@RequestBody SelectAttendanceDTO selectAttendanceDTO) {
 
@@ -46,6 +48,7 @@ public class AttendanceHrController {
     }
 
     /*출근하기 버튼 눌렀을때*/
+    @Operation(summary = "출근 등록 ", description = "출근 등록을 누르면 db에 등록됩니다.", tags = { "AttendanceHrController" })
     @GetMapping("/attendance/mypageAregist")
     public ResponseEntity<ResponseDTO> attendanceMypageRegistCommute(@RequestParam String commuteStartTime, @ModelAttribute MemberDTO memberDTO) throws ParseException {
 
@@ -59,6 +62,7 @@ public class AttendanceHrController {
     }
 
     /*퇴근하기 버튼 눌렀을때*/
+    @Operation(summary = "퇴근 등록 ", description = "퇴근 등록을 누르면 db에 등록됩니다.", tags = { "AttendanceHrController" })
     @GetMapping("/attendance/mypageAfinishRegist")
     public ResponseEntity<ResponseDTO> attendanceMypageFinishRegistCommute(@RequestParam String commuteFinishTime, @ModelAttribute MemberDTO memberDTO) throws ParseException {
 
@@ -72,6 +76,7 @@ public class AttendanceHrController {
     }
 
     /*출근 시간이 출력*/
+    @Operation(summary = "출근 시간 출력 ", description = "출근 버튼을 누르면 시각이 출력", tags = { "AttendanceHrController" })
     @GetMapping("/attendance/mypageAregistSelect")
     public ResponseEntity<ResponseDTO> attendanceMypageSelectRegistCommute(@RequestParam String commuteStartTime, @ModelAttribute MemberDTO memberDTO) throws ParseException {
 
@@ -86,6 +91,7 @@ public class AttendanceHrController {
 
 
     /*모달창 저장 누를시*/
+    @Operation(summary = "모달창 수정값 저장 ", description = "근태 상태를 바꾼후 저장을 누르면 db저장", tags = { "AttendanceHrController" })
     @PostMapping("/attendance/modalSave")
     public ResponseEntity<ResponseDTO> attendanceMypageAttendanceModalSave(@RequestBody SelectAttendanceDTO selectAttendanceDTO) {
 
@@ -97,6 +103,7 @@ public class AttendanceHrController {
     }
 
     /*마이페이지 개인 근태관리*/
+    @Operation(summary = "마이페이지 개인 근태관리 ", description = "마이페이지 개인 근태관리 ", tags = { "AttendanceHrController" })
     @GetMapping("/attendance/myPageSelectAttendance/{memberCode}")
     public ResponseEntity<ResponseDTO> attendanceMypageFinishRegistCommute(@PathVariable String memberCode) {
 
@@ -124,18 +131,17 @@ public class AttendanceHrController {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "사유서 등록 성공", attendanceHrService.createReason(attendanceHrReasonDTO, reasonFile)));
     }
 
+    @Operation(summary = "파일 다운로드", description = "근태 정정 사유서 다운로드", tags = { "AttendanceHrController" })
     @GetMapping("/attendance/mypage/history/reason/{commuteNo}")
     public ResponseEntity<ResponseDTO> downloadFile(@PathVariable String commuteNo) {
 
-
-        System.out.println("commuteNo = " + commuteNo);
-
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "파일 접근 성공",
                                         attendanceHrService.selectFile(commuteNo).getAttendanceHrReasonList()));
-
     }
 
     /*마이페이지 근태기록 확인*/
+    @Operation(summary = "근태기록을 조회후 가져옴 ", description = "마이페이지에서 근태기록을 불러옴 ", tags = { "AttendanceHrController" })
+
     @PostMapping ("/attendance/myPageAttendanceMonth")
     public ResponseEntity<ResponseDTO> myPageAttendanceMonth(@RequestBody AttendanceHrDTO attendanceHrDTO) {
 

@@ -50,11 +50,11 @@ public class BoardNotice {
     private String noticeContent;
 
     @Column(name = "NOTICE_DELETE_YN")
-    private Character noticeDeleteYN;
+    private Character noticeDeleteYn;
 
     @ManyToOne // (fetch = FetchType.LAZY)
     @JoinColumn(name = "MEMBER_CODE", insertable = false, updatable = false)
-    private BoardNoticeMember member;
+    private BoardMember member;
 
 }
 

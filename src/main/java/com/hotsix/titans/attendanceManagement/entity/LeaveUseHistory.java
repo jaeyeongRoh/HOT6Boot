@@ -1,9 +1,11 @@
 package com.hotsix.titans.attendanceManagement.entity;
 
+import com.hotsix.titans.commons.StringPrefixSequenceGenerator;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -19,6 +21,11 @@ public class LeaveUseHistory {
 
     @Id
     @Column(name = "LEAVE_USE_HISTORY_CODE")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_LEAVE_USE_CODE")
+    @GenericGenerator(name = "SEQ_LEAVE_USE_CODE", strategy = "com.hotsix.titans.commons.StringPrefixSequenceGenerator",
+            parameters = {
+                    @org.hibernate.annotations.Parameter(name = StringPrefixSequenceGenerator.VALUE_PREFIX_PARAMETER, value = "LU")
+            })
     private String leaveUseHistoryCode;
     @Column(name = "LEAVE_PAYMENT_HISTORY_CODE")
     private String leavePaymentHistoryCode;

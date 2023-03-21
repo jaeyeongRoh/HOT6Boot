@@ -1,12 +1,11 @@
 package com.hotsix.titans.attendanceManagement.entity;
 
 import com.hotsix.titans.attendanceManagement.dto.LeaveCategoryDTO;
+import com.hotsix.titans.commons.StringPrefixSequenceGenerator;
 import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
 @AllArgsConstructor
@@ -20,6 +19,11 @@ public class LeavePaymentHistory {
 
     @Id
     @Column(name = "LEAVE_PAYMENT_HISTORY_CODE")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_LEAVE_PAYMENT_CODE")
+    @GenericGenerator(name = "SEQ_LEAVE_PAYMENT_CODE", strategy = "com.hotsix.titans.commons.StringPrefixSequenceGenerator",
+            parameters = {
+                    @org.hibernate.annotations.Parameter(name = StringPrefixSequenceGenerator.VALUE_PREFIX_PARAMETER, value = "LP")
+            })
     private String leavePaymentHistoryCode; // 휴가발생내역번호
 
     @Column(name = "MEMBER_CODE")

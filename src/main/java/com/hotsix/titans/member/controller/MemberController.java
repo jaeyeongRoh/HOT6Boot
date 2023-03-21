@@ -48,6 +48,7 @@ public class MemberController {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전사원 count 성공", total));
     }
 
+    @Operation(summary = "회원정보 수정", description = "회원정보 수정 및 저장", tags = { "MemberController" })
     @PutMapping(value = "/mypage/management/update/{memberCode}")
     public ResponseEntity<ResponseDTO> updateMyInfo(@ModelAttribute MemberDTO memberDTO) {
 

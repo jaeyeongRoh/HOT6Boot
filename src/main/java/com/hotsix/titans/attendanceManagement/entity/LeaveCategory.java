@@ -22,7 +22,7 @@ public class LeaveCategory {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_LEAVE_CATEGORY_CODE")
     @GenericGenerator(name = "SEQ_LEAVE_CATEGORY_CODE", strategy = "com.hotsix.titans.commons.StringPrefixSequenceGenerator",
             parameters = {
-                    @Parameter(name = StringPrefixSequenceGenerator.VALUE_PREFIX_PARAMETER, value = "LC")
+                    @Parameter(name = StringPrefixSequenceGenerator.VALUE_PREFIX_PARAMETER, value = "LP")
             })
     private String leaveCategoryCode;       // 휴가구분번호
 
