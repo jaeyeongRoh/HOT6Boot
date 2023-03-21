@@ -1,9 +1,7 @@
 package com.hotsix.titans.electronicApproval.controller;
 
 
-import com.hotsix.titans.attendanceManagement.dto.LeaveUseHistoryDTO;
-import com.hotsix.titans.attendanceManagement.entity.LeaveHistoryAndMember;
-import com.hotsix.titans.attendanceManagement.entity.LeavePaymentHistory;
+
 import com.hotsix.titans.commons.ResponseDTO;
 import com.hotsix.titans.electronicApproval.dto.*;
 import com.hotsix.titans.electronicApproval.service.EaApproverService;
@@ -24,14 +22,11 @@ import java.util.List;
 public class EaApproverController {
     private static final Logger log = LoggerFactory.getLogger(EaApproverController.class);
     private final EaApproverService eaApproverService;
-    private final ModelMapper modelMapper;
-    private final EaService eaService;
 
     @Autowired
-    public EaApproverController(EaApproverService eaApproverService, ModelMapper modelMapper, EaService eaService) {
+    public EaApproverController(EaApproverService eaApproverService) {
         this.eaApproverService = eaApproverService;
-        this.modelMapper = modelMapper;
-        this.eaService = eaService;
+
     }
 
 

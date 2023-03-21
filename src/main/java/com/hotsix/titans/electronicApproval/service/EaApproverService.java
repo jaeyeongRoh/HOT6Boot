@@ -215,7 +215,7 @@ public class EaApproverService {
                 .map(e -> e.getEaCode())
                 .collect(Collectors.toCollection(ArrayList::new));
 
-        List<EaDocument> documentList = eaDocumentRepository.findAllByEaStatusCodeAndEaCodeIn(eaStatusCode,eaCodes);
+        List<EaDocument> documentList = eaDocumentRepository.findAllByEaStatusCodeAndEaCodeInOrderByEaCodeDesc(eaStatusCode,eaCodes);
 
         return documentList.stream().map(eaDocument -> modelMapper.map(eaDocument, EaDocumentDTO.class)).collect(Collectors.toList());
 
