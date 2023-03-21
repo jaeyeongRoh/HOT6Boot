@@ -266,4 +266,49 @@ public class SalaryService {
 
         return eaSalaryList.stream().map(eaSalary -> modelMapper.map(eaSalary, EaSalaryListDTO.class)).collect(Collectors.toList());
     }
+
+    public Object selectRequireSalaryUpdate(String salaryCode) {
+
+        EaSalaryList eaSalaryList = eaSalaryListRepository.findBySalaryCode(salaryCode);
+//        Salary salary = salaryRepository.findBySalaryCode(salaryCode);
+//
+//        SalaryDTO salaryDTO = modelMapper.map(salary, SalaryDTO.class);
+//
+//        Long beforeSalary = salaryDTO.getBasicSalary() + salaryDTO.getMealSalary();
+//        Long incomTax = (Math.round(beforeSalary * 0.066));
+//        Long healthTax = (Math.round(beforeSalary * 0.0306));
+//        Long nationalTax = (Math.round(beforeSalary * 0.081));
+//        Long totalTax = incomTax + healthTax + nationalTax;
+//
+//        salaryDTO.setBeforeSalary(beforeSalary);
+//        salaryDTO.setIncomTax(incomTax);
+//        salaryDTO.setHealthTax(healthTax);
+//        salaryDTO.setNationalTax(nationalTax);
+//        salaryDTO.setTotalTax(totalTax);
+//        salaryDTO.setTotalTax(beforeSalary - totalTax);
+
+        return modelMapper.map(eaSalaryList, EaSalaryListDTO.class);
+    }
+
+    @Transactional
+    public Object updateRequireSalary(SalaryDTO salary) {
+
+        int result = 0;
+
+        try {
+
+            System.out.println("Service 들어오는지 test ====");
+            Salary updateSalary = modelMapper.map(salary, Salary.class);
+
+            salaryRepository.save(updateSalary);
+
+            result = 1;
+
+        } catch (Exception e) {
+
+            throw new RuntimeException(e);
+        }
+
+        return (result > 0) ? "등록 성공" : "등록 실패";
+    }
 }

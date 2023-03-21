@@ -167,6 +167,7 @@ public class EaController {
     }
 
     /* 인사에서 로그인한 사원의 증명서 리스트 조회*/
+    @Operation(summary = "개인 증명 신청 현황 조회", description = "내가 신청한 증명서의 목록을 조회합니다.", tags = {"SalaryController"})
     @GetMapping("/eaList/cert/{memberCode}")
     public ResponseEntity<ResponseDTO> selectMyCertificate(@PathVariable String memberCode) {
 

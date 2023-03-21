@@ -8,4 +8,6 @@ import java.util.List;
 public interface EaSalaryListRepository extends JpaRepository<EaSalaryList, String> {
 
     List<EaSalaryList> findByMemberCode(String memberCode);
+
+    EaSalaryList findBySalaryCode(String salaryCode);
 }
