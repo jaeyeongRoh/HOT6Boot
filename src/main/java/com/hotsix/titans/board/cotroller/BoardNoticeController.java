@@ -3,6 +3,7 @@ package com.hotsix.titans.board.cotroller;
 import com.hotsix.titans.board.dto.BoardNoticeDTO;
 import com.hotsix.titans.board.service.BoardNoticeService;
 import com.hotsix.titans.commons.ResponseDTO;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,10 +45,9 @@ public class BoardNoticeController {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "공지사항 등록 성공", boardNoticeService.insertBoardNotice(boardNoticeDTO)));
     }
 
+    @Operation(summary = "공지사항 수정", description = "공지사항 제목, 내용 수정 및 저장", tags = { "BoardNoticeController" })
     @PutMapping("/board/notice/{noticeCode}") /* 끝에 / 적으면 안됨 */
     public ResponseEntity<ResponseDTO> updateBoardNotice(@ModelAttribute BoardNoticeDTO boardNoticeDTO) {
-
-        System.out.println("boardNoticeDTO = " + boardNoticeDTO);
 
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "공지사항 수정(삭제) 성공", boardNoticeService.updateBoardNotice(boardNoticeDTO)));
     }
