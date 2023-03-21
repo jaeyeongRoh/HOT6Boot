@@ -43,18 +43,15 @@ public class EaApproverController {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 결재처리 성공", eaApproverService.updateEaApproverInfo(eaApproverDTO)));
     }
 
-
-
-
-    /**
-     * 전자결재 휴가신청 insert API
-     * @return
-     */
-    @Operation(summary = "전자결재", description = "기안조회합니다", tags = {"EAController"})
-    @PostMapping("/eaLeave/insert")
-    public ResponseEntity<ResponseDTO> insertLeave(@RequestBody EaLeaveDTO eaLeaveDTO) {
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 휴가신청 update 성공", eaApproverService.updateLeave(eaLeaveDTO)));
-    }
+//    /**
+//     * 전자결재 휴가신청 insert API
+//     * @return
+//     */
+//    @Operation(summary = "전자결재", description = "기안조회합니다", tags = {"EAController"})
+//    @PostMapping("/eaLeave/insert")
+//    public ResponseEntity<ResponseDTO> insertLeave(@RequestBody EaLeaveDTO eaLeaveDTO) {
+//        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 휴가신청 update 성공", eaApproverService.updateLeave(eaLeaveDTO)));
+//    }
 
     /**
      * 전자결재 급여정정 insert API

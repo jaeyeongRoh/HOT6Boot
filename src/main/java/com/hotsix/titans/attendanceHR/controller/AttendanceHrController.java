@@ -131,7 +131,7 @@ public class AttendanceHrController {
         System.out.println("commuteNo = " + commuteNo);
 
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "파일 접근 성공",
-                                        attendanceHrService.selectFile(commuteNo).getAttendanceHrReasonList().get(0).getReasonFaddress()));
+                                        attendanceHrService.selectFile(commuteNo).getAttendanceHrReasonList()));
 
     }
 
