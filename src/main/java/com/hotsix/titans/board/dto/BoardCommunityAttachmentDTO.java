@@ -18,5 +18,5 @@ public class BoardCommunityAttachmentDTO {
 //    private String attachRoute;
 //    private String attachType;
 //    private Date attachDate;
-//    private char attachDeleteYN;
+//    private char attachDeleteYn;
 }

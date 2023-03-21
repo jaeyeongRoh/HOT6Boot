@@ -51,12 +51,4 @@ public class BoardNoticeController {
 
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "공지사항 수정(삭제) 성공", boardNoticeService.updateBoardNotice(boardNoticeDTO)));
     }
-
-//    @PutMapping("/board/notice/{noticeCode}") /* 끝에 / 적으면 안됨 */
-//    public ResponseEntity<ResponseDTO> updateBoardNotice(@ModelAttribute BoardNoticeDTO boardNoticeDTO) {
-//
-//        System.out.println("boardNoticeDTO = " + boardNoticeDTO);
-//
-//        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "공지사항 수정(삭제) 성공", boardNoticeService.updateBoardNotice(boardNoticeDTO)));
-//    }
 }

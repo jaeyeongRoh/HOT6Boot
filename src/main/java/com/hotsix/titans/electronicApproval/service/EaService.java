@@ -119,8 +119,10 @@ public class EaService {
      * @return
      */
     public Object selectSalary(String eaCode) {
+
         EaSalary eaSalary = eaSalaryRepository.findByEaCode(eaCode);
-        return modelMapper.map(eaSalary, EaSalaryDTO.class);
+        return modelMapper.map(eaSalary, EaSalarySelectDTO.class);
+
     }
 
 

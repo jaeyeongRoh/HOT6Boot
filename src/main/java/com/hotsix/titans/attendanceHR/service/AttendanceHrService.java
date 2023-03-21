@@ -1,10 +1,8 @@
 package com.hotsix.titans.attendanceHR.service;
 
-
 import com.hotsix.titans.attendanceHR.dto.*;
 import com.hotsix.titans.attendanceHR.entity.*;
 import com.hotsix.titans.attendanceHR.repository.CRUDattendanceHrRepository;
-import com.hotsix.titans.attendanceHR.entity.*;
 import com.hotsix.titans.attendanceHR.repository.*;
 
 import com.hotsix.titans.member.entity.Member;
@@ -51,6 +49,7 @@ public class AttendanceHrService {
     private String FILE_DIR;
     @Value("http://localhost:8888/files/")
     private String FILE_URL;
+
     @Autowired
     public AttendanceHrService(ModelMapper modelMapper, CRUDattendanceHrRepository crudAttendanceHrRepository, EntityManager entityManager, MemberRepository memberRepository, MypageSelectAttendanceRepository mypageSelectAttendanceRepository, AttendanceHrRepository attendanceHrRepository, AttendanceHrReasonRepository attendanceHrReasonRepository, MyAttendanceHRRepository myAttendanceHRRepository) {
         this.modelMapper = modelMapper;
@@ -333,8 +332,6 @@ public class AttendanceHrService {
         return (result == 1) ? "등록성공" : "등록실패" ;
     }
 
-
-
     public List<MypageSelectAttendanceDTO> attendanceMypageFinishRegistCommute(String memberCode) {
 
         List<MypageSelectAttendance> mypageSelectAttendanceList = mypageSelectAttendanceRepository.findByMemberCode(memberCode);
@@ -378,24 +375,19 @@ public class AttendanceHrService {
         return (result > 0) ? "사유서 등록 성공" : "사유서 등록 실패";
     }
 
-    public Page<MyAttendanceHR> searchMyAttendance(SearchDTO searchDTO) {
+    @Transactional
+    public AttendanceHrDTO selectFile(String commuteNo) {
 
-        Sort sort = Sort.by("commuteDate").descending();
-        Pageable pageable = PageRequest.of(searchDTO.getPage(), searchDTO.getSize(), sort);
+        AttendanceHR attendanceHR = attendanceHrRepository.findByCommuteCode(commuteNo);
+        AttendanceHrReason attendanceHrReason = attendanceHrReasonRepository.findByCommuteCode(commuteNo);
+        attendanceHrReason.setReasonFaddress(FILE_URL + attendanceHrReason.getReasonCname());
 
-        java.sql.Date start = java.sql.Date.valueOf(searchDTO.getStartDate());
-        java.sql.Date end = java.sql.Date.valueOf(searchDTO.getEndDate());
+        System.out.println("attendanceHR = " + attendanceHR);
+        System.out.println("attendanceHrReason.getReasonCname = " + attendanceHrReason.getReasonCname());
 
-        System.out.println("searchDTO = " + searchDTO);
-        System.out.println("start = " + start);
-        System.out.println("end = " + end);
+        return modelMapper.map(attendanceHR, AttendanceHrDTO.class);
 
-        Page<MyAttendanceHR> myAttendances = myAttendanceHRRepository.findByMemberCodeWithConditions(pageable, searchDTO.getMemberCode(), searchDTO.getAttendanceSelect(), start, end);
-
-        return myAttendances;
     }
-
-
 
 
 

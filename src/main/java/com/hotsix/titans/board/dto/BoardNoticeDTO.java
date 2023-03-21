@@ -19,7 +19,7 @@ public class BoardNoticeDTO {
     private LocalDateTime noticeDate;
     private Integer noticeCount;
     private String noticeContent;
-    private Character noticeDeleteYN;
+    private Character noticeDeleteYn;
     private BoardMemberDTO member;
     private List<BoardCommunityComment> boardCommunityComment;
 }
