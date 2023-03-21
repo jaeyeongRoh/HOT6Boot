@@ -127,24 +127,9 @@ public class AttendanceHrController {
 
         System.out.println("commuteNo = " + commuteNo);
 
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "파일 접근 성공", attendanceHrService.selectFile(commuteNo)));
-    }
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "파일 접근 성공",
+                                        attendanceHrService.selectFile(commuteNo).getAttendanceHrReasonList().get(0).getReasonFaddress()));
 
-//    @GetMapping("/attendance/mypage/history/reason/{commuteCode}")
-//    public ResponseEntity<ResponseDTO> downloadFile(@ModelAttribute AttendanceHrReasonDTO attendanceHrReasonDTO, @RequestParam("fileId") MultipartFile reasonFile) {
-//        // 서비스 레이어로 파일 다운로드를 위한 요청을 전달하고, 다운로드할 파일의 리소스 객체를 받습니다.
-//        ResponseDTO fileResource = attendanceHrService.downloadFile(fileId);
-//
-//        // 다운로드할 파일의 리소스 객체가 null일 경우, 404 NOT FOUND 상태 코드와 함께 응답합니다.
-//        if (fileResource == null) {
-//            return ResponseEntity.notFound().build();
-//        }
-//
-//        // 다운로드할 파일의 이름을 가져옵니다.
-//        String fileName = attendanceHrService.getFileName(fileId);
-//
-//        // 파일 다운로드를 위한 ResponseEntity 객체를 생성합니다.
-//        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "파일 다운로드 성공", attendanceHrService.downloadFile(attendanceHrReasonDTO, reasonFile)));
-//    }
+    }
 
 }
