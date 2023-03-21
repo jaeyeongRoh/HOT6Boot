@@ -11,5 +11,7 @@ public interface EaDocumentRepository extends JpaRepository <EaDocument, String>
 
     EaDocument findByEaCode(String eaCode);
 
-    List<EaDocument> findByEaStatusCodeAndEaMember(String eaStatusCode, String eaMember);
+    List<EaDocument> findByEaStatusCodeAndMemberCode(String eaStatusCode, String memberCode);
+
+    List<EaDocument> findAllByMemberCode (String memberCode);
 }

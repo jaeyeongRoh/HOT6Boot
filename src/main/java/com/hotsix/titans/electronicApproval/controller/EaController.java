@@ -126,13 +126,26 @@ public class EaController {
 
 
     /**
-     * 전자결재 상태별, 유저 문서 리스트 조회 API
+     * 전자결재 기안 문서 리스트 조회 API
      * @return
      */
     @Operation(summary = "전자결재", description = "기안조회합니다", tags = {"EAController"})
-    @GetMapping("/eaList/{eaStatusCode}/{eaMember}")
-    public ResponseEntity<ResponseDTO> selectAllDocument(@PathVariable String eaStatusCode, @PathVariable String eaMember) {
-        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 전체 리스트 조회성공", eaService.selectStatusMemberAllDocument(eaStatusCode, eaMember)));
+    @GetMapping("/eaList/draft/{memberCode}")
+    public ResponseEntity<ResponseDTO> selectAllDocument(@PathVariable String memberCode) {
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 전체 리스트 조회성공", eaService.selectAllDraftDocument(memberCode)));
+    }
+
+
+
+
+    /**
+     * 전자결재 상태별, 유저 문서 리스트 조회 API
+     * @return
+     */
+    @Operation(summary = "전자결재", description = "상태별 유저 문서 리스트 조회", tags = {"EAController"})
+    @GetMapping("/eaList/{eaStatusCode}/{memberCode}")
+    public ResponseEntity<ResponseDTO> selectAllDocument(@PathVariable String eaStatusCode, @PathVariable String memberCode) {
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 전체 리스트 조회성공", eaService.selectStatusMemberAllDocument(eaStatusCode, memberCode)));
     }
 
 

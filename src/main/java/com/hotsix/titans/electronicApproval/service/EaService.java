@@ -334,9 +334,18 @@ public class EaService {
         return eaCertList.stream().map(eaCert -> modelMapper.map(eaCert, EaCertListSelectDTO.class)).collect(Collectors.toList());
     }
 
-    public Object selectStatusMemberAllDocument(String eaStatusCode, String eaMember) {
+    public Object selectStatusMemberAllDocument(String eaStatusCode, String memberCode) {
 
-        List<EaDocument> eaDocumentList = eaDocumentRepository.findByEaStatusCodeAndEaMember(eaStatusCode, eaMember);
+        List<EaDocument> eaDocumentList = eaDocumentRepository.findByEaStatusCodeAndMemberCode(eaStatusCode, memberCode);
+
+        return eaDocumentList.stream().map(eaDocument -> modelMapper.map(eaDocument, EaDocumentDTO.class)).collect(Collectors.toList());
+
+
+    }
+
+    public Object selectAllDraftDocument(String memberCode) {
+
+        List<EaDocument> eaDocumentList = eaDocumentRepository.findAllByMemberCode(memberCode);
 
         return eaDocumentList.stream().map(eaDocument -> modelMapper.map(eaDocument, EaDocumentDTO.class)).collect(Collectors.toList());
 
