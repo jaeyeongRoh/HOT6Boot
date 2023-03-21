@@ -42,6 +42,19 @@ public class EaApproverController {
 //    }
 
 
+
+
+
+
+
+    @GetMapping("/status/{eaStatusCode}/{memberCode}")
+    public ResponseEntity<ResponseDTO> selectWaitingInbox(@PathVariable String eaStatusCode,@PathVariable String memberCode) {
+
+        return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 대기함 문서 리스트 성공", eaApproverService.selectWaitingInbox(eaStatusCode,memberCode)));
+    }
+
+
+
 //    @GetMapping("/approver/{memberCode}")
 //    public ResponseEntity<ResponseDTO> selectApproverMember(@PathVariable String memberCode) {
 //

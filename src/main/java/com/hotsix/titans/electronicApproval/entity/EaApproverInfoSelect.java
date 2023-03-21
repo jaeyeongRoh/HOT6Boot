@@ -18,18 +18,10 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @Table(name = "TBL_EA_APPROVER_INFO")
-@DynamicInsert
-public class EaApproverInfo {
+public class EaApproverInfoSelect {
 
     @Id
     @Column(name = "EA_APPROVER_CODE")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_EA_APPROVER")
-    @GenericGenerator(name = "SEQ_EA_APPROVER",
-            strategy = "com.hotsix.titans.commons.StringPrefixedSequenceIdGenerator",
-            parameters = {
-                    @org.hibernate.annotations.Parameter(name = StringPrefixedSequenceIdGenerator.VALUE_PREFIX_PARAMETER, value = "EAP"),
-                    @org.hibernate.annotations.Parameter(name = StringPrefixedSequenceIdGenerator.NUMBER_FORMAT_PARAMETER, value = "%08d")
-            })
     private String eaApproverCode;
 
     @Column(name = "EA_CODE")
@@ -37,10 +29,6 @@ public class EaApproverInfo {
 
     @Column(name = "MEMBER_CODE")
     private String memberCode;
-
-    @ManyToOne
-    @JoinColumn(name = "MEMBER_CODE", insertable = false, updatable = false)
-    private EaMember eaMember;
 
     @Column(name = "EA_AUTH_CODE")
     private String eaAuthCode;
@@ -53,10 +41,5 @@ public class EaApproverInfo {
 
     @Column(name = "APPROVER_COMMENT")
     private String approverComment;
-
-    @ManyToOne
-    @JoinColumn(name = "EA_STATUS_CODE", insertable = false, updatable = false)
-    private EaStatusCategory eaStatusCategory;
-
 
 }

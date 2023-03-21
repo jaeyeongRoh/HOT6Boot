@@ -9,6 +9,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.slf4j.Logger;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class EaApproverService {
     private static final Logger log = LoggerFactory.getLogger(EaApproverService.class);
@@ -198,5 +202,22 @@ public class EaApproverService {
 
         int result = 1;
         return result;
+    }
+
+    @Transactional
+    public Object selectWaitingInbox(String eaStatusCode, String memberCode) {
+
+        List<EaApproverInfo> eaList = eaApproverRepository.findAllByMemberCode(memberCode);
+
+        List<EaApproverInfoSelectDTO> eaCodeList = eaList.stream().map(eaApproverInfo -> modelMapper.map(eaApproverInfo, EaApproverInfoSelectDTO.class)).collect(Collectors.toList());
+        List<String> eaCodes = eaCodeList
+                .stream()
+                .map(e -> e.getEaCode())
+                .collect(Collectors.toCollection(ArrayList::new));
+
+        List<EaDocument> documentList = eaDocumentRepository.findAllByEaStatusCodeAndEaCodeIn(eaStatusCode,eaCodes);
+
+        return documentList.stream().map(eaDocument -> modelMapper.map(eaDocument, EaDocumentDTO.class)).collect(Collectors.toList());
+
     }
 }
