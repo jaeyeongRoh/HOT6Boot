@@ -15,5 +15,6 @@ public class EaSalarySelectDTO extends EaDocumentDTO {
 
     private LocalDate salCorrectionDate;
     private Salary salary;
+    private String salaryCode;
 
 }

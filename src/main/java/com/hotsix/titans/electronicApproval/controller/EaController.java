@@ -120,7 +120,6 @@ public class EaController {
         return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "전자결재 전체 리스트 조회성공", eaService.selectAllDocument()));
     }
 
-
     /**
      * 전자결재 휴가신청 insert API
      * @return
