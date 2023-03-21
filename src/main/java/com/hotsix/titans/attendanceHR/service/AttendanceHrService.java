@@ -383,35 +383,4 @@ public class AttendanceHrService {
         return modelMapper.map(attendanceHR, AttendanceHrDTO.class);
     }
 
-//    @Transactional
-//    public Object downloadFile(AttendanceHrReasonDTO attendanceHrReasonDTO, MultipartFile reasonFile) {
-//
-//        // 파일 ID에 해당하는 파일 엔티티를 가져옵니다.
-//        FileEntity fileEntity = fileRepository.findById(fileId)
-//                .orElseThrow(() -> new FileNotFoundException("File not found with id " + fileId));
-//
-//        // 파일이 저장된 경로를 가져옵니다.
-//        String filePath = fileEntity.getFilePath();
-//
-//        // 파일의 실제 경로를 생성합니다.
-//        Path file = Paths.get(filePath).normalize().toAbsolutePath();
-//
-//        // 파일이 존재하는지 확인합니다.
-//        if (!Files.exists(file)) {
-//            throw new FileNotFoundException("File not found with id " + fileId);
-//        }
-//
-//        // 파일의 리소스 객체를 생성하여 반환합니다.
-//        return new FileSystemResource(file);
-//    }
-//
-//    public String getFileName(Long fileId) {
-//        // 파일 ID에 해당하는 파일 엔티티를 가져옵니다.
-//        FileEntity fileEntity = fileRepository.findById(fileId)
-//                .orElseThrow(() -> new FileNotFoundException("File not found with id " + fileId));
-//
-//        // 파일 이름을 반환합니다.
-//        return fileEntity.getFileName();
-//    }
-
 }
