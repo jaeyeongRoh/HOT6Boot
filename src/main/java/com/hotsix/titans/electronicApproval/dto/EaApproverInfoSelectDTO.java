@@ -13,24 +13,8 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @ToString
-public class EaApproverInfoDTO {
-
-    private String eaApproverCode;
+public class EaApproverInfoSelectDTO {
 
     private String eaCode;
-
-    private String memberCode;
-
-    private EaMember eaMember;
-
-    private String eaAuthCode;
-
-    private LocalDate eaApproverDate;
-
-    private String eaStatusCode;
-
-    private EaStatusCategory eaStatusCategory;
-
-    private String approverComment;
 
 }

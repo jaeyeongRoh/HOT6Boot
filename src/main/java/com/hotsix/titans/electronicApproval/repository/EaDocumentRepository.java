@@ -1,5 +1,6 @@
 package com.hotsix.titans.electronicApproval.repository;
 
+import com.hotsix.titans.electronicApproval.entity.EaApproverInfo;
 import com.hotsix.titans.electronicApproval.entity.EaDocument;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -11,4 +12,9 @@ public interface EaDocumentRepository extends JpaRepository <EaDocument, String>
 
     EaDocument findByEaCode(String eaCode);
 
+    List<EaDocument> findByEaStatusCodeAndMemberCode(String eaStatusCode, String memberCode);
+
+    List<EaDocument> findAllByMemberCode (String memberCode);
+
+    List<EaDocument> findAllByEaStatusCodeAndEaCodeInOrderByEaCodeDesc(String eaStatusCode, List<String> eaCodes);
 }
