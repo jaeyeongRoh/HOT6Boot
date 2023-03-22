@@ -1,16 +1,17 @@
 package com.hotsix.titans.electronicApproval.service;
 
-import com.hotsix.titans.commons.ResponseDTO;
 import com.hotsix.titans.electronicApproval.dto.*;
 import com.hotsix.titans.electronicApproval.entity.*;
 import com.hotsix.titans.electronicApproval.repository.*;
 import org.modelmapper.ModelMapper;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.slf4j.Logger;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class EaApproverService {
@@ -23,9 +24,10 @@ public class EaApproverService {
     private final EaLoaRepository eaLoaRepository;
     private final EaRnsttRepository eaRnsttRepository;
     private final EaCertRepository eaCertRepository;
+    private final EaApproverRepository eaApproverRepository;
     private final ModelMapper modelMapper;
 
-    public EaApproverService(EaRetireRepository eaRetireRepository, EaDutyRepository eaDutyRepository, EaDocumentRepository eaDocumentRepository, EaSalaryRepository eaSalaryRepository, EaLeaveRepository eaLeaveRepository, EaLoaRepository eaLoaRepository, EaRnsttRepository eaRnsttRepository, EaCertRepository eaCertRepository, ModelMapper modelMapper) {
+    public EaApproverService(EaRetireRepository eaRetireRepository, EaDutyRepository eaDutyRepository, EaDocumentRepository eaDocumentRepository, EaSalaryRepository eaSalaryRepository, EaLeaveRepository eaLeaveRepository, EaLoaRepository eaLoaRepository, EaRnsttRepository eaRnsttRepository, EaCertRepository eaCertRepository, EaApproverRepository eaApproverRepository, ModelMapper modelMapper) {
         this.eaRetireRepository = eaRetireRepository;
         this.eaDutyRepository = eaDutyRepository;
         this.eaDocumentRepository = eaDocumentRepository;
@@ -34,6 +36,7 @@ public class EaApproverService {
         this.eaLoaRepository = eaLoaRepository;
         this.eaRnsttRepository = eaRnsttRepository;
         this.eaCertRepository = eaCertRepository;
+        this.eaApproverRepository = eaApproverRepository;
         this.modelMapper = modelMapper;
     }
 
@@ -152,5 +155,69 @@ public class EaApproverService {
         eaLeaveRepository.save(eaLeave);
         int result = 1;
         return result;
+    }
+
+    /* 중간결재자 결재 과정 */
+    @Transactional
+    public Object middleApproverProcess(String eaCode, String eaMember) {
+
+        EaDocument eaDocument = eaDocumentRepository.findByEaCode(eaCode);
+        EaApproverInfo eaApproverInfo = eaApproverRepository.findByEaCodeAndMemberCode(eaCode, eaMember);
+
+        /* 전자결재 최종결재자 승인으로 변경 */
+        log.info("eaApproverInfo.getEaStatusCode{}", eaApproverInfo.getEaStatusCode());
+        eaApproverInfo.setEaStatusCode("EA_STATUS_SUCCESS");
+        log.info("eaApproverInfo.getEaStatusCode{}", eaApproverInfo.getEaStatusCode());
+
+        /* 전자결재 문서 상태 결재 완료로 변경 */
+        log.info("eaApproverInfo.getEaStatusCode{}", eaApproverInfo.getEaStatusCode());
+        eaDocument.setEaStatusCode("EA_STATUS_PROCESS");
+        log.info("eaApproverInfo.getEaStatusCode{}", eaApproverInfo.getEaStatusCode());
+
+
+        int result = 1;
+        return result;
+    }
+
+
+    /* 최종결재자 결재 과정 */
+    @Transactional
+    public Object finalApproverProcess(String eaCode, String eaMember) {
+
+        EaDocument eaDocument = eaDocumentRepository.findByEaCode(eaCode);
+        EaApproverInfo eaApproverInfo = eaApproverRepository.findByEaCodeAndMemberCode(eaCode, eaMember);
+
+
+
+        /* 전자결재 최종결재자 승인으로 변경 */
+        log.info("eaApproverInfo.getEaStatusCode{}", eaApproverInfo.getEaStatusCode());
+        eaApproverInfo.setEaStatusCode("EA_STATUS_SUCCESS");
+        log.info("eaApproverInfo.getEaStatusCode{}", eaApproverInfo.getEaStatusCode());
+
+        /* 전자결재 문서 상태 결재 완료로 변경 */
+        log.info("eaApproverInfo.getEaStatusCode{}", eaApproverInfo.getEaStatusCode());
+        eaDocument.setEaStatusCode("EA_STATUS_FINISH");
+        log.info("eaApproverInfo.getEaStatusCode{}", eaApproverInfo.getEaStatusCode());
+
+
+        int result = 1;
+        return result;
+    }
+
+    @Transactional
+    public Object selectWaitingInbox(String eaStatusCode, String memberCode) {
+
+        List<EaApproverInfo> eaList = eaApproverRepository.findAllByMemberCode(memberCode);
+
+        List<EaApproverInfoSelectDTO> eaCodeList = eaList.stream().map(eaApproverInfo -> modelMapper.map(eaApproverInfo, EaApproverInfoSelectDTO.class)).collect(Collectors.toList());
+        List<String> eaCodes = eaCodeList
+                .stream()
+                .map(e -> e.getEaCode())
+                .collect(Collectors.toCollection(ArrayList::new));
+
+        List<EaDocument> documentList = eaDocumentRepository.findAllByEaStatusCodeAndEaCodeInOrderByEaCodeDesc(eaStatusCode,eaCodes);
+
+        return documentList.stream().map(eaDocument -> modelMapper.map(eaDocument, EaDocumentDTO.class)).collect(Collectors.toList());
+
     }
 }
