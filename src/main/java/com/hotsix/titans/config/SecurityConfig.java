@@ -78,6 +78,7 @@ public class SecurityConfig {
 				.antMatchers("/api/v1/organization/chart/**").permitAll()
 				.antMatchers("/api/v1/organization/retireeChart/**").permitAll()
 				.antMatchers("/api/v1/calendar/**").permitAll()
+				.antMatchers("/api/v1/profileImages/**").permitAll()
 //		    	.antMatchers("/api/**").hasRole("MEMBER")
 //		    	.antMatchers("/api/**").hasRole("ADMIN")
 				.antMatchers("/api/**").hasAnyRole("MEMBER", "ADMIN")
