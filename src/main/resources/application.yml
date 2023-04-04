@@ -4,9 +4,6 @@ server:
 spring:
   datasource:
     driver-class-name: oracle.jdbc.driver.OracleDriver
-    url: jdbc:oracle:thin:@oracle.coffit.site:1521:xe
-    username: C##HOT6
-    password: HOT6
   servlet:
     multipart:
       enabled: true
@@ -31,7 +28,7 @@ spring:
 
 
 jwt:
-  secret: i2KAFlcHeoKfMAEdBCIpMEP3k5eVazNsA5naytmtrYIjUxNuz9QyitYJvHLaYK/u9iC9qTYNQwAcu0i+ryQjaA==
+
 
 # swagger-ui custom path
 springdoc:
